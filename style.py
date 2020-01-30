@@ -7,7 +7,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 # -------------------VARIABLE-------------------
 # Position And Size
-xScreen = 450
+xScreen = 500
 yScreen = 550
 screen = pygame.display.set_mode((xScreen, yScreen))
 
@@ -18,10 +18,15 @@ xFileBar = (xScreen / 2) - (widthBar / 2)
 yFileBar = 100
 
 # Main LABEL
-xMainTitle = 145
+xMainTitle = (xScreen / 2) - 90
 yMainTitle = 20
+#File Label
 xFilelbl = 60
 yFilelbl = 103
+
+# WELCOME USER label
+xWelUSer = 10
+yWelUser = 30
 
 # Login Window
 lengthLoginWindow = 240
@@ -60,6 +65,7 @@ lblFile = fontText.render(str("File"), True, white)
 lblUsername = fontText.render(str("Username"), True, white)
 lblPassword = fontText.render(str("Password"), True, white)
 lblButtonLogin = fontText.render(str("Login"), True, white)
+lblWelcomeUser = fontText.render(str("Welcome"), True, white)
 
 
 # -----------------------FUNCTION-----------------------
@@ -111,7 +117,10 @@ def drawMainTitle():
 
 
 # Draw all Label
-def drawUiLabel():
+def drawUiLabel(userName):
+  lblWelcomeUser = fontText.render(userName, True, white)
   screen.blit(lblFile, (xFilelbl, yFilelbl))
+  screen.blit(lblWelcomeUser, (xWelUSer, yWelUser))
+  
 
 # ------------------------------------------------------

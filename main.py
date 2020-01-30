@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import pygame, os, style, mouseChanger, pygame_textinput
+import pygame, os, style, mouseChanger, pygame_textinput, idVector
 pygame.init()
 
 # GET current path
@@ -13,7 +13,7 @@ myIcon = pygame.image.load(whiteSquarePNG)
 pygame.display.set_icon(myIcon)
 
 # PYGAME INITIALISATION
-xScreen = 450
+xScreen = 500
 yScreen = 550
 screen = pygame.display.set_mode((xScreen, yScreen))
 clock = pygame.time.Clock()
@@ -63,14 +63,15 @@ while True:
   style.drawMainTitle()
 
   if loginIsOk:
+    # BOX
     style.drawUiBox()
-    style.drawUiLabel()
+    # LABEL
+    style.drawUiLabel(textinputUsername.get_text())
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
 
-  # CHECK IF THE LOGIN IS CORRECT BACKEND ?
-  if iPressedMyLoginButton:
-    loginIsOk = True
+  # Check If Login is OK
+  loginIsOk = idVector.confirmationLogin(iPressedMyLoginButton)
 
   if not(loginIsOk):
     # TEXT INPUT USERNAME
