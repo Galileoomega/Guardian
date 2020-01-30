@@ -40,8 +40,8 @@ def flyDetector(xMouse, yMouse, xLeft, xRight, yTop, yBottom):
   
   return mouseSkinChanged
 
-# Detect when the mouse click on an area
-def clickDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
+# Detect when the mouse click on an BUTTON
+def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
   iClicked = False
   if xMouse < xRight + 20:
     if xMouse > xLeft - 5:
@@ -55,7 +55,6 @@ def clickDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
 
           if pygame.mouse.get_pressed() == (1,0,0):
             tempIClicked = True
-            #print("TempPresdd")
         else:
           tempIClicked = False
       else:
@@ -69,5 +68,43 @@ def clickDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
     iPressedMyButton = False
   else:
     iPressedMyButton = True
-  
+    
+  return iPressedMyButton, tempIClicked
+
+# Detect when the mouse click on an INPUT BAR
+def clickBarDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
+  iClicked = False
+  if xMouse < xRight + 20:
+    if xMouse > xLeft - 5:
+      if yMouse < yBottom:
+        if yMouse > yTop - 5:
+          if tempIClicked:
+            iClicked = True
+
+          if pygame.mouse.get_pressed() == (1,0,0):
+            tempIClicked = True
+
+        else:
+          iClicked = False
+          tempIClicked = False
+      else:
+        iClicked = False
+        tempIClicked = False
+    else:
+      iClicked = False
+      tempIClicked = False
+  else:
+    iClicked = False
+    tempIClicked = False
+
+  if not(iClicked):
+    iPressedMyButton = False
+  else:
+    iPressedMyButton = True
+
+  if iClicked:
+    iPressedMyButton = True
+  else:
+    iPressedMyButton = False
+    
   return iPressedMyButton, tempIClicked

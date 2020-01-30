@@ -42,6 +42,8 @@ white = (255,255,255)
 grey = (67, 67, 70)
 
 tempIClicked = False
+focusOnPasswordBar = False
+focusOnUsernameBar = False
 # ----------------------------------------------
 
 # PATH
@@ -64,6 +66,8 @@ lblButtonLogin = fontText.render(str("Login"), True, white)
 
 # First render when program is open (WINDOW LOGIN)
 def loginWindow(xMouse, yMouse, tempIClicked):
+  focusOnPasswordBar = False
+  focusOnUsernameBar = False
   pygame.draw.rect(screen, darkBlack, (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow))
 
   # UserName Field
@@ -78,22 +82,22 @@ def loginWindow(xMouse, yMouse, tempIClicked):
   # Username Bar
   mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
   if mouseSkinChanged:
-    focusOnUsernameBar, tempIClicked = mouseChanger.clickDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25, tempIClicked)
+    focusOnUsernameBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25, tempIClicked)
   # Password bar
   if not(mouseSkinChanged):
     mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
     if mouseSkinChanged:
-      focusOnPasswordBar, tempIClicked = mouseChanger.clickDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
+      focusOnPasswordBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
   
   # LOGIN Button
   pygame.draw.rect(screen, grey, (xButtonLogin, yButtonLogin, 70, 30))
   screen.blit(lblButtonLogin, (xButtonLogin + 15, yButtonLogin + 5))
   if not(mouseSkinChanged):
-    iPressedMyLoginButton, tempIClicked = mouseChanger.clickDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 70, yButtonLogin, yButtonLogin + 30, tempIClicked)
+    iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 70, yButtonLogin, yButtonLogin + 30, tempIClicked)
   else:
     iPressedMyLoginButton = False
 
-  return iPressedMyLoginButton, tempIClicked
+  return iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked
 
 
 # Draw all UI container
