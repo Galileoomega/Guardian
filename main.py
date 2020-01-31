@@ -20,11 +20,28 @@ yScreen = 550
 screen = pygame.display.set_mode((xScreen, yScreen))
 clock = pygame.time.Clock()
 
-# ----------------------VARIABLE----------------------
-black = (40, 40, 43)
-grey = (67, 67, 70)
-loginIsOk = False
-tempIClicked = True
+# -------------------VARIABLE-------------------
+# Position And Size
+xScreen = 500
+yScreen = 550
+screen = pygame.display.set_mode((xScreen, yScreen))
+
+# File Input Bar
+lengthBar = 25
+widthBar = 250
+xFileBar = (xScreen / 2) - (widthBar / 2)
+yFileBar = 100
+
+# Main LABEL
+xMainTitle = (xScreen / 2) - 90
+yMainTitle = 20
+#File Label
+xFilelbl = 90
+yFilelbl = 103
+
+# WELCOME USER label
+xWelUSer = 10
+yWelUser = 30
 
 # Login Window
 lengthLoginWindow = 240
@@ -38,11 +55,35 @@ yPasswordBar = yLoginWindow + 140
 yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
 xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 
-# ----------------------------------------------------
+lengthListPath = 100
+widthListBar = 300
+xPathList = (xScreen / 2) - (widthListBar / 2)
+
+xEncryptButton = 50
+yEncrypButton = 400
+
+yDecriptButton = 400
+xDecryptButton = 340
+
+# Color
+black = (40, 40, 43)
+darkBlack = (20, 20, 23)
+white = (255,255,255)
+grey = (67, 67, 70)
+whiteGrey = (57, 57, 60)
+
+tempIClicked = False
+focusOnPasswordBar = False
+focusOnUsernameBar = False
+loginIsOk = True
+iPressedMyEncryptButton = False
+iPressedMyLoginButton = False
+laal = False
+# ----------------------------------------------
 
 # Create textinput-object
-textinputUsername = pygame_textinput.TextInput("", robotoRegularTTF, 18, True, (255,255,255), grey)
-textinputPassword = pygame_textinput.TextInput("", robotoRegularTTF, 18, True, (255,255,255), grey)
+textinputUsername = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
+textinputPassword = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
 
 
 while True:
@@ -63,6 +104,13 @@ while True:
 
   # Calling Front-End function
   style.drawMainTitle()
+
+  #Calling Back-End function
+  iPressedMyEncryptButton, laal = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 90, yEncrypButton, yEncrypButton + 40, laal)
+
+  # 
+  if iPressedMyEncryptButton:
+    print(iPressedMyEncryptButton)
 
   if loginIsOk:
     # BOX
