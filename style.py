@@ -63,6 +63,7 @@ white = (255,255,255)
 halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
+listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
 
 tempIClicked = False
 focusOnPasswordBar = False
@@ -90,6 +91,7 @@ lblUsername = fontText.render(str("Username"), True, white)
 lblPassword = fontText.render(str("Password"), True, white)
 lblButtonLogin = fontText.render(str("Login"), True, white)
 lblAwaiting = fontText.render(str("Awaiting files"), True, halfWhite)
+lblStatus = fontText.render(str("Status"), True, halfWhite)
 
 # IMAGE 
 imageUser = pygame.image.load(imageUserPath)
@@ -102,14 +104,14 @@ imageUnlock = pygame.image.load(imageUnlockPath)
 def loginWindow(xMouse, yMouse, tempIClicked):
   focusOnPasswordBar = False
   focusOnUsernameBar = False
-  pygame.draw.rect(screen, darkBlack, (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow))
+  pygame.draw.rect(screen, listOfColor[5], (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow))
 
   # UserName Field
-  pygame.draw.rect(screen, grey, (xLoginWindow + 20, yUsernameBar, 250, 25))
+  pygame.draw.rect(screen, listOfColor[6], (xLoginWindow + 20, yUsernameBar, 250, 25))
   screen.blit(lblUsername, (xLoginWindow + 20, yUsernameBar - 20))
 
   # Password Field
-  pygame.draw.rect(screen, grey, (xLoginWindow + 20, yPasswordBar, 250, 25))
+  pygame.draw.rect(screen, listOfColor[7], (xLoginWindow + 20, yPasswordBar, 250, 25))
   screen.blit(lblPassword, (xLoginWindow + 20, yPasswordBar - 20))
 
   # Change the mouse appearance and call the click detector
@@ -124,10 +126,14 @@ def loginWindow(xMouse, yMouse, tempIClicked):
       focusOnPasswordBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
   
   # LOGIN Button
-  pygame.draw.rect(screen, grey, (xButtonLogin, yButtonLogin, 70, 30))
+  pygame.draw.rect(screen, listOfColor[8], (xButtonLogin, yButtonLogin, 70, 30))
   screen.blit(lblButtonLogin, (xButtonLogin + 15, yButtonLogin + 5))
   if not(mouseSkinChanged):
+    # Detect click button
     iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 70, yButtonLogin, yButtonLogin + 30, tempIClicked)
+    # Change button color
+    mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8)
+
   else:
     iPressedMyLoginButton = False
 
@@ -156,6 +162,7 @@ def drawUiLabel(userName):
   screen.blit(lblDecryptButton, (xDecryptButton + 14, yDecryptButton + 10))
   screen.blit(lblCryptButton, (xEncryptButton + 14, yEncrypButton + 10))
   screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
+  screen.blit(lblStatus, (xPathList + 300, yFileBar + 60))
 
 
 def drawImages():

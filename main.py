@@ -78,7 +78,7 @@ white = (255,255,255)
 halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
-listOfColor = [grey, grey, whiteGrey, grey, grey]
+listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
 
 tempIClicked = False
 focusOnPasswordBar = False
@@ -119,6 +119,7 @@ while True:
   iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 90, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
 
   mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4)
+  mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3)
 
   # DEBUG
   if iPressedMyEncryptButton:
