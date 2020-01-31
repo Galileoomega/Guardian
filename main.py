@@ -56,29 +56,36 @@ yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
 xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 
 lengthListPath = 100
-widthListBar = 300
+widthListBar = 400
 xPathList = (xScreen / 2) - (widthListBar / 2)
 
-xEncryptButton = 50
+# ENCRYPT Button
+widthEncryptButton = 90
+lengthEncryptButton = 40
+xEncryptButton = ((xScreen / 2) - (widthEncryptButton / 2)) - 100
 yEncrypButton = 400
 
-yDecriptButton = 400
-xDecryptButton = 340
+# DECRYPT Button
+widthDecryptButton = 90
+lengthDecryptButton = 40
+yDecryptButton = 400
+xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
 
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
 white = (255,255,255)
+halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
+listOfColor = [grey, grey, whiteGrey, grey, grey]
 
 tempIClicked = False
 focusOnPasswordBar = False
 focusOnUsernameBar = False
-loginIsOk = True
-iPressedMyEncryptButton = False
-iPressedMyLoginButton = False
-laal = False
+loginIsOk = False
+tempEncryptButton = False
+tempDecryptButton = False
 # ----------------------------------------------
 
 # Create textinput-object
@@ -106,15 +113,23 @@ while True:
   style.drawMainTitle()
 
   #Calling Back-End function
-  iPressedMyEncryptButton, laal = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 90, yEncrypButton, yEncrypButton + 40, laal)
+  # Detect click on ENCRYPT BUTTON
+  iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 90, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
+  # Detect click on DECRYPT BUTTON
+  iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 90, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
 
-  # 
+  mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4)
+
+  # DEBUG
   if iPressedMyEncryptButton:
     print(iPressedMyEncryptButton)
+  
+  if iPressedMyDecryptButton:
+    print(iPressedMyDecryptButton)
 
   if loginIsOk:
     # BOX
-    style.drawUiBox()
+    style.drawUiBox(listOfColor)
     # LABEL
     style.drawUiLabel(textinputUsername.get_text())
     # IMAGES

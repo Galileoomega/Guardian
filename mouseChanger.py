@@ -8,6 +8,9 @@ xScreen = 450
 yScreen = 550
 screen = pygame.display.set_mode((xScreen, yScreen))
 
+black = (40, 40, 43)
+grey = (67, 67, 70)
+
 # GET current path
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
@@ -39,6 +42,13 @@ def flyDetector(xMouse, yMouse, xLeft, xRight, yTop, yBottom):
     mouseSkinChanged = False
   
   return mouseSkinChanged
+
+# Can Change the color of a button (similar to flyDetector())
+def flyDetectorButtons(permissionToChange, listOfColor, index):
+  if permissionToChange:
+    listOfColor[index] = black
+  else:
+    listOfColor[index] = grey
 
 # Detect when the mouse click on an BUTTON
 def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):

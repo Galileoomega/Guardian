@@ -41,19 +41,26 @@ yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
 xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 
 lengthListPath = 100
-widthListBar = 300
+widthListBar = 400
 xPathList = (xScreen / 2) - (widthListBar / 2)
 
-xEncryptButton = 50
+# ENCRYPT Button
+widthEncryptButton = 90
+lengthEncryptButton = 40
+xEncryptButton = ((xScreen / 2) - (widthEncryptButton / 2)) - 100
 yEncrypButton = 400
 
-yDecriptButton = 400
-xDecryptButton = 340
+# DECRYPT Button
+widthDecryptButton = 90
+lengthDecryptButton = 40
+yDecryptButton = 400
+xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
 
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
 white = (255,255,255)
+halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
 
@@ -76,12 +83,14 @@ fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
 
 # DEFINE TEXT
 lblMainTitle = fontTitle.render(str("GUARDIAN ENCRYPTION"), True, white)
-lblFile = fontText.render(str("File"), True, white)
+lblFile = fontText.render(str("File"), True, halfWhite)
 lblCryptButton = fontWelcome.render(str("ENCRYPT"), True, white)
 lblDecryptButton = fontWelcome.render(str("DECRYPT"), True, white)
 lblUsername = fontText.render(str("Username"), True, white)
 lblPassword = fontText.render(str("Password"), True, white)
 lblButtonLogin = fontText.render(str("Login"), True, white)
+lblAwaiting = fontText.render(str("Awaiting files"), True, halfWhite)
+
 # IMAGE 
 imageUser = pygame.image.load(imageUserPath)
 imageLock = pygame.image.load(imageLockPath)
@@ -126,12 +135,12 @@ def loginWindow(xMouse, yMouse, tempIClicked):
 
 
 # Draw all UI container
-def drawUiBox():
-  pygame.draw.rect(screen, grey, (xFileBar,yFileBar,widthBar, lengthBar))
-  pygame.draw.rect(screen, grey, (xPathList,yFileBar + 60,widthListBar, lengthListPath))
-  pygame.draw.rect(screen, whiteGrey, (xPathList,yFileBar + 60,widthListBar, lengthListPath - 80))
-  pygame.draw.rect(screen, grey, (xEncryptButton,yEncrypButton,90, 40))
-  pygame.draw.rect(screen, grey, (xDecryptButton,yDecriptButton,90, 40))
+def drawUiBox(listOfColor):
+  pygame.draw.rect(screen, listOfColor[0], (xFileBar, yFileBar, widthBar, lengthBar))
+  pygame.draw.rect(screen, listOfColor[1], (xPathList, yFileBar + 60, widthListBar, lengthListPath))
+  pygame.draw.rect(screen, listOfColor[2], (xPathList, yFileBar + 60, widthListBar, lengthListPath - 80))
+  pygame.draw.rect(screen, listOfColor[3], (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton))
+  pygame.draw.rect(screen, listOfColor[4], (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton))
   
 
 
@@ -144,13 +153,15 @@ def drawMainTitle():
 def drawUiLabel(userName):
   # FILE label
   screen.blit(lblFile, (xFilelbl, yFilelbl))
-  screen.blit(lblDecryptButton, (xDecryptButton + 14, yDecriptButton + 10))
+  screen.blit(lblDecryptButton, (xDecryptButton + 14, yDecryptButton + 10))
   screen.blit(lblCryptButton, (xEncryptButton + 14, yEncrypButton + 10))
+  screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
+
 
 def drawImages():
   # USER ICON
   #screen.blit(imageUser, (10, 10))
   screen.blit(imageLock, (xEncryptButton + 25, yEncrypButton + 45))
-  screen.blit(imageUnlock, (xDecryptButton + 25, yDecriptButton + 45))
+  screen.blit(imageUnlock, (xDecryptButton + 25, yDecryptButton + 45))
   
 # ------------------------------------------------------
