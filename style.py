@@ -40,6 +40,10 @@ yPasswordBar = yLoginWindow + 140
 yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
 xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 
+lengthListPath = 100
+widthListBar = 300
+xPathList = (xScreen / 2) - (widthListBar / 2)
+
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
@@ -54,10 +58,12 @@ focusOnUsernameBar = False
 # PATH
 robotoRegularTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Regular.ttf')
 robotoLightTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Light.ttf')
+imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\8-513.png')
 
 # DEFINE FONT
-fontTitle = pygame.font.Font(robotoRegularTTF, 15)
+fontTitle = pygame.font.Font(robotoRegularTTF, 16)
 fontText = pygame.font.Font(robotoLightTTF, 13)
+fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
 
 # DEFINE TEXT
 lblMainTitle = fontTitle.render(str("GUARDIAN ENCRYPTING"), True, white)
@@ -65,8 +71,8 @@ lblFile = fontText.render(str("File"), True, white)
 lblUsername = fontText.render(str("Username"), True, white)
 lblPassword = fontText.render(str("Password"), True, white)
 lblButtonLogin = fontText.render(str("Login"), True, white)
-lblWelcomeUser = fontText.render(str("Welcome"), True, white)
-
+# IMAGE 
+imageUser = pygame.image.load(imageUserPath)
 
 # -----------------------FUNCTION-----------------------
 
@@ -109,6 +115,7 @@ def loginWindow(xMouse, yMouse, tempIClicked):
 # Draw all UI container
 def drawUiBox():
   pygame.draw.rect(screen, grey, (xFileBar,yFileBar,widthBar, lengthBar))
+  pygame.draw.rect(screen, grey, (xPathList,yFileBar + 60,widthListBar, lengthListPath))
 
 
 # Draw main Title
@@ -118,9 +125,11 @@ def drawMainTitle():
 
 # Draw all Label
 def drawUiLabel(userName):
-  lblWelcomeUser = fontText.render(userName, True, white)
+  # FILE label
   screen.blit(lblFile, (xFilelbl, yFilelbl))
-  screen.blit(lblWelcomeUser, (xWelUSer, yWelUser))
-  
 
+def drawImages():
+  # USER ICON
+  screen.blit(imageUser, (10, 10))
+  
 # ------------------------------------------------------

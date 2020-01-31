@@ -4,6 +4,8 @@ pygame.init()
 
 # GET current path
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+robotoRegularTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Regular.ttf')
+
 # Change window name
 pygame.display.set_caption("SHA-256")
 
@@ -39,8 +41,8 @@ xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 # ----------------------------------------------------
 
 # Create textinput-object
-textinputUsername = pygame_textinput.TextInput("", "", 25, True, (255,255,255), grey)
-textinputPassword = pygame_textinput.TextInput("", "", 25, True, (255,255,255), grey)
+textinputUsername = pygame_textinput.TextInput("", robotoRegularTTF, 18, True, (255,255,255), grey)
+textinputPassword = pygame_textinput.TextInput("", robotoRegularTTF, 18, True, (255,255,255), grey)
 
 
 while True:
@@ -67,6 +69,8 @@ while True:
     style.drawUiBox()
     # LABEL
     style.drawUiLabel(textinputUsername.get_text())
+    # IMAGES
+    style.drawImages()
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
 
@@ -79,14 +83,14 @@ while True:
       # Feed it with events every frame
       textinputUsername.update(events)
     # Blit its surface onto the screen
-    screen.blit(textinputUsername.get_surface(), (xLoginWindow + 25, yUsernameBar + 4))
+    screen.blit(textinputUsername.get_surface(), (xLoginWindow + 25, yUsernameBar + 2))
 
     # TEXT INPUT PASSWORD
     if focusOnPasswordBar:
       # Feed it with events every frame
       textinputPassword.update(events)
-      
+
     # Blit its surface onto the screen
-    screen.blit(textinputPassword.get_surface(), (xLoginWindow + 25, yPasswordBar + 4))
+    screen.blit(textinputPassword.get_surface(), (xLoginWindow + 25, yPasswordBar + 2))
   
   pygame.display.update()
