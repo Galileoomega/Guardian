@@ -168,8 +168,8 @@ def drawUiBox(listOfColor):
   pygame.draw.rect(screen, listOfColor[3], (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton))
   pygame.draw.rect(screen, listOfColor[4], (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton))
   pygame.draw.rect(screen, grey, (xFileBar + widthBar + 35, yFileBar, 26, 26))
-  pygame.draw.rect(screen, lavanda, (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
-  pygame.draw.rect(screen, lavanda, (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
+  pygame.draw.rect(screen, black, (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
+  pygame.draw.rect(screen, black, (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
   
 
 
