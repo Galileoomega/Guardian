@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((xScreen, yScreen))
 
 black = (40, 40, 43)
 grey = (67, 67, 70)
-white = (100, 100, 140)
+lavanda = (54, 54, 153)
 
 # GET current path
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -47,7 +47,7 @@ def flyDetector(xMouse, yMouse, xLeft, xRight, yTop, yBottom):
 # Can Change the color of a button (similar to flyDetector())
 def flyDetectorButtons(permissionToChange, listOfColor, index):
   if permissionToChange:
-    listOfColor[index] = white
+    listOfColor[index] = lavanda
   else:
     listOfColor[index] = grey
 

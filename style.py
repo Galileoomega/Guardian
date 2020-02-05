@@ -64,6 +64,7 @@ halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
 red = (189, 11, 11)
+lavanda = (54, 54, 153)
 listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
 
 tempIClicked = False
@@ -106,33 +107,48 @@ imageUnlock = pygame.image.load(imageUnlockPath)
 def loginWindow(xMouse, yMouse, tempIClicked):
   focusOnPasswordBar = False
   focusOnUsernameBar = False
+
+  # BACKGROUND BLIT
   pygame.draw.rect(screen, listOfColor[5], (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow))
 
-  # UserName Field
+  # UserName Field BLIT
   pygame.draw.rect(screen, listOfColor[6], (xLoginWindow + 20, yUsernameBar, 250, 25))
-  screen.blit(lblUsername, (xLoginWindow + 20, yUsernameBar - 20))
+  screen.blit(lblUsername, (xLoginWindow + 20, yUsernameBar - 30))
 
-  # Password Field
+  # Password Field BLIT
   pygame.draw.rect(screen, listOfColor[7], (xLoginWindow + 20, yPasswordBar, 250, 25))
-  screen.blit(lblPassword, (xLoginWindow + 20, yPasswordBar - 20))
+  screen.blit(lblPassword, (xLoginWindow + 20, yPasswordBar - 30))
 
+  # ------------Username Bar------------
   # Change the mouse appearance and call the click detector
-  # Username Bar
   mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
   if mouseSkinChanged:
     focusOnUsernameBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25, tempIClicked)
-  # Password bar
+  # CHANGE COLOR IF FOCUSED
+  if focusOnUsernameBar:
+    pygame.draw.rect(screen, lavanda, (xLoginWindow + 20, yUsernameBar, 250, 25))
+  
+  mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
+  # ------------------------------------
+
+  # ------------Password bar------------
   if not(mouseSkinChanged):
     mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
     if mouseSkinChanged:
       focusOnPasswordBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
+  # CHANGE COLOR IF FOCUSED
+  if focusOnPasswordBar:
+    pygame.draw.rect(screen, lavanda, (xLoginWindow + 20, yPasswordBar, 250, 25))
+    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
+    #mouseSkinChanged = False
+  # ------------------------------------
   
   # LOGIN Button
   pygame.draw.rect(screen, listOfColor[8], (xButtonLogin, yButtonLogin, 70, 30))
   screen.blit(lblButtonLogin, (xButtonLogin + 15, yButtonLogin + 5))
   if not(mouseSkinChanged):
     # Detect click button
-    iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 70, yButtonLogin, yButtonLogin + 30, tempIClicked)
+    iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 55, yButtonLogin, yButtonLogin + 30, tempIClicked)
     # Change button color
     mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8)
 
