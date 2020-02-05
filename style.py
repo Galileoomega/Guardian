@@ -63,6 +63,7 @@ white = (255,255,255)
 halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
+red = (189, 11, 11)
 listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
 
 tempIClicked = False
@@ -81,6 +82,7 @@ imageUnlockPath = os.path.join(THIS_FOLDER, 'Resources\\unlock.png')
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
 fontText = pygame.font.Font(robotoLightTTF, 13)
 fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
+fontError = pygame.font.Font(robotoRegularTTF, 13)
 
 # DEFINE TEXT
 lblMainTitle = fontTitle.render(str("GUARDIAN ENCRYPTION"), True, white)
@@ -164,6 +166,10 @@ def drawUiLabel(userName):
   screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
   screen.blit(lblStatus, (xPathList + 300, yFileBar + 60))
 
+
+def showErrorMessage(myText):
+  lblError = fontError.render(str(myText), True, red)
+  screen.blit(lblError, (190, 400))
 
 def drawImages():
   # USER ICON
