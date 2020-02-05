@@ -5,8 +5,14 @@
 ########                          v1.0                                       ########
 #####################################################################################
 
-import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib, cryptography, json
-from cryptography.fernet import Fernet
+try:
+  import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib, cryptography, json
+  from cryptography.fernet import Fernet
+  playing = True
+except ModuleNotFoundError:
+  print("FATAL ERROR: You have to follow installation instruction")
+  playing = False
+  input()
 pygame.init()
 
 # GET current path
@@ -107,7 +113,7 @@ textinputPassword = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (
 textinputFile = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
 
 
-while True:
+while playing:
 
   # Set FPS
   clock.tick(120)
