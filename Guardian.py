@@ -5,7 +5,8 @@
 ########                          v1.0                                       ########
 #####################################################################################
 
-import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib
+import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib, cryptography
+from cryptography.fernet import Fernet
 pygame.init()
 
 # GET current path
@@ -92,6 +93,7 @@ focusOnUsernameBar = False
 loginIsOk = False
 tempEncryptButton = False
 tempDecryptButton = False
+wrongPass = False
 # ----------------------------------------------
 
 # Create textinput-object
@@ -144,10 +146,17 @@ while True:
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
 
-  # Check If Login is OK
-  loginIsOk = idVector.confirmationLogin(iPressedMyLoginButton)
-
   if not(loginIsOk):
+    # Check If Login is OK
+    try:
+      loginIsOk, wrongPass = idVector.confirmationLogin(textinputPassword.get_text(), iPressedMyLoginButton)
+    except TypeError:
+      loginIsOk = idVector.confirmationLogin(textinputPassword.get_text(), iPressedMyLoginButton)
+
+    # Show An Error If the password is not correct
+    if wrongPass:
+      style.showErrorMessage("Invalid credentials...")
+
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:
       # Feed it with events every frame
@@ -162,5 +171,5 @@ while True:
 
     # Blit its surface onto the screen
     screen.blit(textinputPassword.get_surface(), (xLoginWindow + 25, yPasswordBar + 2))
-  
+
   pygame.display.update()
