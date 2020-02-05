@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((xScreen, yScreen))
 
 black = (40, 40, 43)
 grey = (67, 67, 70)
-lavanda = (54, 54, 153)
+lavanda = (0, 120, 215)
 
 # GET current path
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))

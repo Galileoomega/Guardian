@@ -80,7 +80,7 @@ xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
 
 # Color
 black = (40, 40, 43)
-lavanda = (54, 54, 153)
+lavanda = (0, 120, 215)
 darkBlack = (20, 20, 23)
 white = (255,255,255)
 halfWhite = (200,200,200)
