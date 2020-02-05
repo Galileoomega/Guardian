@@ -35,7 +35,7 @@ screen = pygame.display.set_mode((xScreen, yScreen))
 
 # File Input Bar
 lengthBar = 25
-widthBar = 250
+widthBar = 270
 xFileBar = (xScreen / 2) - (widthBar / 2)
 yFileBar = 100
 
@@ -138,6 +138,9 @@ while True:
   # DEBUG
   if iPressedMyEncryptButton:
     print(iPressedMyEncryptButton)
+
+  if iPressedMyDecryptButton:
+    print(iPressedMyDecryptButton)
   
 
   if loginIsOk:
@@ -153,8 +156,8 @@ while True:
     focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
     # CHANGE COLOR IF FOCUSED
     if focusOnFileBar:
-      pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, 252, 27))
-      pygame.draw.rect(screen, grey, (xFileBar, yFileBar, 250, 25))
+      pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2))
+      pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
     # Detect overfly on FILE BAR
     mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 235, yFileBar, yFileBar + 25)
     # TEXT INPUT FILE BAR
@@ -162,7 +165,7 @@ while True:
       # Feed it with events every frame
       textinputFile.update(events)
     # Blit its surface onto the screen
-    screen.blit(textinputFile.get_surface(), (xFileBar, yFileBar + 2))
+    screen.blit(textinputFile.get_surface(), (xFileBar + 5, yFileBar + 2))
     # ------------------------------
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)

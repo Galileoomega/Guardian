@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((xScreen, yScreen))
 
 # File Input Bar
 lengthBar = 25
-widthBar = 250
+widthBar = 270
 xFileBar = (xScreen / 2) - (widthBar / 2)
 yFileBar = 100
 
@@ -167,6 +167,9 @@ def drawUiBox(listOfColor):
   pygame.draw.rect(screen, listOfColor[2], (xPathList, yFileBar + 60, widthListBar, lengthListPath - 80))
   pygame.draw.rect(screen, listOfColor[3], (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton))
   pygame.draw.rect(screen, listOfColor[4], (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton))
+  pygame.draw.rect(screen, grey, (xFileBar + widthBar + 35, yFileBar, 26, 26))
+  pygame.draw.rect(screen, lavanda, (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
+  pygame.draw.rect(screen, lavanda, (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
   
 
 
