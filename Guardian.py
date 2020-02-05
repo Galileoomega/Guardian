@@ -10,7 +10,7 @@ try:
   from cryptography.fernet import Fernet
   playing = True
 except ModuleNotFoundError:
-  print("FATAL ERROR: You have to follow installation instruction")
+  print("!! FATAL ERROR: You have to follow the installation instruction !!")
   playing = False
   input()
 pygame.init()
