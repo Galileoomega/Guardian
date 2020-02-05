@@ -80,7 +80,7 @@ xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
 
 # Color
 black = (40, 40, 43)
-lavanda = (0, 120, 215)
+lavanda = (0, 115, 210)
 darkBlack = (20, 20, 23)
 white = (255,255,255)
 halfWhite = (200,200,200)
@@ -104,6 +104,7 @@ userPassword = ""
 # Create textinput-object
 textinputUsername = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
 textinputPassword = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
+textinputFile = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
 
 
 while True:
@@ -127,9 +128,9 @@ while True:
 
   #Calling Back-End function
   # Detect click on ENCRYPT BUTTON
-  iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 90, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
+  iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
   # Detect click on DECRYPT BUTTON
-  iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 90, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
+  iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
 
   mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4)
   mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3)
@@ -138,8 +139,6 @@ while True:
   if iPressedMyEncryptButton:
     print(iPressedMyEncryptButton)
   
-  if iPressedMyDecryptButton:
-    print(iPressedMyDecryptButton)
 
   if loginIsOk:
     # BOX
@@ -148,6 +147,23 @@ while True:
     style.drawUiLabel(textinputUsername.get_text())
     # IMAGES
     style.drawImages()
+
+    # -----------FILE BAR-----------
+    # Detect click On FILE BAR
+    focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
+    # CHANGE COLOR IF FOCUSED
+    if focusOnFileBar:
+      pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, 252, 27))
+      pygame.draw.rect(screen, grey, (xFileBar, yFileBar, 250, 25))
+    # Detect overfly on FILE BAR
+    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 235, yFileBar, yFileBar + 25)
+    # TEXT INPUT FILE BAR
+    if focusOnFileBar:
+      # Feed it with events every frame
+      textinputFile.update(events)
+    # Blit its surface onto the screen
+    screen.blit(textinputFile.get_surface(), (xFileBar, yFileBar + 2))
+    # ------------------------------
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
 

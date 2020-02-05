@@ -64,7 +64,7 @@ halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
 red = (189, 11, 11)
-lavanda = (0, 120, 215)
+lavanda = (0, 115, 210)
 listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
 
 tempIClicked = False
@@ -147,7 +147,7 @@ def loginWindow(xMouse, yMouse, tempIClicked):
   
   # LOGIN Button
   pygame.draw.rect(screen, listOfColor[8], (xButtonLogin, yButtonLogin, 70, 30))
-  screen.blit(lblButtonLogin, (xButtonLogin + 15, yButtonLogin + 5))
+  screen.blit(lblButtonLogin, (xButtonLogin + 16, yButtonLogin + 5))
   if not(mouseSkinChanged):
     # Detect click button
     iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 55, yButtonLogin, yButtonLogin + 30, tempIClicked)
