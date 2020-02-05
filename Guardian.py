@@ -11,7 +11,7 @@ try:
   playing = True
 except ModuleNotFoundError:
   for u in range(0, 5):
-    print("!! FATAL ERROR: You have to follow the installation instruction README.md!!")
+    print("!! FATAL ERROR: You have to follow the installation instruction (README.md) !!")
   playing = False
   input()
 pygame.init()
