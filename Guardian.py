@@ -5,7 +5,7 @@
 ########                          v1.0                                       ########
 #####################################################################################
 
-import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib, cryptography
+import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib, cryptography, json
 from cryptography.fernet import Fernet
 pygame.init()
 
@@ -94,6 +94,10 @@ loginIsOk = False
 tempEncryptButton = False
 tempDecryptButton = False
 wrongPass = False
+stop = False
+
+# OTHER
+userPassword = ""
 # ----------------------------------------------
 
 # Create textinput-object
@@ -116,7 +120,7 @@ while True:
   for event in events:
       if event.type == pygame.QUIT:
           exit()
-
+  
   # Calling Front-End function
   style.drawMainTitle()
 
@@ -149,9 +153,9 @@ while True:
   if not(loginIsOk):
     # Check If Login is OK
     try:
-      loginIsOk, wrongPass = idVector.confirmationLogin(textinputPassword.get_text(), iPressedMyLoginButton)
+      loginIsOk, wrongPass = idVector.confirmationLogin(userPassword, iPressedMyLoginButton)
     except TypeError:
-      loginIsOk = idVector.confirmationLogin(textinputPassword.get_text(), iPressedMyLoginButton)
+      loginIsOk = idVector.confirmationLogin(userPassword, iPressedMyLoginButton)
 
     # Show An Error If the password is not correct
     if wrongPass:
@@ -167,7 +171,28 @@ while True:
     # TEXT INPUT PASSWORD
     if focusOnPasswordBar:
       # Feed it with events every frame
+      for event in events:
+        if event.type == pygame.KEYDOWN:
+          if event.key == pygame.K_BACKSPACE:
+            userPassword = userPassword[:-1]
+          else:
+            character = event.unicode
+            userPassword += character
+          print(userPassword)
+
+          if event.key == pygame.K_LEFT:
+            pygame.event.clear()
+            events = pygame.event.get()
+
+          if character != "":
+            if not(event.key == pygame.K_BACKSPACE):
+              newEvent = pygame.event.Event(pygame.locals.KEYDOWN, unicode="*", key=pygame.locals.K_ASTERISK, mod=pygame.locals.KMOD_NONE) #create the event
+              pygame.event.post(newEvent) #add the event to the queue
+              events = pygame.event.get()
+          
       textinputPassword.update(events)
+      pygame.event.clear()
+      
 
     # Blit its surface onto the screen
     screen.blit(textinputPassword.get_surface(), (xLoginWindow + 25, yPasswordBar + 2))
