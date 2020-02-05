@@ -10,7 +10,8 @@ try:
   from cryptography.fernet import Fernet
   playing = True
 except ModuleNotFoundError:
-  print("!! FATAL ERROR: You have to follow the installation instruction README.md!!")
+  for u in range(0, 5):
+    print("!! FATAL ERROR: You have to follow the installation instruction README.md!!")
   playing = False
   input()
 pygame.init()
