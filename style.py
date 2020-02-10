@@ -176,12 +176,16 @@ def loginWindow(xMouse, yMouse, tempIClicked):
 
 # Draw all UI container
 def drawUiBox(listOfColor):
+  # File Bar Input
   pygame.draw.rect(screen, listOfColor[0], (xFileBar, yFileBar, widthBar, lengthBar))
+  
   # Path list background
   pygame.draw.rect(screen, listOfColor[1], (xPathList, yPathList, widthListBar, lengthListPath))
   # Legend of Path List
   pygame.draw.rect(screen, listOfColor[2], (xPathList, yPathList, widthListBar, lengthListPath - 80))
+  # Encrypt Button
   pygame.draw.rect(screen, listOfColor[3], (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton))
+  # Decrypt Button
   pygame.draw.rect(screen, listOfColor[4], (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton))
   # Add Button
   pygame.draw.rect(screen, grey, (xAddButton, yAddButton, widthAddButton, lengthAddButton))
