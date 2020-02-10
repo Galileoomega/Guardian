@@ -111,6 +111,7 @@ userPassword = ""
 clipboard = ""
 userUsername = ""
 userFile = ""
+hideUserPassword = ""
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -207,9 +208,9 @@ while playing:
     # TEXT INPUT PASSWORD
     if focusOnPasswordBar:
       for event in events:
-        userPassword = backModule.secretTextInput(event, userPassword)
+        userPassword, hideUserPassword = backModule.secretTextInput(event, userPassword, hideUserPassword)
     # Blit the text on the screen
-    textinputPassword = font.render(userPassword, True, white)
+    textinputPassword = font.render(hideUserPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
   # ---------------------------------------
   pygame.display.update()

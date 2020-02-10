@@ -42,20 +42,41 @@ def keyboardCommandDetection(user_input_value, event):
   return iUsedCtrlV, user_input_value
 
 
+# Classical text input management
 def textInput(event, text):
-    if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                print(text)
-                text = text
-            elif event.key == pygame.K_BACKSPACE:
-                text = text[:-1]
-            else:
-                text += event.unicode
-    else: 
+  if event.type == pygame.KEYDOWN:
+    if event.key == pygame.K_RETURN:
+      print(text)
       text = text
-    try:
-      return text
-    except UnboundLocalError:
+    elif event.key == pygame.K_BACKSPACE:
+      text = text[:-1]
+    else:
+      text += event.unicode
+  else: 
+    text = text
+  try:
+    return text
+  except UnboundLocalError:
+    text = text
+    return text
+
+# Same than textInput() but for password
+def secretTextInput(event, text, secretText):
+  if event.type == pygame.KEYDOWN:
+    if event.key == pygame.K_RETURN:
+      print(text)
       text = text
-      return text
+    elif event.key == pygame.K_BACKSPACE:
+      text = text[:-1]
+      secretText = secretText[:-1]
+    else:
+      text += event.unicode
+      secretText += "*"
+  else: 
+    text = text
+  try:
+    return text, secretText
+  except UnboundLocalError:
+    text = text
+    return text, secretText
 
