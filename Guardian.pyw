@@ -70,9 +70,11 @@ yPasswordBar = yLoginWindow + 140
 yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
 xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 
+# Path List
 lengthListPath = 100
 widthListBar = 400
 xPathList = (xScreen / 2) - (widthListBar / 2)
+yPathList = yFileBar + 60
 
 # ENCRYPT Button
 widthEncryptButton = 90
@@ -86,6 +88,15 @@ lengthDecryptButton = 40
 yDecryptButton = 400
 xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
 
+# Add Button
+xAddButton = xFileBar + widthBar + 35
+yAddButton = yFileBar
+widthAddButton = 26
+lengthAddButton = 26
+
+xElement = int(xPathList) + 5
+yElement = int(yPathList)
+
 # Color
 black = (40, 40, 43)
 lavanda = (0, 115, 210)
@@ -94,7 +105,7 @@ white = (255,255,255)
 halfWhite = (200,200,200)
 grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
-listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
+listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey, black, black]
 
 tempIClicked = False
 focusOnPasswordBar = False
@@ -105,6 +116,8 @@ tempDecryptButton = False
 wrongPass = False
 stop = False
 active = False
+tempIClickedAddButton = False
+iPressedMyAddButton = False
 
 # OTHER
 userPassword = ""
@@ -112,9 +125,15 @@ clipboard = ""
 userUsername = ""
 userFile = ""
 hideUserPassword = ""
+fileToEncrypt = [str]
+listOfPath = []
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
+littleFont = pygame.font.Font(robotoRegularTTF, 12)
+
+# DEFINE TEXT
+errorPathList = littleFont.render("Maximum File", True, lavanda)
 # ----------------------------------------------
 
 while playing:
@@ -134,27 +153,31 @@ while playing:
           exit()
   
   # Calling Front-End function
-  style.drawMainTitle()
-
-  #Calling Back-End function
-  # Detect click on ENCRYPT BUTTON
-  iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
-  # Detect click on DECRYPT BUTTON
-  iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
-  
-  mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4)
-  
-  mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3)
-
-  # DEBUG
-  if iPressedMyEncryptButton:
-    print(iPressedMyEncryptButton)
-
-  if iPressedMyDecryptButton:
-    print(iPressedMyDecryptButton)
-  
+  style.drawMainTitle()  
 
   if loginIsOk:
+
+    # Detect click on ENCRYPT BUTTON
+    iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
+    # Detect click on DECRYPT BUTTON
+    iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
+    # Detect Click On "Add Button"
+    iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
+
+
+    # Change Button Color While pressed
+    # Decrypt Button
+    mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
+    # Encrypt Button
+    mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
+    # Add Button
+    mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
+    mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
+
+    # DEBUG
+    if iPressedMyEncryptButton:
+      print(iPressedMyEncryptButton)
+
     # BOX
     style.drawUiBox(listOfColor)
     # LABEL
@@ -165,6 +188,7 @@ while playing:
     # -----------FILE BAR-----------
     # Detect click On FILE BAR
     focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
+
     # CHANGE COLOR IF FOCUSED
     if focusOnFileBar:
       pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2))
@@ -179,7 +203,24 @@ while playing:
     textinputFile = font.render(userFile, True, white)
     screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
     # ------------------------------
+
+    # ---------ADDING VALUE TO LIST---------
+    if iPressedMyAddButton:
+      # Check if theres is no more than 6 value
+      if not(len(listOfPath) == 6):
+        listOfPath.append(userFile)
+
+    if len(listOfPath) >= 6: 
+      screen.blit(errorPathList, (xElement, yPathList + lengthListPath + 10))
+
+    for u in range(0, len(listOfPath)):
+      yElement = u * 12 + yPathList + 20
+      u = littleFont.render(listOfPath[u], True, white)
+      screen.blit(u, (xElement, yElement))
+
+    # -------------------------------------
   else:
+    # Background Of Window Login
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
 
   # --------------WINDOW LOGIN--------------

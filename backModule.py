@@ -40,6 +40,15 @@ def keyboardCommandDetection(user_input_value, event):
 
   return user_input_value
 
+# GRAPHIC : Detect a CTRL + A
+def selectAllText(user_input_value):
+  if event.key == pygame.K_a and pygame.key.get_mods() & pygame.KMOD_CTRL:
+    iUsedCtrlA = True
+  else:
+    iUsedCtrlA = False
+    user_input_value = user_input_value
+  return iUsedCtrlA, user_input_value
+
 
 # Classical text input management
 def textInput(event, text):
