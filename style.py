@@ -40,9 +40,11 @@ yPasswordBar = yLoginWindow + 140
 yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
 xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
 
+# Path List
 lengthListPath = 100
 widthListBar = 400
 xPathList = (xScreen / 2) - (widthListBar / 2)
+yPathList = yFileBar + 60
 
 # ENCRYPT Button
 widthEncryptButton = 90
@@ -56,6 +58,12 @@ lengthDecryptButton = 40
 yDecryptButton = 400
 xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
 
+# Add Button
+xAddButton = xFileBar + widthBar + 35
+yAddButton = yFileBar
+widthAddButton = 26
+lengthAddButton = 26
+
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
@@ -65,11 +73,12 @@ grey = (67, 67, 70)
 whiteGrey = (57, 57, 60)
 red = (189, 11, 11)
 lavanda = (0, 115, 210)
-listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey]
+listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey, black, black]
 
 tempIClicked = False
 focusOnPasswordBar = False
 focusOnUsernameBar = False
+
 # ----------------------------------------------
 
 # PATH
@@ -157,7 +166,7 @@ def loginWindow(xMouse, yMouse, tempIClicked):
     # Detect click button
     iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 55, yButtonLogin, yButtonLogin + 30, tempIClicked)
     # Change button color
-    mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8)
+    mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8, grey)
 
   else:
     iPressedMyLoginButton = False
@@ -168,15 +177,18 @@ def loginWindow(xMouse, yMouse, tempIClicked):
 # Draw all UI container
 def drawUiBox(listOfColor):
   pygame.draw.rect(screen, listOfColor[0], (xFileBar, yFileBar, widthBar, lengthBar))
-  pygame.draw.rect(screen, listOfColor[1], (xPathList, yFileBar + 60, widthListBar, lengthListPath))
-  pygame.draw.rect(screen, listOfColor[2], (xPathList, yFileBar + 60, widthListBar, lengthListPath - 80))
+  # Path list background
+  pygame.draw.rect(screen, listOfColor[1], (xPathList, yPathList, widthListBar, lengthListPath))
+  # Legend of Path List
+  pygame.draw.rect(screen, listOfColor[2], (xPathList, yPathList, widthListBar, lengthListPath - 80))
   pygame.draw.rect(screen, listOfColor[3], (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton))
   pygame.draw.rect(screen, listOfColor[4], (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton))
-  pygame.draw.rect(screen, grey, (xFileBar + widthBar + 35, yFileBar, 26, 26))
-  pygame.draw.rect(screen, black, (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
-  pygame.draw.rect(screen, black, (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
+  # Add Button
+  pygame.draw.rect(screen, grey, (xAddButton, yAddButton, widthAddButton, lengthAddButton))
+  # Arrow Of "Add Button"
+  pygame.draw.rect(screen, listOfColor[9], (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
+  pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
   
-
 
 # Draw main Title
 def drawMainTitle():

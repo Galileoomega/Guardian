@@ -45,11 +45,11 @@ def flyDetector(xMouse, yMouse, xLeft, xRight, yTop, yBottom):
   return mouseSkinChanged
 
 # Can Change the color of a button (similar to flyDetector())
-def flyDetectorButtons(permissionToChange, listOfColor, index):
+def flyDetectorButtons(permissionToChange, listOfColor, index, baseColor):
   if permissionToChange:
     listOfColor[index] = lavanda
   else:
-    listOfColor[index] = grey
+    listOfColor[index] = baseColor
 
 # Detect when the mouse click on an BUTTON
 def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
