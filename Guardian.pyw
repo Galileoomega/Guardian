@@ -5,8 +5,9 @@
 ########                          v1.0                                       ########
 #####################################################################################
 
+# Catch error if the installation is not good
 try:
-  import pygame, os, style, mouseChanger, pygame_textinput, idVector, hashlib, cryptography, json
+  import pygame, os, style, mouseChanger, idVector, hashlib, cryptography, json, backModule
   from cryptography.fernet import Fernet
   playing = True
 except ModuleNotFoundError:
@@ -103,16 +104,16 @@ tempEncryptButton = False
 tempDecryptButton = False
 wrongPass = False
 stop = False
+active = False
 
 # OTHER
 userPassword = ""
+clipboard = ""
+userUsername = ""
+
+# FONT 
+font = pygame.font.Font(robotoRegularTTF, 15)
 # ----------------------------------------------
-
-# Create textinput-object
-textinputUsername = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
-textinputPassword = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
-textinputFile = pygame_textinput.TextInput("", robotoRegularTTF, 17, True, (255,255,255), grey)
-
 
 while playing:
 
@@ -138,10 +139,14 @@ while playing:
   iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
   # Detect click on DECRYPT BUTTON
   iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
-
+  
   mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4)
+  
   mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3)
 
+  # Get The Content Of The Clipboard
+  clipboard = backModule.getContentOfClipboard()
+  
   # DEBUG
   if iPressedMyEncryptButton:
     print(iPressedMyEncryptButton)
@@ -154,7 +159,7 @@ while playing:
     # BOX
     style.drawUiBox(listOfColor)
     # LABEL
-    style.drawUiLabel(textinputUsername.get_text())
+    style.drawUiLabel()
     # IMAGES
     style.drawImages()
 
@@ -168,11 +173,11 @@ while playing:
     # Detect overfly on FILE BAR
     mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 235, yFileBar, yFileBar + 25)
     # TEXT INPUT FILE BAR
-    if focusOnFileBar:
+    #if focusOnFileBar:
       # Feed it with events every frame
-      textinputFile.update(events)
+      #textinputFile.update(events)
     # Blit its surface onto the screen
-    screen.blit(textinputFile.get_surface(), (xFileBar + 5, yFileBar + 2))
+    #screen.blit(textinputFile.get_surface(), (xFileBar + 5, yFileBar + 2))
     # ------------------------------
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
@@ -190,38 +195,20 @@ while playing:
 
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:
-      # Feed it with events every frame
-      textinputUsername.update(events)
-    # Blit its surface onto the screen
-    screen.blit(textinputUsername.get_surface(), (xLoginWindow + 25, yUsernameBar + 2))
+      for event in events:
+        userUsername = backModule.textInput(event, userUsername)
+    # Blit the text on the screen
+    textinputUsername = font.render(userUsername, True, white)
+    screen.blit(textinputUsername, (xLoginWindow + 25, yUsernameBar + 3))
+
+
 
     # TEXT INPUT PASSWORD
     if focusOnPasswordBar:
-      # Feed it with events every frame
       for event in events:
-        if event.type == pygame.KEYDOWN:
-          if event.key == pygame.K_BACKSPACE:
-            userPassword = userPassword[:-1]
-          else:
-            character = event.unicode
-            userPassword += character
-          print(userPassword)
-
-          if event.key == pygame.K_LEFT:
-            pygame.event.clear()
-            events = pygame.event.get()
-
-          if character != "":
-            if not(event.key == pygame.K_BACKSPACE):
-              newEvent = pygame.event.Event(pygame.locals.KEYDOWN, unicode="*", key=pygame.locals.K_ASTERISK, mod=pygame.locals.KMOD_NONE) #create the event
-              pygame.event.post(newEvent) #add the event to the queue
-              events = pygame.event.get()
-          
-      textinputPassword.update(events)
-      pygame.event.clear()
-      
-
-    # Blit its surface onto the screen
-    screen.blit(textinputPassword.get_surface(), (xLoginWindow + 25, yPasswordBar + 2))
+        userPassword = backModule.textInput(event, userPassword)
+    # Blit the text on the screen
+    textinputPassword = font.render(userPassword, True, white)
+    screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
 
   pygame.display.update()
