@@ -197,7 +197,6 @@ while playing:
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:
       for event in events:
-        print(event)
         userUsername = backModule.textInput(event, userUsername)
     # Blit the text on the screen
     textinputUsername = font.render(userUsername, True, white)

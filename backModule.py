@@ -43,7 +43,6 @@ def keyboardCommandDetection(user_input_value, event):
 
 # Classical text input management
 def textInput(event, text):
-  
   if event.type == pygame.KEYDOWN:
     if event.key == pygame.K_RETURN:
       print(text)
