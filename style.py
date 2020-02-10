@@ -179,7 +179,7 @@ def drawMainTitle():
 
 
 # Draw all Label
-def drawUiLabel(userName):
+def drawUiLabel():
   # FILE label
   screen.blit(lblFile, (xFilelbl, yFilelbl))
   screen.blit(lblDecryptButton, (xDecryptButton + 14, yDecryptButton + 10))
