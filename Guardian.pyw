@@ -110,6 +110,7 @@ active = False
 userPassword = ""
 clipboard = ""
 userUsername = ""
+userFile = ""
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -171,17 +172,19 @@ while playing:
       pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2))
       pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
     # Detect overfly on FILE BAR
-    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 235, yFileBar, yFileBar + 25)
+    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
     # TEXT INPUT FILE BAR
-    #if focusOnFileBar:
-      # Feed it with events every frame
-      #textinputFile.update(events)
-    # Blit its surface onto the screen
-    #screen.blit(textinputFile.get_surface(), (xFileBar + 5, yFileBar + 2))
+    if focusOnFileBar:
+      for event in events:
+        userFile = backModule.textInput(event, userFile)
+    # Show the text input on the screen
+    textinputFile = font.render(userFile, True, white)
+    screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
     # ------------------------------
   else:
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
 
+  # --------------WINDOW LOGIN--------------
   if not(loginIsOk):
     # Check If Login is OK
     try:
@@ -201,14 +204,12 @@ while playing:
     textinputUsername = font.render(userUsername, True, white)
     screen.blit(textinputUsername, (xLoginWindow + 25, yUsernameBar + 3))
 
-
-
     # TEXT INPUT PASSWORD
     if focusOnPasswordBar:
       for event in events:
-        userPassword = backModule.textInput(event, userPassword)
+        userPassword = backModule.secretTextInput(event, userPassword)
     # Blit the text on the screen
     textinputPassword = font.render(userPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
-
+  # ---------------------------------------
   pygame.display.update()
