@@ -229,9 +229,9 @@ while playing:
   if not(loginIsOk):
     # Check If Login is OK
     try:
-      loginIsOk, wrongPass = idVector.confirmationLogin(userPassword, iPressedMyLoginButton)
+      loginIsOk, wrongPass = idVector.confirmationLogin(userPassword, iPressedMyLoginButton, userUsername)
     except TypeError:
-      loginIsOk = idVector.confirmationLogin(userPassword, iPressedMyLoginButton)
+      loginIsOk = idVector.confirmationLogin(userPassword, iPressedMyLoginButton, userUsername)
 
     # Show An Error If the password is not correct
     if wrongPass:
