@@ -51,7 +51,7 @@ def selectAllText(user_input_value):
 
 
 # Classical text input management
-def textInput(event, text):
+def textInput(event, text, maxLimit):
   if event.type == pygame.KEYDOWN:
     if event.key == pygame.K_RETURN:
       print(text)
@@ -59,15 +59,16 @@ def textInput(event, text):
     elif event.key == pygame.K_BACKSPACE:
       text = text[:-1]
     else:
-      # Detect a CTRL + V
-      text = keyboardCommandDetection(text, event)
+      if len(text) <= maxLimit:
+        # Detect a CTRL + V
+        text = keyboardCommandDetection(text, event)
 
-      # Filtering invalid character
-      try:
-        if ord(event.unicode) > 31:
-          text += event.unicode
-      except TypeError:
-        pass
+        # Filtering invalid character
+        try:
+          if ord(event.unicode) > 31:
+            text += event.unicode
+        except TypeError:
+          pass
   else: 
     text = text
   try:
