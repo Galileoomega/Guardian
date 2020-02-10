@@ -195,10 +195,12 @@ while playing:
       pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
     # Detect overfly on FILE BAR
     mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
+    
     # TEXT INPUT FILE BAR
     if focusOnFileBar:
       for event in events:
-        userFile = backModule.textInput(event, userFile)
+        userFile = backModule.textInput(event, userFile, lengthBar)
+
     # Show the text input on the screen
     textinputFile = font.render(userFile, True, white)
     screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
@@ -217,8 +219,8 @@ while playing:
       yElement = u * 12 + yPathList + 20
       u = littleFont.render(listOfPath[u], True, white)
       screen.blit(u, (xElement, yElement))
-
     # -------------------------------------
+
   else:
     # Background Of Window Login
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
@@ -238,7 +240,7 @@ while playing:
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:
       for event in events:
-        userUsername = backModule.textInput(event, userUsername)
+        userUsername = backModule.textInput(event, userUsername, 100)
     # Blit the text on the screen
     textinputUsername = font.render(userUsername, True, white)
     screen.blit(textinputUsername, (xLoginWindow + 25, yUsernameBar + 3))
@@ -250,5 +252,5 @@ while playing:
     # Blit the text on the screen
     textinputPassword = font.render(hideUserPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
-  # ---------------------------------------
+  # ----------------------------------------
   pygame.display.update()
