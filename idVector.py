@@ -44,6 +44,8 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
             key = base64.urlsafe_b64encode(kdf.derive(password)) # Can only use kdf once
             key = key.decode()
 
+            print(key)
+
             with open(passwordPath) as f:
                 data2 = json.load(f)
 
@@ -57,8 +59,6 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
                 extractedPassword = extractedPassword[1]
 
             finalPassword = str(extractedPassword)
-
-            print(key)
 
             if secrets.compare_digest(finalPassword, key):
                 loginIsOk = True
