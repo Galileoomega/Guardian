@@ -34,16 +34,16 @@ def getContentOfClipboard():
 
 # GRAPHIC : Detect a CTRL + V or C
 def keyboardCommandDetection(user_input_value, event):
+  clipboard = getContentOfClipboard()
   if event.key == pygame.K_v and pygame.key.get_mods() & pygame.KMOD_CTRL:
-      user_input_value += str(clipboard)
-      iUsedCtrlV = True
-  else:
-      iUsedCtrlV = False
-  return iUsedCtrlV, user_input_value
+    user_input_value += str(clipboard)
+
+  return user_input_value
 
 
 # Classical text input management
 def textInput(event, text):
+  
   if event.type == pygame.KEYDOWN:
     if event.key == pygame.K_RETURN:
       print(text)
@@ -51,7 +51,15 @@ def textInput(event, text):
     elif event.key == pygame.K_BACKSPACE:
       text = text[:-1]
     else:
-      text += event.unicode
+      # Detect a CTRL + V
+      text = keyboardCommandDetection(text, event)
+
+      # Filtering invalid character
+      try:
+        if ord(event.unicode) > 31:
+          text += event.unicode
+      except TypeError:
+        pass
   else: 
     text = text
   try:
@@ -70,8 +78,13 @@ def secretTextInput(event, text, secretText):
       text = text[:-1]
       secretText = secretText[:-1]
     else:
-      text += event.unicode
-      secretText += "*"
+      # Filtering invalid character
+      try:
+        if ord(event.unicode) > 31:
+          text += event.unicode
+          secretText += "*"
+      except TypeError:
+        pass
   else: 
     text = text
   try:

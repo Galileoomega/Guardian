@@ -146,9 +146,6 @@ while playing:
   
   mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3)
 
-  # Get The Content Of The Clipboard
-  clipboard = backModule.getContentOfClipboard()
-  
   # DEBUG
   if iPressedMyEncryptButton:
     print(iPressedMyEncryptButton)
@@ -200,6 +197,7 @@ while playing:
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:
       for event in events:
+        print(event)
         userUsername = backModule.textInput(event, userUsername)
     # Blit the text on the screen
     textinputUsername = font.render(userUsername, True, white)
