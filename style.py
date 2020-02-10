@@ -78,6 +78,7 @@ robotoLightTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Light.ttf'
 imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\8-513.png')
 imageLockPath = os.path.join(THIS_FOLDER, 'Resources\\lock.png')
 imageUnlockPath = os.path.join(THIS_FOLDER, 'Resources\\unlock.png')
+imageEyePath = os.path.join(THIS_FOLDER, 'Resources\\eyeBall.png')
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
@@ -100,6 +101,7 @@ lblStatus = fontText.render(str("Status"), True, halfWhite)
 imageUser = pygame.image.load(imageUserPath)
 imageLock = pygame.image.load(imageLockPath)
 imageUnlock = pygame.image.load(imageUnlockPath)
+imageEye = pygame.image.load(imageEyePath)
 
 # -----------------------FUNCTION-----------------------
 
@@ -118,6 +120,9 @@ def loginWindow(xMouse, yMouse, tempIClicked):
   # Password Field BLIT
   pygame.draw.rect(screen, listOfColor[7], (xLoginWindow + 20, yPasswordBar, 250, 25))
   screen.blit(lblPassword, (xLoginWindow + 20, yPasswordBar - 30))
+
+  # The eye
+  #screen.blit(imageEye, (xLoginWindow + 240, yPasswordBar + 1))
 
   # ------------Username Bar------------
   # Change the mouse appearance and call the click detector
