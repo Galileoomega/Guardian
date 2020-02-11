@@ -7,7 +7,7 @@
 
 # Catch error if the installation is not good
 try:
-  import pygame, os, style, mouseChanger, idVector, hashlib, cryptography, json, backModule
+  import pygame, os, style, mouseChanger, idVector, hashlib, cryptography, json, backModule, engine
   from cryptography.fernet import Fernet
   playing = True
 except ModuleNotFoundError:
@@ -228,10 +228,10 @@ while playing:
         showBrowser = False
       if pygame.mouse.get_pressed() == (1, 0, 0):
         if xMouse > xDialogBrowser:
-          if xMouse < xDialogBrowser + widthDialogBrowser - 20:
-            if yMouse > yDialogBrowser - 5:
-              if yMouse < yDialogBrowser + 25:
-                xDialogBrowser = xMouse - 100
+          if xMouse < xDialogBrowser + widthDialogBrowser - 35:
+            if yMouse > yDialogBrowser - 15:
+              if yMouse < yDialogBrowser + 30:
+                xDialogBrowser = xMouse - 150
                 yDialogBrowser = yMouse - 10
     # Openning File Browser
     if iPressedMyAddButton:
@@ -248,12 +248,16 @@ while playing:
       screen.blit(u, (xElement, yElement))
     # -------------------------------------
 
-  else:
-    # Background Of Window Login
-    iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
-
   # --------------WINDOW LOGIN--------------
   if not(loginIsOk):
+    
+    # ---------LINES SIMULATION----------
+    engine.renderLineSimulation(screen)
+    # -----------------------------------
+
+    # Background Of Window Login
+    iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
+    
     # Check If Login is OK
     try:
       loginIsOk, wrongPass = idVector.confirmationLogin(userPassword, iPressedMyLoginButton, userUsername)
@@ -280,4 +284,5 @@ while playing:
     textinputPassword = font.render(hideUserPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
   # ----------------------------------------
+  
   pygame.display.update()
