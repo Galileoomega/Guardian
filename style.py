@@ -64,6 +64,16 @@ yAddButton = yFileBar
 widthAddButton = 26
 lengthAddButton = 26
 
+# Dialog Browser
+widthDialogBrowser = 340
+lengthDialogBrowser = 330
+xDialogBrowser = (xScreen / 2) - (widthDialogBrowser / 2)
+yDialogBrowser = 100
+
+# Blue Circle
+xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
+yCloseCircle = yDialogBrowser + 2
+
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
@@ -88,6 +98,7 @@ imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\8-513.png')
 imageLockPath = os.path.join(THIS_FOLDER, 'Resources\\lock.png')
 imageUnlockPath = os.path.join(THIS_FOLDER, 'Resources\\unlock.png')
 imageEyePath = os.path.join(THIS_FOLDER, 'Resources\\eyeBall.png')
+imageCirclePath = os.path.join(THIS_FOLDER, 'Resources\\circle.png')
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
@@ -105,12 +116,14 @@ lblPassword = fontText.render(str("Password"), True, white)
 lblButtonLogin = fontText.render(str("Login"), True, white)
 lblAwaiting = fontText.render(str("Awaiting files"), True, halfWhite)
 lblStatus = fontText.render(str("Status"), True, halfWhite)
+lblDialogBrowser = fontText.render(str("Browser..."), True, halfWhite)
 
 # IMAGE 
 imageUser = pygame.image.load(imageUserPath)
 imageLock = pygame.image.load(imageLockPath)
 imageUnlock = pygame.image.load(imageUnlockPath)
 imageEye = pygame.image.load(imageEyePath)
+imageCircle = pygame.image.load(imageCirclePath)
 
 # -----------------------FUNCTION-----------------------
 
@@ -178,7 +191,6 @@ def loginWindow(xMouse, yMouse, tempIClicked):
 def drawUiBox(listOfColor):
   # File Bar Input
   pygame.draw.rect(screen, listOfColor[0], (xFileBar, yFileBar, widthBar, lengthBar))
-  
   # Path list background
   pygame.draw.rect(screen, listOfColor[1], (xPathList, yPathList, widthListBar, lengthListPath))
   # Legend of Path List
@@ -192,6 +204,24 @@ def drawUiBox(listOfColor):
   # Arrow Of "Add Button"
   pygame.draw.rect(screen, listOfColor[9], (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
   pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
+  
+
+def browserDialog(xDialogBrowser, yDialogBrowser):
+  xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
+  yCloseCircle = yDialogBrowser + 2
+
+  # Little grey border
+  pygame.draw.rect(screen, grey, (xDialogBrowser - 1, yDialogBrowser - 1, widthDialogBrowser + 2, lengthDialogBrowser + 2))
+  # Main Background
+  pygame.draw.rect(screen, darkBlack, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, lengthDialogBrowser))
+  # Head Legend
+  pygame.draw.rect(screen, whiteGrey, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, 25))
+  # Label : "Browser..."
+  screen.blit(lblDialogBrowser, (xDialogBrowser + 3, yDialogBrowser + 3))
+  # Close Circle
+  screen.blit(imageCircle, (xCloseCircle, yCloseCircle))
+
+  return xCloseCircle, yCloseCircle
   
 
 # Draw main Title

@@ -94,6 +94,16 @@ yAddButton = yFileBar
 widthAddButton = 26
 lengthAddButton = 26
 
+# Dialog Browser
+widthDialogBrowser = 340
+lengthDialogBrowser = 330
+xDialogBrowser = (xScreen / 2) - (widthDialogBrowser / 2)
+yDialogBrowser = 100
+
+# Blue Circle
+xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
+yCloseCircle = yDialogBrowser + 2
+
 xElement = int(xPathList) + 5
 yElement = int(yPathList)
 
@@ -113,11 +123,14 @@ focusOnUsernameBar = False
 loginIsOk = False
 tempEncryptButton = False
 tempDecryptButton = False
+tempCloseCircle = False
 wrongPass = False
 stop = False
 active = False
 tempIClickedAddButton = False
 iPressedMyAddButton = False
+iPressedMyCircleButton = False
+showBrowser = False
 
 # OTHER
 userPassword = ""
@@ -140,43 +153,44 @@ while playing:
 
   # Set FPS
   clock.tick(120)
-
   # Refresh Window
   screen.fill(black)
-
   # Get Mouse Position
   xMouse, yMouse = pygame.mouse.get_pos()
-  
+  # EVENT
   events = pygame.event.get()
   for event in events:
       if event.type == pygame.QUIT:
           exit()
   
-  # Calling Front-End function
+  # Calling Front-End function (MAIN TITLE)
   style.drawMainTitle()  
 
   if loginIsOk:
 
-    # Detect click on ENCRYPT BUTTON
-    iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
-    # Detect click on DECRYPT BUTTON
-    iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
+    if not(showBrowser):
+      # Detect click on ENCRYPT BUTTON
+      iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
+      # Detect click on DECRYPT BUTTON
+      iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
     # Detect Click On "Add Button"
     iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
+    # Detect Click on blue circle (Browser Dialog)
+    iPressedMyCircleButton, tempCloseCircle = mouseChanger.clickButtonDetect(xMouse, yMouse, xCloseCircle, xCloseCircle + 20, yCloseCircle, yCloseCircle + 20, tempCloseCircle)
 
-
-    # Change Button Color While pressed
-    # Decrypt Button
-    mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
-    # Encrypt Button
-    mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
-    # Add Button
-    mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
-    mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
+    if not(showBrowser):
+      # Change Button Color While pressed
+      # Decrypt Button
+      mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
+      # Encrypt Button
+      mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
+      # Add Button
+      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
+      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
 
     # DEBUG
-    if iPressedMyEncryptButton:
-      print(iPressedMyEncryptButton)
+    if iPressedMyCircleButton:
+      print(iPressedMyCircleButton)
 
     # BOX
     style.drawUiBox(listOfColor)
@@ -185,33 +199,46 @@ while playing:
     # IMAGES
     style.drawImages()
 
-    # -----------FILE BAR-----------
-    # Detect click On FILE BAR
-    focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
+    if not(showBrowser):
+      # -----------FILE BAR-----------
+      # Detect click On FILE BAR
+      focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
 
-    # CHANGE COLOR IF FOCUSED
-    if focusOnFileBar:
-      pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2))
-      pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
-    # Detect overfly on FILE BAR
-    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
-    
-    # TEXT INPUT FILE BAR
-    if focusOnFileBar:
-      for event in events:
-        userFile = backModule.textInput(event, userFile, lengthBar)
+      # CHANGE COLOR IF FOCUSED
+      if focusOnFileBar:
+        pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2))
+        pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
+      # Detect overfly on FILE BAR
+      mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
+      
+      # TEXT INPUT FILE BAR
+      if focusOnFileBar:
+        for event in events:
+          userFile = backModule.textInput(event, userFile, lengthBar)
 
-    # Show the text input on the screen
-    textinputFile = font.render(userFile, True, white)
-    screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
-    # ------------------------------
+      # Show the text input on the screen
+      textinputFile = font.render(userFile, True, white)
+      screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
+      # ------------------------------
 
-    # ---------ADDING VALUE TO LIST---------
+    # Drag And Drop The File Browser Window
+    if showBrowser:
+      xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
+      if iPressedMyCircleButton:
+        showBrowser = False
+      if pygame.mouse.get_pressed() == (1, 0, 0):
+        if xMouse > xDialogBrowser:
+          if xMouse < xDialogBrowser + widthDialogBrowser - 20:
+            if yMouse > yDialogBrowser - 5:
+              if yMouse < yDialogBrowser + 25:
+                xDialogBrowser = xMouse - 100
+                yDialogBrowser = yMouse - 10
+    # Openning File Browser
     if iPressedMyAddButton:
-      # Check if theres is no more than 6 value
-      if not(len(listOfPath) == 6):
-        listOfPath.append(userFile)
+      showBrowser = True
+      xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
 
+    # -----------LIST OF PATH--------------
     if len(listOfPath) >= 6: 
       screen.blit(errorPathList, (xElement, yPathList + lengthListPath + 10))
 
