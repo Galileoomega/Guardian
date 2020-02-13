@@ -1,6 +1,6 @@
 # FRONT END but call some BACK-END function
-import pygame, os
-import mouseChanger
+from pygame import *
+import os, mouseChanger, pygame
 pygame.init()
 
 # GET current path
@@ -128,20 +128,61 @@ imageCircle = pygame.image.load(imageCirclePath)
 
 # -----------------------FUNCTION-----------------------
 
+# Draw rounded box
+def AAfilledRoundedRect(surface,rect,color,radius=0.4):
+
+    """
+    AAfilledRoundedRect(surface,rect,color,radius=0.4)
+
+    surface : destination
+    rect    : rectangle
+    color   : rgb or rgba
+    radius  : 0 <= radius <= 1
+    """
+
+    rect         = Rect(rect)
+    color        = Color(*color)
+    alpha        = color.a
+    color.a      = 0
+    pos          = rect.topleft
+    rect.topleft = 0,0
+    rectangle    = Surface(rect.size,SRCALPHA)
+
+    circle       = Surface([min(rect.size)*3]*2,SRCALPHA)
+    draw.ellipse(circle,(0,0,0),circle.get_rect(),0)
+    circle       = transform.smoothscale(circle,[int(min(rect.size)*radius)]*2)
+
+    radius              = rectangle.blit(circle,(0,0))
+    radius.bottomright  = rect.bottomright
+    rectangle.blit(circle,radius)
+    radius.topright     = rect.topright
+    rectangle.blit(circle,radius)
+    radius.bottomleft   = rect.bottomleft
+    rectangle.blit(circle,radius)
+
+    rectangle.fill((0,0,0),rect.inflate(-radius.w,0))
+    rectangle.fill((0,0,0),rect.inflate(0,-radius.h))
+
+    rectangle.fill(color,special_flags=BLEND_RGBA_MAX)
+    rectangle.fill((255,255,255,alpha),special_flags=BLEND_RGBA_MIN)
+
+    return surface.blit(rectangle,pos)
+
+
 # First render when program is open (WINDOW LOGIN)
 def loginWindow(xMouse, yMouse, tempIClicked):
   focusOnPasswordBar = False
   focusOnUsernameBar = False
 
   # BACKGROUND BLIT
-  pygame.draw.rect(screen, listOfColor[5], (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow))
+  AAfilledRoundedRect(screen, (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow), listOfColor[5], 0.1)
 
   # UserName Field BLIT
-  pygame.draw.rect(screen, listOfColor[6], (xLoginWindow + 20, yUsernameBar, 250, 25))
+  AAfilledRoundedRect(screen, (xLoginWindow + 20, yUsernameBar, 250, 25), listOfColor[6], 0.2)
   screen.blit(lblUsername, (xLoginWindow + 20, yUsernameBar - 30))
 
   # Password Field BLIT
-  pygame.draw.rect(screen, listOfColor[7], (xLoginWindow + 20, yPasswordBar, 250, 25))
+  AAfilledRoundedRect(screen, (xLoginWindow + 20, yPasswordBar, 250, 25), listOfColor[7], 0.2)
   screen.blit(lblPassword, (xLoginWindow + 20, yPasswordBar - 30))
 
   # The eye
@@ -174,7 +215,7 @@ def loginWindow(xMouse, yMouse, tempIClicked):
   # ------------------------------------
   
   # LOGIN Button
-  pygame.draw.rect(screen, listOfColor[8], (xButtonLogin, yButtonLogin, 70, 30))
+  AAfilledRoundedRect(screen, (xButtonLogin, yButtonLogin, 70, 30), listOfColor[8], 0.2)
   screen.blit(lblButtonLogin, (xButtonLogin + 16, yButtonLogin + 5))
   if not(mouseSkinChanged):
     # Detect click button
@@ -191,15 +232,15 @@ def loginWindow(xMouse, yMouse, tempIClicked):
 # Draw all UI container
 def drawUiBox(listOfColor):
   # File Bar Input
-  pygame.draw.rect(screen, listOfColor[0], (xFileBar, yFileBar, widthBar, lengthBar))
+  AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
   # Path list background
   pygame.draw.rect(screen, listOfColor[1], (xPathList, yPathList, widthListBar, lengthListPath))
   # Legend of Path List
   pygame.draw.rect(screen, listOfColor[2], (xPathList, yPathList, widthListBar, lengthListPath - 80))
   # Encrypt Button
-  pygame.draw.rect(screen, listOfColor[3], (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton))
+  AAfilledRoundedRect(screen, (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton), listOfColor[3], 0.2)
   # Decrypt Button
-  pygame.draw.rect(screen, listOfColor[4], (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton))
+  AAfilledRoundedRect(screen, (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton), listOfColor[4], 0.2)
   # Add Button
   pygame.draw.rect(screen, grey, (xAddButton, yAddButton, widthAddButton, lengthAddButton))
   # Arrow Of "Add Button"
@@ -234,8 +275,8 @@ def drawMainTitle():
 def drawUiLabel():
   # FILE label
   screen.blit(lblFile, (xFilelbl, yFilelbl))
-  screen.blit(lblDecryptButton, (xDecryptButton + 14, yDecryptButton + 10))
-  screen.blit(lblCryptButton, (xEncryptButton + 14, yEncrypButton + 10))
+  screen.blit(lblDecryptButton, (xDecryptButton + 16, yDecryptButton + 11))
+  screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
   screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
   screen.blit(lblStatus, (xPathList + 300, yFileBar + 60))
 

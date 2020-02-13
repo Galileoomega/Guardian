@@ -216,7 +216,7 @@ while playing:
 
       # CHANGE COLOR IF FOCUSED
       if focusOnFileBar:
-        pygame.draw.rect(screen, lavanda, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2))
+        style.AAfilledRoundedRect(screen, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2), lavanda, 0.1)
         pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
       # Detect overfly on FILE BAR
       mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
@@ -266,7 +266,7 @@ while playing:
       needToDraw = True
     if needToDraw:
       finishedToDraw = engine.renderLineSimulation(screen, 40, random.randint(200, 300), 1)
-      finishedToDraw2 = engine.renderLineSimulation(screen, 0, random. randint(0, 100), 2)
+      finishedToDraw2 = engine.renderLineSimulation(screen, -100, random. randint(0, 100), 2)
       if finishedToDraw:
         if finishedToDraw2:
           needToDraw = False
