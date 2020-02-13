@@ -137,6 +137,7 @@ iPressedMyCircleButton = False
 showBrowser = False
 needToDraw = False
 finishedToDraw = True
+makingAnimation = False
 
 # OTHER
 userPassword = ""
@@ -146,6 +147,9 @@ userFile = ""
 hideUserPassword = ""
 fileToEncrypt = [str]
 listOfPath = []
+xCycleAdding = xLoginWindow + widthLoginWindow / 2
+xCycleRemoval = xLoginWindow + widthLoginWindow / 2
+alpha = 0
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -176,111 +180,114 @@ while playing:
   # Calling Front-End function (MAIN TITLE)
   style.drawMainTitle()  
 
-  if loginIsOk:
+  if not(makingAnimation):
+    if loginIsOk:
 
-    if not(showBrowser):
-      # Detect click on ENCRYPT BUTTON
-      iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
-      # Detect click on DECRYPT BUTTON
-      iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
-    # Detect Click On "Add Button"
-    iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
-    # Detect Click on blue circle (Browser Dialog)
-    iPressedMyCircleButton, tempCloseCircle = mouseChanger.clickButtonDetect(xMouse, yMouse, xCloseCircle, xCloseCircle + 20, yCloseCircle, yCloseCircle + 20, tempCloseCircle)
+      if not(showBrowser):
+        # Detect click on ENCRYPT BUTTON
+        iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
+        # Detect click on DECRYPT BUTTON
+        iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
+      # Detect Click On "Add Button"
+      iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
+      # Detect Click on blue circle (Browser Dialog)
+      iPressedMyCircleButton, tempCloseCircle = mouseChanger.clickButtonDetect(xMouse, yMouse, xCloseCircle, xCloseCircle + 20, yCloseCircle, yCloseCircle + 20, tempCloseCircle)
 
-    if not(showBrowser):
-      # Change Button Color While pressed
-      # Decrypt Button
-      mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
-      # Encrypt Button
-      mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
-      # Add Button
-      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
-      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
+      if not(showBrowser):
+        # Change Button Color While pressed
+        # Decrypt Button
+        mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
+        # Encrypt Button
+        mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
+        # Add Button
+        mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
+        mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
 
-    # DEBUG
-    if iPressedMyCircleButton:
-      print(iPressedMyCircleButton)
-
-    # BOX
-    style.drawUiBox(listOfColor)
-    # LABEL
-    style.drawUiLabel()
-    # IMAGES
-    style.drawImages()
-
-    if not(showBrowser):
-      # -----------FILE BAR-----------
-      # Detect click On FILE BAR
-      focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
-
-      # CHANGE COLOR IF FOCUSED
-      if focusOnFileBar:
-        style.AAfilledRoundedRect(screen, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2), lavanda, 0.1)
-        pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
-      # Detect overfly on FILE BAR
-      mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
-      
-      # TEXT INPUT FILE BAR
-      if focusOnFileBar:
-        for event in events:
-          userFile = backModule.textInput(event, userFile, lengthBar)
-
-      # Show the text input on the screen
-      textinputFile = font.render(userFile, True, white)
-      screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
-      # ------------------------------
-
-    # Drag And Drop The File Browser Window
-    if showBrowser:
-      xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
+      # DEBUG
       if iPressedMyCircleButton:
-        showBrowser = False
-      if pygame.mouse.get_pressed() == (1, 0, 0):
-        if xMouse > xDialogBrowser:
-          if xMouse < xDialogBrowser + widthDialogBrowser - 35:
-            if yMouse > yDialogBrowser - 15:
-              if yMouse < yDialogBrowser + 30:
-                xDialogBrowser = xMouse - 150
-                yDialogBrowser = yMouse - 10
-    # Openning File Browser
-    if iPressedMyAddButton:
-      showBrowser = True
-      xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
+        print(iPressedMyCircleButton)
 
-    # -----------LIST OF PATH--------------
-    if len(listOfPath) >= 6: 
-      screen.blit(errorPathList, (xElement, yPathList + lengthListPath + 10))
+      # BOX
+      style.drawUiBox(listOfColor)
+      # LABEL
+      style.drawUiLabel()
+      # IMAGES
+      style.drawImages()
 
-    for u in range(0, len(listOfPath)):
-      yElement = u * 12 + yPathList + 20
-      u = littleFont.render(listOfPath[u], True, white)
-      screen.blit(u, (xElement, yElement))
-    # -------------------------------------
+      if not(showBrowser):
+        # -----------FILE BAR-----------
+        # Detect click On FILE BAR
+        focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
+
+        # CHANGE COLOR IF FOCUSED
+        if focusOnFileBar:
+          style.AAfilledRoundedRect(screen, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2), lavanda, 0.1)
+          pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
+        # Detect overfly on FILE BAR
+        mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
+        
+        # TEXT INPUT FILE BAR
+        if focusOnFileBar:
+          for event in events:
+            userFile = backModule.textInput(event, userFile, lengthBar)
+
+        # Show the text input on the screen
+        textinputFile = font.render(userFile, True, white)
+        screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
+        # ------------------------------
+
+      # Drag And Drop The File Browser Window
+      if showBrowser:
+        xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
+        if iPressedMyCircleButton:
+          showBrowser = False
+        if pygame.mouse.get_pressed() == (1, 0, 0):
+          if xMouse > xDialogBrowser:
+            if xMouse < xDialogBrowser + widthDialogBrowser - 35:
+              if yMouse > yDialogBrowser - 15:
+                if yMouse < yDialogBrowser + 30:
+                  xDialogBrowser = xMouse - 150
+                  yDialogBrowser = yMouse - 10
+      # Openning File Browser
+      if iPressedMyAddButton:
+        showBrowser = True
+        xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
+
+      # -----------LIST OF PATH--------------
+      if len(listOfPath) >= 6: 
+        screen.blit(errorPathList, (xElement, yPathList + lengthListPath + 10))
+
+      for u in range(0, len(listOfPath)):
+        yElement = u * 12 + yPathList + 20
+        u = littleFont.render(listOfPath[u], True, white)
+        screen.blit(u, (xElement, yElement))
+      # -------------------------------------
 
   # --------------WINDOW LOGIN--------------
   if not(loginIsOk):
-    
-    # ---------LINES SIMULATION----------
-    if keyPress:
-      needToDraw = True
-    if needToDraw:
-      finishedToDraw = engine.renderLineSimulation(screen, 40, random.randint(200, 300), 1)
-      finishedToDraw2 = engine.renderLineSimulation(screen, -100, random. randint(0, 100), 2)
-      if finishedToDraw:
-        if finishedToDraw2:
-          needToDraw = False
-    
-    # -----------------------------------
 
     # Background Of Window Login
-    iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked)
+    iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow)
+    
+    # ---------LINES SIMULATION----------
+    #if iPressedMyLoginButton:
+    #  needToDraw = True
+    #if needToDraw:
+    #  finishedToDraw = engine.renderLineSimulation(screen, 40, random.randint(200, 300), 1)
+    #  finishedToDraw2 = engine.renderLineSimulation(screen, -100, random. randint(0, 100), 2)
+    #  if finishedToDraw:
+    #    if finishedToDraw2:
+    #      needToDraw = False
+    # -----------------------------------
     
     # Check If Login is OK
     try:
       loginIsOk, wrongPass = idVector.confirmationLogin(userPassword, iPressedMyLoginButton, userUsername)
     except TypeError:
       loginIsOk = idVector.confirmationLogin(userPassword, iPressedMyLoginButton, userUsername)
+
+    if loginIsOk:
+      makingAnimation = True
 
     # Show An Error If the password is not correct
     if wrongPass:
@@ -302,5 +309,12 @@ while playing:
     textinputPassword = font.render(hideUserPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
   # ----------------------------------------
+
+  if makingAnimation:
+    loginIsOk = False
+    makingAnimation, xCycleAdding, xCycleRemoval, xLoginWindow, alpha = style.loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha)
+    if not(makingAnimation):
+      loginIsOk = True
+
   
   pygame.display.update()

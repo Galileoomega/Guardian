@@ -168,9 +168,44 @@ def AAfilledRoundedRect(surface,rect,color,radius=0.4):
 
     return surface.blit(rectangle,pos)
 
+def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha):
+
+  pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleAdding, yLoginWindow), 3)
+  pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleRemoval, yLoginWindow), 3)
+
+  if not(int(xCycleAdding) == widthLoginWindow / 2 - 42):
+    if xCycleAdding > 250 - 50:
+      xCycleAdding -= 0.8
+    else:
+      xCycleAdding -= 1.2
+    
+    if xCycleRemoval < 250 + 50:
+      xCycleRemoval += 0.8
+    else:
+      xCycleRemoval += 1.2
+
+    makingAnimation = True
+  else:
+    xCycleRemoval = xCycleRemoval
+    xCycleAdding = xCycleAdding
+
+    ##############################
+    alpha += 2.5
+    s = pygame.Surface((xScreen,yScreen))  # the size of your rect
+    s.set_alpha(alpha)              # alpha level
+    s.fill(black)           # this fills the entire surface
+    screen.blit(s, (0,50))
+
+    if alpha == 300:
+      makingAnimation = False
+    else:
+      makingAnimation = True
+
+  return makingAnimation, xCycleAdding, xCycleRemoval, xLoginWindow, alpha
+
 
 # First render when program is open (WINDOW LOGIN)
-def loginWindow(xMouse, yMouse, tempIClicked):
+def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
   focusOnPasswordBar = False
   focusOnUsernameBar = False
 
