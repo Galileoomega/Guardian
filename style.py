@@ -1,6 +1,6 @@
 # FRONT END but call some BACK-END function
 from pygame import *
-import os, mouseChanger, pygame
+import os, mouseChanger, pygame, re
 pygame.init()
 
 # GET current path
@@ -100,6 +100,8 @@ imageLockPath = os.path.join(THIS_FOLDER, 'Resources\\lock.png')
 imageUnlockPath = os.path.join(THIS_FOLDER, 'Resources\\unlock.png')
 imageEyePath = os.path.join(THIS_FOLDER, 'Resources\\eyeBall.png')
 imageCirclePath = os.path.join(THIS_FOLDER, 'Resources\\circle.png')
+imageFolderPath = os.path.join(THIS_FOLDER, 'Resources\\folder-invoices.png')
+imageFilePath = os.path.join(THIS_FOLDER, 'Resources\\file-image.png')
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
@@ -125,6 +127,8 @@ imageLock = pygame.image.load(imageLockPath)
 imageUnlock = pygame.image.load(imageUnlockPath)
 imageEye = pygame.image.load(imageEyePath)
 imageCircle = pygame.image.load(imageCirclePath)
+imageFolder = pygame.image.load(imageFolderPath)
+imageFile = pygame.image.load(imageFilePath)
 
 # OTHER
 separator = 10
@@ -173,10 +177,10 @@ def AAfilledRoundedRect(surface,rect,color,radius=0.4):
 
 def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha):
 
-  pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleAdding, yLoginWindow), 3)
-  pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleRemoval, yLoginWindow), 3)
-
   if not(int(xCycleAdding) == widthLoginWindow / 2 - 42):
+    pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleAdding, yLoginWindow), 3)
+    pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleRemoval, yLoginWindow), 3)
+
     if xCycleAdding > 250 - 50:
       xCycleAdding -= 0.8
     else:
@@ -306,7 +310,14 @@ def browserDialog(xDialogBrowser, yDialogBrowser):
 # FILE OPENNING (INSIDE)
 def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
   lblElement = fontText.render(str(element), True, halfWhite)
-  screen.blit(lblElement, (xDialogBrowser + 10, yDialogBrowser + separator + 50))
+
+  x = re.search("\.", element)
+  if not(x):
+    screen.blit(imageFolder, (xDialogBrowser + 5, yDialogBrowser + separator + 38))
+  else:
+    screen.blit(imageFile, (xDialogBrowser + 5, yDialogBrowser + separator + 38))
+
+  screen.blit(lblElement, (xDialogBrowser + 40, yDialogBrowser + separator + 40))
   
   return separator
 
