@@ -5,5 +5,5 @@ Encrypting Software
 
 - WINDOWS<br>
   <br>
-  cd <Guardian Location><br>
+  cd <<Guardian Location>><br>
   pip install -r requirements.txt
