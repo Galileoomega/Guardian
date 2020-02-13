@@ -101,7 +101,6 @@ def renderLineSimulation(screen, xStartUser, yStartUser, index):
     "added": str(False)
   }
   if finishedToDraw:
-    print("AADDED IS NOW TRUE")
     toDump = {
       "xStart": str(xStart),
       "yStart": str(yStart),
