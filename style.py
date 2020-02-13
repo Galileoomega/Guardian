@@ -126,6 +126,9 @@ imageUnlock = pygame.image.load(imageUnlockPath)
 imageEye = pygame.image.load(imageEyePath)
 imageCircle = pygame.image.load(imageCirclePath)
 
+# OTHER
+separator = 10
+
 # -----------------------FUNCTION-----------------------
 
 # Draw rounded box
@@ -282,7 +285,7 @@ def drawUiBox(listOfColor):
   pygame.draw.rect(screen, listOfColor[9], (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
   pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
   
-
+# FILE OPENNING (BACKGROUND)
 def browserDialog(xDialogBrowser, yDialogBrowser):
   xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
   yCloseCircle = yDialogBrowser + 2
@@ -300,11 +303,16 @@ def browserDialog(xDialogBrowser, yDialogBrowser):
 
   return xCloseCircle, yCloseCircle
   
+# FILE OPENNING (INSIDE)
+def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
+  lblElement = fontText.render(str(element), True, halfWhite)
+  screen.blit(lblElement, (xDialogBrowser + 10, yDialogBrowser + separator + 50))
+  
+  return separator
 
 # Draw main Title
 def drawMainTitle():
   screen.blit(lblMainTitle, (xMainTitle, yMainTitle))
-
 
 # Draw all Label
 def drawUiLabel():
@@ -314,7 +322,6 @@ def drawUiLabel():
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
   screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
   screen.blit(lblStatus, (xPathList + 300, yFileBar + 60))
-
 
 def showErrorMessage(myText):
   lblError = fontError.render(str(myText), True, red)

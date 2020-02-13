@@ -1,4 +1,4 @@
-import pygame
+import pygame, os, style
 pygame.init()
 pygame.scrap.init()
 
@@ -7,6 +7,8 @@ iUsedCtrlV = False
 font = pygame.font.Font("Resources\\Roboto\\Roboto-Black.ttf", 13)
 black = (250, 250, 250)
 active = False
+listDir = [str]
+separator = 10
 
 # PROGRAM : Will take the text of the clipboard
 def getContentOfClipboard():
@@ -48,7 +50,6 @@ def selectAllText(user_input_value):
     iUsedCtrlA = False
     user_input_value = user_input_value
   return iUsedCtrlA, user_input_value
-
 
 # Classical text input management
 def textInput(event, text, maxLimit):
@@ -102,3 +103,14 @@ def secretTextInput(event, text, secretText):
     text = text
     return text, secretText
 
+def listDirectory(separator, xDialogBrowser, yDialogBrowser):
+  listDir = os.listdir()
+  
+  for u in listDir:
+    # GET THE INDEX OF U FOR COUNT
+    separator = listDir.index(u) * 20 + 10
+    if separator == 100:
+      separator = 10
+    separator = style.browserDialogContent(u, separator, xDialogBrowser, yDialogBrowser)
+  
+  return separator

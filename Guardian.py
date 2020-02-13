@@ -150,6 +150,7 @@ listOfPath = []
 xCycleAdding = xLoginWindow + widthLoginWindow / 2
 xCycleRemoval = xLoginWindow + widthLoginWindow / 2
 alpha = 0
+separator = 10
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -239,8 +240,11 @@ while playing:
       # Drag And Drop The File Browser Window
       if showBrowser:
         xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
+        separator = backModule.listDirectory(separator, xDialogBrowser, yDialogBrowser)
+
         if iPressedMyCircleButton:
           showBrowser = False
+        # Detect if user is  mooving the window
         if pygame.mouse.get_pressed() == (1, 0, 0):
           if xMouse > xDialogBrowser:
             if xMouse < xDialogBrowser + widthDialogBrowser - 35:
@@ -254,6 +258,7 @@ while playing:
         xCloseCircle, yCloseCircle = style.browserDialog(xDialogBrowser, yDialogBrowser)
 
       # -----------LIST OF PATH--------------
+      # 6 is equal of the number of file simultaneously
       if len(listOfPath) >= 6: 
         screen.blit(errorPathList, (xElement, yPathList + lengthListPath + 10))
 
