@@ -1,5 +1,6 @@
 # FRONT END but call some BACK-END function
-import pygame, os, mouseChanger
+import pygame, os
+import mouseChanger
 pygame.init()
 
 # GET current path
