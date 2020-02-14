@@ -34,9 +34,6 @@ myIcon = pygame.image.load(whiteSquarePNG)
 pygame.display.set_icon(myIcon)
 
 # PYGAME INITIALISATION
-xScreen = 500
-yScreen = 550
-screen = pygame.display.set_mode((xScreen, yScreen))
 clock = pygame.time.Clock()
 
 # -------------------VARIABLE-------------------
