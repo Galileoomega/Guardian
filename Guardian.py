@@ -41,7 +41,7 @@ clock = pygame.time.Clock()
 xScreen = 500
 yScreen = 550
 
-screen = pygame.display.set_mode((xScreen, yScreen))
+screen = pygame.display.set_mode((xScreen, yScreen), pygame.RESIZABLE)
 
 # File Input Bar
 lengthBar = 25
@@ -164,24 +164,33 @@ errorPathList = littleFont.render("Maximum File", True, lavanda)
 
 while playing:
 
+  # GET THE NEW WIDTH OF THE SCREEN
+  xScreen, yScreen = pygame.display.get_surface().get_size()
+
   # Set FPS
   clock.tick(120)
   # Refresh Window
   screen.fill(black)
   # Get Mouse Position
   xMouse, yMouse = pygame.mouse.get_pos()
+
   # EVENT
   events = pygame.event.get()
   for event in events:
-      if event.type == pygame.KEYDOWN:
+    if event.type == pygame.KEYDOWN:
         keyPress = True
-      else:
+    else:
         keyPress = False
-      if event.type == pygame.QUIT:
-          exit()
+    if event.type == pygame.QUIT:
+        exit()
+    # UPDATE The Size Of The Screen
+    if event.type == pygame.VIDEORESIZE:
+        scrsize = event.size  # or event.w, event.h
+        screen = pygame.display.set_mode(scrsize,pygame.RESIZABLE)
+        changed = True
   
   # Calling Front-End function (MAIN TITLE)
-  style.drawMainTitle()  
+  style.drawMainTitle(xScreen)  
 
   if not(makingAnimation):
     if loginIsOk:
@@ -283,6 +292,7 @@ while playing:
   if not(loginIsOk):
 
     # Background Of Window Login
+    xLoginWindow = (xScreen / 2) - (widthLoginWindow / 2)
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow)
 
     for event in events:
@@ -313,7 +323,7 @@ while playing:
 
     # Show An Error If the password is not correct
     if wrongPass:
-      style.showErrorMessage("Invalid credentials...")
+      style.showErrorMessage("Invalid credentials...", xScreen / 2 - 55)
 
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:

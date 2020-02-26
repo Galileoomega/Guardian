@@ -155,7 +155,7 @@ def AAfilledRoundedRect(surface,rect,color,radius=0.4):
     radius  : 0 <= radius <= 1
     """
 
-    rect         = Rect(rect)
+    rect = Rect(rect)
     color        = Color(*color)
     alpha        = color.a
     color.a      = 0
@@ -264,7 +264,8 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
     #mouseSkinChanged = False
   # ------------------------------------
   
-  # LOGIN Button
+  # ---------------LOGIN Button---------------
+  xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
   AAfilledRoundedRect(screen, (xButtonLogin, yButtonLogin, 70, 30), listOfColor[8], 0.2)
   screen.blit(lblButtonLogin, (xButtonLogin + 16, yButtonLogin + 5))
   if not(mouseSkinChanged):
@@ -272,9 +273,9 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
     iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 55, yButtonLogin, yButtonLogin + 30, tempIClicked)
     # Change button color
     mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8, grey)
-
   else:
     iPressedMyLoginButton = False
+  # ------------------------------------------
 
   return iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked
 
@@ -341,7 +342,11 @@ def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
   return separator
 
 # Draw main Title
-def drawMainTitle():
+def drawMainTitle(xScreen):
+  # Main LABEL
+  xMainTitle = (xScreen / 2) - 90
+  yMainTitle = 20
+
   screen.blit(lblMainTitle, (xMainTitle, yMainTitle))
 
 # Draw all Label
@@ -353,9 +358,10 @@ def drawUiLabel():
   screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
   screen.blit(lblStatus, (xPathList + 300, yFileBar + 60))
 
-def showErrorMessage(myText):
+# SHOW AN ERROR MESSAGE WHEN CREDENTIALS ARE WRONG
+def showErrorMessage(myText, xScreen):
   lblError = fontError.render(str(myText), True, red)
-  screen.blit(lblError, (190, 400))
+  screen.blit(lblError, (xScreen, 400))
 
 def drawImages():
   # USER ICON
