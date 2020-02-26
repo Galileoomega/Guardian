@@ -75,6 +75,10 @@ yDialogBrowser = 100
 xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
 yCloseCircle = yDialogBrowser + 2
 
+# FILE BROWSER: Arrows
+leftArrow = xDialogBrowser + widthDialogBrowser - 70
+rightArrow = xDialogBrowser + widthDialogBrowser - 30
+
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
@@ -102,6 +106,8 @@ imageEyePath = os.path.join(THIS_FOLDER, 'Resources\\eyeBall.png')
 imageCirclePath = os.path.join(THIS_FOLDER, 'Resources\\circle.png')
 imageFolderPath = os.path.join(THIS_FOLDER, 'Resources\\folder-invoices.png')
 imageFilePath = os.path.join(THIS_FOLDER, 'Resources\\file-image.png')
+imageRightArrowPath = os.path.join(THIS_FOLDER, 'Resources\\right-arrow.png')
+imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
@@ -129,6 +135,8 @@ imageEye = pygame.image.load(imageEyePath)
 imageCircle = pygame.image.load(imageCirclePath)
 imageFolder = pygame.image.load(imageFolderPath)
 imageFile = pygame.image.load(imageFilePath)
+imageRightArrow = pygame.image.load(imageRightArrowPath)
+imageLeftArrow = pygame.image.load(imageLeftArrowPath)
 
 # OTHER
 separator = 10
@@ -184,26 +192,26 @@ def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha):
     if xCycleAdding > 250 - 50:
       xCycleAdding -= 0.8
     else:
-      xCycleAdding -= 1.2
+      xCycleAdding -= 1.3
     
     if xCycleRemoval < 250 + 50:
       xCycleRemoval += 0.8
     else:
-      xCycleRemoval += 1.2
+      xCycleRemoval += 1.3
 
     makingAnimation = True
-  else:
     xCycleRemoval = xCycleRemoval
     xCycleAdding = xCycleAdding
 
     ##############################
+  if xCycleAdding < 200:
     alpha += 2.5
     s = pygame.Surface((xScreen,yScreen))  # the size of your rect
     s.set_alpha(alpha)              # alpha level
     s.fill(black)           # this fills the entire surface
     screen.blit(s, (0,50))
 
-    if alpha == 300:
+    if alpha >= 300:
       makingAnimation = False
     else:
       makingAnimation = True
@@ -304,20 +312,27 @@ def browserDialog(xDialogBrowser, yDialogBrowser):
   screen.blit(lblDialogBrowser, (xDialogBrowser + 3, yDialogBrowser + 3))
   # Close Circle
   screen.blit(imageCircle, (xCloseCircle, yCloseCircle))
+  # ARROWS
+  leftArrow = xDialogBrowser + widthDialogBrowser - 60
+  rightArrow = xDialogBrowser + widthDialogBrowser - 30
+  screen.blit(imageRightArrow, (rightArrow, yDialogBrowser + 30))
+  screen.blit(imageLeftArrow, (leftArrow, yDialogBrowser + 30))
 
-  return xCloseCircle, yCloseCircle
+  return xCloseCircle, yCloseCircle, leftArrow, rightArrow
   
 # FILE OPENNING (INSIDE)
 def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
   lblElement = fontText.render(str(element), True, halfWhite)
 
+  # ---SEE If Its A Folder---
   x = re.search("\.", element)
   if not(x):
-    screen.blit(imageFolder, (xDialogBrowser + 5, yDialogBrowser + separator + 38))
+    screen.blit(imageFolder, (xDialogBrowser + 5, yDialogBrowser + separator + 48))
   else:
-    screen.blit(imageFile, (xDialogBrowser + 5, yDialogBrowser + separator + 38))
+    screen.blit(imageFile, (xDialogBrowser + 5, yDialogBrowser + separator + 48))
+  #---------------------------
 
-  screen.blit(lblElement, (xDialogBrowser + 40, yDialogBrowser + separator + 40))
+  screen.blit(lblElement, (xDialogBrowser + 40, yDialogBrowser + separator + 50))
   
   return separator
 
