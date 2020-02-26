@@ -292,12 +292,12 @@ def drawUiBox(listOfColor):
   # Decrypt Button
   AAfilledRoundedRect(screen, (xDecryptButton, yDecryptButton, widthDecryptButton, lengthDecryptButton), listOfColor[4], 0.2)
   # Add Button
-  pygame.draw.rect(screen, grey, (xAddButton, yAddButton, widthAddButton, lengthAddButton))
+  AAfilledRoundedRect(screen, (xAddButton, yAddButton, widthAddButton, lengthAddButton), grey, 0.5)
   # Arrow Of "Add Button"
   pygame.draw.rect(screen, listOfColor[9], (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
   pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
   
-# FILE OPENNING (BACKGROUND)
+# FILE BROWSER: FILE OPENNING (BACKGROUND)
 def browserDialog(xDialogBrowser, yDialogBrowser):
   xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
   yCloseCircle = yDialogBrowser + 2
@@ -320,7 +320,7 @@ def browserDialog(xDialogBrowser, yDialogBrowser):
 
   return xCloseCircle, yCloseCircle, leftArrow, rightArrow
   
-# FILE OPENNING (INSIDE)
+# FILE BROWSER: FILE OPENNING (INSIDE)
 def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
   lblElement = fontText.render(str(element), True, halfWhite)
 
@@ -329,10 +329,14 @@ def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
   if not(x):
     screen.blit(imageFolder, (xDialogBrowser + 5, yDialogBrowser + separator + 48))
   else:
-    screen.blit(imageFile, (xDialogBrowser + 5, yDialogBrowser + separator + 48))
+    screen.blit(imageFile, (xDialogBrowser + 5, yDialogBrowser + separator + 49))
   #---------------------------
 
-  screen.blit(lblElement, (xDialogBrowser + 40, yDialogBrowser + separator + 50))
+  # FILES NAME
+  screen.blit(lblElement, (xDialogBrowser + 30, yDialogBrowser + separator + 50))
+  # THE LINE BEETWEEN THE FILES
+  pygame.draw.aaline(screen, black, (xDialogBrowser + 28, yDialogBrowser + 56), (xDialogBrowser + widthDialogBrowser - 20, yDialogBrowser + 56), 2)
+  pygame.draw.aaline(screen, black, (xDialogBrowser + 28, yDialogBrowser + separator + 70), (xDialogBrowser + widthDialogBrowser - 20, yDialogBrowser + separator + 70), 2)
   
   return separator
 

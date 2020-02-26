@@ -40,6 +40,7 @@ clock = pygame.time.Clock()
 # Position And Size
 xScreen = 500
 yScreen = 550
+
 screen = pygame.display.set_mode((xScreen, yScreen))
 
 # File Input Bar
@@ -241,9 +242,9 @@ while playing:
       # Openning File Browser
       if iPressedMyAddButton:
         iPressedMyAddButton = False
-        print("FEWNWIGPWEGWIE")
         myPath = THIS_FOLDER
         showBrowser = True
+        # Initialize the File Browser
         xCloseCircle, yCloseCircle, leftArrow, rightArrow = style.browserDialog(xDialogBrowser, yDialogBrowser)
 
       # ------------------The File Browser Window------------------
@@ -252,8 +253,6 @@ while playing:
         if iPressedMyLeftArrow:
           myPath = backModule.popPathElement(myPath)
         
-        print(myPath)
-
         separator = backModule.listDirectory(separator, xDialogBrowser, yDialogBrowser, myPath)
 
         # Closing the window 

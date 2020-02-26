@@ -102,13 +102,14 @@ def listDirectory(separator, xDialogBrowser, yDialogBrowser, myPath):
   
   for u in listDir:
     # GET THE INDEX OF U FOR COUNT
-    separator = listDir.index(u) * 20 + 10
+    separator = listDir.index(u) * 24 + 10
     if separator == 100:
       separator = 10
     separator = style.browserDialogContent(u, separator, xDialogBrowser, yDialogBrowser)
   
   return separator
 
+# FILE BROWSER: When Left Arrow Is Pressed, change to under directory
 def popPathElement(myPath):
   word = ''
 
