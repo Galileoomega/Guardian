@@ -139,6 +139,7 @@ finishedToDraw = True
 makingAnimation = False
 iPressedMyLeftArrow = tempCloseLeftArrow = False
 tempCloseRightArrow = iPressedMyRightArrow = False
+fullscreen = False
 
 # OTHER
 userPassword = ""
@@ -174,7 +175,9 @@ while playing:
   # Get Mouse Position
   xMouse, yMouse = pygame.mouse.get_pos()
 
-  # EVENT
+  print(xMouse, yMouse)
+
+  # EVENTS
   events = pygame.event.get()
   for event in events:
     if event.type == pygame.KEYDOWN:
@@ -188,7 +191,14 @@ while playing:
         scrsize = event.size  # or event.w, event.h
         screen = pygame.display.set_mode(scrsize,pygame.RESIZABLE)
         changed = True
-  
+    # DETECT AN F11 TO PUT WINDOW IN FULLSCREEN 
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_F11:
+          screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+        
+        if event.key == pygame.K_ESCAPE:
+          screen = pygame.display.set_mode((500, 550), pygame.RESIZABLE)
+    
   # Calling Front-End function (MAIN TITLE)
   style.drawMainTitle(xScreen)  
 
