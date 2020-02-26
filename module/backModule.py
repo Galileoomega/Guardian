@@ -9,6 +9,7 @@ black = (250, 250, 250)
 active = False
 listDir = [str]
 separator = 10
+myPath = ""
 
 # PROGRAM : Will take the text of the clipboard
 def getContentOfClipboard():
@@ -54,10 +55,7 @@ def selectAllText(user_input_value):
 # Classical text input management
 def textInput(event, text, maxLimit):
   if event.type == pygame.KEYDOWN:
-    if event.key == pygame.K_RETURN:
-      print(text)
-      text = text
-    elif event.key == pygame.K_BACKSPACE:
+    if event.key == pygame.K_BACKSPACE:
       text = text[:-1]
     else:
       if len(text) <= maxLimit:
@@ -81,10 +79,7 @@ def textInput(event, text, maxLimit):
 # Same than textInput() but for password
 def secretTextInput(event, text, secretText):
   if event.type == pygame.KEYDOWN:
-    if event.key == pygame.K_RETURN:
-      print(text)
-      text = text
-    elif event.key == pygame.K_BACKSPACE:
+    if event.key == pygame.K_BACKSPACE:
       text = text[:-1]
       secretText = secretText[:-1]
     else:
@@ -95,16 +90,15 @@ def secretTextInput(event, text, secretText):
           secretText += "*"
       except TypeError:
         pass
-  else: 
-    text = text
   try:
     return text, secretText
   except UnboundLocalError:
-    text = text
+    print("error")
     return text, secretText
 
-def listDirectory(separator, xDialogBrowser, yDialogBrowser):
-  listDir = os.listdir()
+# Will read all file in a directory and give them an position
+def listDirectory(separator, xDialogBrowser, yDialogBrowser, myPath):
+  listDir = os.listdir(myPath)
   
   for u in listDir:
     # GET THE INDEX OF U FOR COUNT
@@ -114,3 +108,17 @@ def listDirectory(separator, xDialogBrowser, yDialogBrowser):
     separator = style.browserDialogContent(u, separator, xDialogBrowser, yDialogBrowser)
   
   return separator
+
+def popPathElement(myPath):
+  word = ''
+
+  for u in myPath[::-1]:
+    word += u
+    if u == "\\":
+      word = word[::-1]
+      myPath = myPath.replace(word, "")
+      word = ''
+      break
+
+  return myPath
+
