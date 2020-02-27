@@ -205,10 +205,10 @@ def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha, xScreen, yScr
 
   if xCycleAdding < xLoginWindow + widthLoginWindow / 2 - 50:
     alpha += 3
-    s = pygame.Surface((xScreen,yScreen))  # the size of your rect
+    s = pygame.Surface((320, 300))  # the size of your rect
     s.set_alpha(alpha)              # alpha level
     s.fill(black)           # this fills the entire surface
-    screen.blit(s, (0,50))
+    screen.blit(s, (xLoginWindow - 10, yLoginWindow - 10)) # NEED TO BE CHANGED
 
     if alpha >= 300:
       makingAnimation = False
@@ -216,7 +216,6 @@ def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha, xScreen, yScr
       makingAnimation = True
 
   return makingAnimation, xCycleAdding, xCycleRemoval, xLoginWindow, alpha
-
 
 # First render when program is open (WINDOW LOGIN)
 def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
@@ -278,9 +277,16 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
 
   return iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked
 
-
 # Draw all UI container
-def drawUiBox(listOfColor):
+def drawUiBox(listOfColor, xScreen):
+  # --------Update Var Location--------
+  xFileBar = (xScreen / 2) - (widthBar / 2)
+  xPathList = (xScreen / 2) - (widthListBar / 2)
+  xEncryptButton = ((xScreen / 2) - (widthEncryptButton / 2)) - 100
+  xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
+  xAddButton = xFileBar + widthBar + 35
+  # -----------------------------------
+
   # File Bar Input
   AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
   # Path list background
@@ -296,6 +302,8 @@ def drawUiBox(listOfColor):
   # Arrow Of "Add Button"
   pygame.draw.rect(screen, listOfColor[9], (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
   pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
+
+  return xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton
   
 # FILE BROWSER: FILE OPENNING (BACKGROUND)
 def browserDialog(xDialogBrowser, yDialogBrowser):
@@ -303,11 +311,14 @@ def browserDialog(xDialogBrowser, yDialogBrowser):
   yCloseCircle = yDialogBrowser + 2
 
   # Little grey border
-  pygame.draw.rect(screen, grey, (xDialogBrowser - 1, yDialogBrowser - 1, widthDialogBrowser + 2, lengthDialogBrowser + 2))
+  #pygame.draw.rect(screen, grey, (xDialogBrowser - 1, yDialogBrowser - 1, widthDialogBrowser + 2, lengthDialogBrowser + 2))
+  AAfilledRoundedRect(screen, (xDialogBrowser - 1, yDialogBrowser - 1, widthDialogBrowser + 2, lengthDialogBrowser + 2), grey, 0.05)
   # Main Background
-  pygame.draw.rect(screen, darkBlack, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, lengthDialogBrowser))
+  AAfilledRoundedRect(screen, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, lengthDialogBrowser), darkBlack, 0.05)
+  #pygame.draw.rect(screen, darkBlack, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, lengthDialogBrowser))
   # Head Legend
-  pygame.draw.rect(screen, whiteGrey, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, 25))
+  AAfilledRoundedRect(screen, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, 25), whiteGrey, 0.3)
+  #pygame.draw.rect(screen, whiteGrey, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, 25))
   # Label : "Browser..."
   screen.blit(lblDialogBrowser, (xDialogBrowser + 3, yDialogBrowser + 3))
   # Close Circle
@@ -349,9 +360,12 @@ def drawMainTitle(xScreen):
   screen.blit(lblMainTitle, (xMainTitle, yMainTitle))
 
 # Draw all Label
-def drawUiLabel():
+def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList):
+  # --------Update Var Location--------
+  # -----------------------------------
+
   # FILE label
-  screen.blit(lblFile, (xFilelbl, yFilelbl))
+  screen.blit(lblFile, (xFilelbl - 40, yFilelbl))
   screen.blit(lblDecryptButton, (xDecryptButton + 16, yDecryptButton + 11))
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
   screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
@@ -362,7 +376,7 @@ def showErrorMessage(myText, xScreen):
   lblError = fontError.render(str(myText), True, red)
   screen.blit(lblError, (xScreen, 400))
 
-def drawImages():
+def drawImages(xEncryptButton, xDecryptButton):
   # USER ICON
   #screen.blit(imageUser, (10, 10))
   screen.blit(imageLock, (xEncryptButton + 25, yEncrypButton + 45))
