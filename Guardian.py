@@ -169,7 +169,7 @@ while playing:
   xScreen, yScreen = pygame.display.get_surface().get_size()
 
   # Set FPS
-  clock.tick(120)
+  clock.tick(200)
   # Refresh Window
   screen.fill(black)
   # Get Mouse Position
@@ -207,7 +207,7 @@ while playing:
           yScreen = 550
     # -----------------------------------------------------------
     
-  # Calling Front-End function (MAIN TITLE)
+  # DRAW MAIN TITLE
   style.drawMainTitle(xScreen)
 
   if not(makingAnimation):
@@ -238,11 +238,11 @@ while playing:
         mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
 
       # BOX
-      style.drawUiBox(listOfColor)
+      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton = style.drawUiBox(listOfColor, xScreen)
       # LABEL
-      style.drawUiLabel()
+      style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList)
       # IMAGES
-      style.drawImages()
+      style.drawImages(xEncryptButton, xDecryptButton)
 
       if not(showBrowser):
         # -----------FILE BAR-----------
@@ -285,14 +285,6 @@ while playing:
         # Closing the window 
         if iPressedMyCircleButton:
           showBrowser = False
-        # Detect if user is  mooving the window
-        if pygame.mouse.get_pressed() == (1, 0, 0):
-          if xMouse > xDialogBrowser:
-            if xMouse < xDialogBrowser + widthDialogBrowser - 35:
-              if yMouse > yDialogBrowser - 15:
-                if yMouse < yDialogBrowser + 30:
-                  xDialogBrowser = xMouse - 150
-                  yDialogBrowser = yMouse - 10
       # ----------------------------------------------------------
 
       # -----------LIST OF PATH--------------
@@ -306,7 +298,7 @@ while playing:
         screen.blit(u, (xElement, yElement))
       # -------------------------------------
 
-  # --------------WINDOW LOGIN--------------
+  # ------------------WINDOW LOGIN------------------
   if not(loginIsOk):
 
     # Background Of Window Login
@@ -358,7 +350,7 @@ while playing:
     # Blit the text on the screen
     textinputPassword = font.render(hideUserPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
-  # ----------------------------------------
+  # ------------------------------------------------
 
   if makingAnimation:
     if loginIsOk:
