@@ -76,8 +76,10 @@ xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
 yCloseCircle = yDialogBrowser + 2
 
 # FILE BROWSER: Arrows
-leftArrow = xDialogBrowser + widthDialogBrowser - 70
-rightArrow = xDialogBrowser + widthDialogBrowser - 30
+leftArrow = xFileBar + 385
+rightArrow = xFileBar + 415
+
+xHouseIcon = xFileBar + 400
 
 # Color
 black = (40, 40, 43)
@@ -106,9 +108,10 @@ imageEyePath = os.path.join(THIS_FOLDER, 'Resources\\eyeBall.png')
 imageCirclePath = os.path.join(THIS_FOLDER, 'Resources\\circle.png')
 imageFolderPath = os.path.join(THIS_FOLDER, 'Resources\\folder-invoices.png')
 imageFilePath = os.path.join(THIS_FOLDER, 'Resources\\file-image.png')
+imageHousePATH = os.path.join(THIS_FOLDER, 'Resources\\house.png')
 imageRightArrowPath = os.path.join(THIS_FOLDER, 'Resources\\right-arrow.png')
 imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
-imageHousePATH = os.path.join(THIS_FOLDER, 'Resources\\house.png')
+
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
@@ -136,9 +139,10 @@ imageEye = pygame.image.load(imageEyePath)
 imageCircle = pygame.image.load(imageCirclePath)
 imageFolder = pygame.image.load(imageFolderPath)
 imageFile = pygame.image.load(imageFilePath)
+imageHouse = pygame.image.load(imageHousePATH)
 imageRightArrow = pygame.image.load(imageRightArrowPath)
 imageLeftArrow = pygame.image.load(imageLeftArrowPath)
-imageHouse = pygame.image.load(imageHousePATH)
+
 
 # OTHER
 separator = 10
@@ -310,58 +314,12 @@ def drawUiBox(listOfColor, xScreen, yScreen):
 
   return xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton
   
-# FILE BROWSER: FILE OPENNING (BACKGROUND)
-def browserDialog(xDialogBrowser, yDialogBrowser):
-  xCloseCircle = xDialogBrowser + widthDialogBrowser - 30
-  yCloseCircle = yDialogBrowser + 2
-
-  # Little grey border
-  #pygame.draw.rect(screen, grey, (xDialogBrowser - 1, yDialogBrowser - 1, widthDialogBrowser + 2, lengthDialogBrowser + 2))
-  AAfilledRoundedRect(screen, (xDialogBrowser - 1, yDialogBrowser - 1, widthDialogBrowser + 2, lengthDialogBrowser + 2), grey, 0.05)
-  # Main Background
-  AAfilledRoundedRect(screen, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, lengthDialogBrowser), darkBlack, 0.05)
-  #pygame.draw.rect(screen, darkBlack, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, lengthDialogBrowser))
-  # Head Legend
-  AAfilledRoundedRect(screen, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, 25), whiteGrey, 0.3)
-  #pygame.draw.rect(screen, whiteGrey, (xDialogBrowser, yDialogBrowser, widthDialogBrowser, 25))
-  # Label : "Browser..."
-  screen.blit(lblDialogBrowser, (xDialogBrowser + 3, yDialogBrowser + 3))
-  # Close Circle
-  screen.blit(imageCircle, (xCloseCircle, yCloseCircle))
-  # ARROWS
-  leftArrow = xDialogBrowser + widthDialogBrowser - 60
-  rightArrow = xDialogBrowser + widthDialogBrowser - 30
-  screen.blit(imageRightArrow, (rightArrow, yDialogBrowser + 30))
-  screen.blit(imageLeftArrow, (leftArrow, yDialogBrowser + 30))
-
-  return xCloseCircle, yCloseCircle, leftArrow, rightArrow
-  
-# FILE BROWSER: FILE OPENNING (INSIDE)
-def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
-  lblElement = fontText.render(str(element), True, halfWhite)
-
-  # ---SEE If Its A Folder---
-  x = re.search("\.", element)
-  if not(x):
-    screen.blit(imageFolder, (xDialogBrowser + 5, yDialogBrowser + separator + 48))
-  else:
-    screen.blit(imageFile, (xDialogBrowser + 5, yDialogBrowser + separator + 49))
-  #---------------------------
-
-  # FILES NAME
-  screen.blit(lblElement, (xDialogBrowser + 30, yDialogBrowser + separator + 50))
-  # THE LINE BEETWEEN THE FILES
-  pygame.draw.aaline(screen, black, (xDialogBrowser + 28, yDialogBrowser + 56), (xDialogBrowser + widthDialogBrowser - 20, yDialogBrowser + 56), 2)
-  pygame.draw.aaline(screen, black, (xDialogBrowser + 28, yDialogBrowser + separator + 70), (xDialogBrowser + widthDialogBrowser - 20, yDialogBrowser + separator + 70), 2)
-  
-  return separator
-
 # Draw main Title
 def drawMainTitle(xScreen, loginIsOk, xMainTitle):
   # Main LABEL
   yMainTitle = 20
   if loginIsOk:
-    xMainTitle = xScreen - 300
+    xMainTitle = 150
   else:
     xMainTitle = (xScreen / 2) - 90
 
@@ -381,24 +339,35 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yE
   screen.blit(lblStatus, (xFileBar + 250, yFileBar + 80))
 
 # Draw the TOP PATH
-def drawPath(myPath):
-  
-  # THE HOUSE ICON
-  screen.blit(imageHouse, (xFileBar + 390, 45))
-  
+def drawPath(myPath, xHouseIcon):  
   # THE PATH
   lblMyPath = fontError.render(str(myPath), True, halfWhite)
-  screen.blit(lblMyPath, (xFileBar + 420, 46))
+  screen.blit(lblMyPath, (xHouseIcon + 30, 46))
 
 # SHOW AN ERROR MESSAGE WHEN CREDENTIALS ARE WRONG
 def showErrorMessage(myText, xScreen):
   lblError = fontError.render(str(myText), True, red)
   screen.blit(lblError, (xScreen, 400))
 
-def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton):
-  # USER ICON
-  #screen.blit(imageUser, (10, 10))
+def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar):
+
+  # FILE BROWSER: Arrows
+  leftArrow = xFileBar + 405
+  rightArrow = xFileBar + 435
+
+  # Locker Image For Encrypt/Decrypt buttons
   screen.blit(imageLock, (xEncryptButton + 25, yEncrypButton + 45))
   screen.blit(imageUnlock, (xDecryptButton + 25, yDecryptButton + 45))
+
+  # ARROWS for path navigation
+  print(leftArrow)
+  screen.blit(imageLeftArrow, (leftArrow, 45))
+  screen.blit(imageRightArrow, (rightArrow, 45))
+
+  # THE HOUSE ICON
+  xHouseIcon = xFileBar + 470
+  screen.blit(imageHouse, (xHouseIcon, 45))
+
+  return xHouseIcon
   
 # ------------------------------------------------------

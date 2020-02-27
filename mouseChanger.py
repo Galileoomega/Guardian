@@ -60,10 +60,9 @@ def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked
       if yMouse < yBottom:
         if yMouse > yTop - 5:
           if tempIClicked:
-              if pygame.mouse.get_pressed() == (0,0,0):
-                iClicked = True 
-                tempIClicked = False
-                #print("iClicked")
+            if pygame.mouse.get_pressed() == (0,0,0):
+              iClicked = True 
+              tempIClicked = False
 
           if pygame.mouse.get_pressed() == (1,0,0):
             tempIClicked = True

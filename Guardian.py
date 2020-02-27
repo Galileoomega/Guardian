@@ -10,7 +10,7 @@ try:
   import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
   from cryptography.fernet import Fernet
   from multiprocessing import Process
-  from module import engine, backModule, idVector
+  from module import engine, backModule, idVector, fileDir
 
   playing = True
 except ModuleNotFoundError:
@@ -25,7 +25,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 robotoRegularTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Regular.ttf')
 
 # Change window name
-pygame.display.set_caption("SHA-256")
+pygame.display.set_caption("Guardian")
 
 # Changing default ICON
 whiteSquarePNG = os.path.join(THIS_FOLDER, 'Resources\\white-square.png')
@@ -37,10 +37,10 @@ clock = pygame.time.Clock()
 
 # -------------------VARIABLE-------------------
 # Position And Size
-xScreen = 500
+xScreen = 750
 yScreen = 550
 
-screen = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
+screen = pygame.display.set_mode((xScreen, yScreen), pygame.RESIZABLE)
 
 # File Input Bar
 lengthBar = 25
@@ -108,9 +108,11 @@ yCloseCircle = yDialogBrowser + 2
 xElement = int(xPathList) + 5
 yElement = int(yPathList)
 
-# ARROWS
-leftArrow = 0
-rightArrow = 0
+# FILE BROWSER: Arrows
+leftArrow = xFileBar + 385
+rightArrow = xFileBar + 415
+
+xHouseIcon = xFileBar + 400
 
 # Color
 black = (40, 40, 43)
@@ -153,6 +155,9 @@ xCycleRemoval = xLoginWindow + widthLoginWindow / 2
 alpha = 0
 separator = 10
 myPath = THIS_FOLDER
+xCell = 550
+yCell = 100
+listDir = []
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -201,8 +206,8 @@ while playing:
           xScreen, yScreen = modes[0]
         
         if event.key == pygame.K_ESCAPE:
-          screen = pygame.display.set_mode((500, 550), pygame.RESIZABLE)
-          xScreen = 500
+          screen = pygame.display.set_mode((xScreen, yScreen), pygame.RESIZABLE)
+          xScreen = 750
           yScreen = 550
     # -----------------------------------------------------------
     
@@ -211,82 +216,80 @@ while playing:
 
   if not(makingAnimation):
     if loginIsOk:
+      
+      # ----------LISTING ALL FILES----------
+      listDir, xCell, yCell = fileDir.listingFiles(myPath, xCell, yCell, xScreen)
+      # -------------------------------------
 
-      if not(showBrowser):
-        # Detect click on ENCRYPT BUTTON
-        iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
-        # Detect click on DECRYPT BUTTON
-        iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
-        # Detect Click On "Add Button"
-        iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
+      # Detect click on ENCRYPT BUTTON
+      iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
+      # Detect click on DECRYPT BUTTON
+      iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
+      # Detect Click On "Add Button"
+      iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
       # Detect Click on blue circle (Browser Dialog)
       iPressedMyCircleButton, tempCloseCircle = mouseChanger.clickButtonDetect(xMouse, yMouse, xCloseCircle, xCloseCircle + 20, yCloseCircle, yCloseCircle + 20, tempCloseCircle)
-      # Detect arrow press (LEFT)
-      iPressedMyLeftArrow, tempCloseLeftArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, leftArrow, leftArrow + 3, yDialogBrowser + 30, yDialogBrowser + 50, tempCloseLeftArrow)
-      # Detect arrow press (RIGHT)
-      iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 3, yDialogBrowser + 30, yDialogBrowser + 50, tempCloseRightArrow)
+      
+      # FILE BROWSER: Arrows
+      leftArrow = xFileBar + 405
+      rightArrow = xFileBar + 435
 
-      if not(showBrowser):
-        # Change Button Color While pressed
-        # Decrypt Button
-        mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
-        # Encrypt Button
-        mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
-        # Add Button
-        mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
-        mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
+      # Detect arrow press (LEFT)
+      iPressedMyLeftArrow, tempCloseLeftArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, leftArrow, leftArrow + 20, 45, 65, tempCloseLeftArrow)
+      # Detect arrow press (RIGHT)
+      iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 10, 45, 65, tempCloseRightArrow)
+      
+      if iPressedMyLeftArrow:
+        myPath = fileDir.popPathElement(myPath)
+
+      # ------------Change Button Color While pressed------------
+      # Decrypt Button
+      mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
+      # Encrypt Button
+      mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
+      # Add Button
+      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
+      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
+      # ---------------------------------------------------------
 
       # BOX
       xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton = style.drawUiBox(listOfColor, xScreen, yScreen)
       # LABEL
       style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       # IMAGES
-      style.drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton)
+      xHouseIcon = style.drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar)
       # PATHS
-      style.drawPath(myPath)
+      style.drawPath(myPath, xHouseIcon)
 
-      if not(showBrowser):
-        # -----------FILE BAR-----------
-        # Detect click On FILE BAR
-        focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
+      # -----------FILE BAR-----------
+      # Detect click On FILE BAR
+      focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
 
-        # CHANGE COLOR IF FOCUSED
-        if focusOnFileBar:
-          style.AAfilledRoundedRect(screen, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2), lavanda, 0.1)
-          pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
-        # Detect overfly on FILE BAR
-        mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
+      # CHANGE COLOR IF FOCUSED
+      if focusOnFileBar:
+        style.AAfilledRoundedRect(screen, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2), lavanda, 0.1)
+        pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
+      # Detect overfly on FILE BAR
+      mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
         
-        # TEXT INPUT FILE BAR
-        if focusOnFileBar:
-          for event in events:
-            userFile = backModule.textInput(event, userFile, lengthBar)
+      # TEXT INPUT FILE BAR
+      if focusOnFileBar:
+        for event in events:
+          userFile = backModule.textInput(event, userFile, lengthBar)
 
-        # Show the text input on the screen
-        textinputFile = font.render(userFile, True, white)
-        screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
-        # ------------------------------
+      # Show the text input on the screen
+      textinputFile = font.render(userFile, True, white)
+      screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
+      # ------------------------------
 
-      # Openning File Browser
+      # ADDING PATH TO WAIT LIST
       if iPressedMyAddButton:
-        iPressedMyAddButton = False
-        myPath = THIS_FOLDER
-        showBrowser = True
+        print("LALAAAAAA")
+        #iPressedMyAddButton = False
+        #myPath = THIS_FOLDER
+        #showBrowser = True
         # Initialize the File Browser
-        xCloseCircle, yCloseCircle, leftArrow, rightArrow = style.browserDialog(xDialogBrowser, yDialogBrowser)
-
-      # ------------------The File Browser Window------------------
-      if showBrowser:
-        xCloseCircle, yCloseCircle, leftArrow, rightArrow = style.browserDialog(xDialogBrowser, yDialogBrowser)
-        if iPressedMyLeftArrow:
-          myPath = backModule.popPathElement(myPath)
-        
-        separator = backModule.listDirectory(separator, xDialogBrowser, yDialogBrowser, myPath)
-
-        # Closing the window 
-        if iPressedMyCircleButton:
-          showBrowser = False
-      # ----------------------------------------------------------
+        #xCloseCircle, yCloseCircle, leftArrow, rightArrow = style.browserDialog(xDialogBrowser, yDialogBrowser)
 
       # -----------LIST OF PATH--------------
       # 6 is equal of the number of file simultaneously
