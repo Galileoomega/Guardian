@@ -109,17 +109,4 @@ def listDirectory(separator, xDialogBrowser, yDialogBrowser, myPath):
   
   return separator
 
-# FILE BROWSER: When Left Arrow Is Pressed, change to under directory
-def popPathElement(myPath):
-  word = ''
-
-  for u in myPath[::-1]:
-    word += u
-    if u == "\\":
-      word = word[::-1]
-      myPath = myPath.replace(word, "")
-      word = ''
-      break
-
-  return myPath
 
