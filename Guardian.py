@@ -173,7 +173,7 @@ while playing:
   xScreen, yScreen = pygame.display.get_surface().get_size()
 
   # Set FPS
-  clock.tick(200)
+  clock.tick(90)
   # Refresh Window
   screen.fill(black)
   # Get Mouse Position
