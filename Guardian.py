@@ -240,7 +240,9 @@ while playing:
       iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 10, 45, 65, tempCloseRightArrow)
       
       if iPressedMyLeftArrow:
+        print("BEFORE : ", myPath)
         myPath = fileDir.popPathElement(myPath)
+        print("AFTER : ", myPath)
 
       # ------------Change Button Color While pressed------------
       # Decrypt Button

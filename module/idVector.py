@@ -22,7 +22,6 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
         
         if len(newlist) == 1:
             # If the user exist: Extract the ID (index)
-            print(newlist)
             userExist = True
             masterIndex = extractedUsername.index(newlist[0])
         else:
