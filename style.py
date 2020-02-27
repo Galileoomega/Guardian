@@ -183,29 +183,28 @@ def AAfilledRoundedRect(surface,rect,color,radius=0.4):
 
     return surface.blit(rectangle,pos)
 
-def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha):
+def loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha, xScreen, yScreen, yLoginWindow):
 
   if not(int(xCycleAdding) == widthLoginWindow / 2 - 42):
     pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleAdding, yLoginWindow), 3)
     pygame.draw.line(screen, lavanda, (xLoginWindow + (widthLoginWindow / 2), yLoginWindow), (xCycleRemoval, yLoginWindow), 3)
 
-    if xCycleAdding > 250 - 50:
-      xCycleAdding -= 0.8
-    else:
-      xCycleAdding -= 1.3
+    if xCycleAdding > xLoginWindow + 10:
+      if xCycleAdding > xLoginWindow + widthLoginWindow / 2 - 50:
+        xCycleAdding -= 0.9
+      else:
+        xCycleAdding -= 2
     
-    if xCycleRemoval < 250 + 50:
-      xCycleRemoval += 0.8
-    else:
-      xCycleRemoval += 1.3
+    if xCycleRemoval < xLoginWindow + widthLoginWindow - 10:
+      if xCycleRemoval < xLoginWindow + widthLoginWindow / 2 + 50:
+        xCycleRemoval += 0.9
+      else:
+        xCycleRemoval += 2
 
     makingAnimation = True
-    xCycleRemoval = xCycleRemoval
-    xCycleAdding = xCycleAdding
 
-    ##############################
-  if xCycleAdding < 200:
-    alpha += 2.5
+  if xCycleAdding < xLoginWindow + widthLoginWindow / 2 - 50:
+    alpha += 3
     s = pygame.Surface((xScreen,yScreen))  # the size of your rect
     s.set_alpha(alpha)              # alpha level
     s.fill(black)           # this fills the entire surface

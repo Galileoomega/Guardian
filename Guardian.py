@@ -41,7 +41,7 @@ clock = pygame.time.Clock()
 xScreen = 500
 yScreen = 550
 
-screen = pygame.display.set_mode((xScreen, yScreen), pygame.RESIZABLE)
+screen = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
 
 # File Input Bar
 lengthBar = 25
@@ -175,8 +175,6 @@ while playing:
   # Get Mouse Position
   xMouse, yMouse = pygame.mouse.get_pos()
 
-  print(xMouse, yMouse)
-
   # EVENTS
   events = pygame.event.get()
   for event in events:
@@ -191,16 +189,26 @@ while playing:
         scrsize = event.size  # or event.w, event.h
         screen = pygame.display.set_mode(scrsize,pygame.RESIZABLE)
         changed = True
-    # DETECT AN F11 TO PUT WINDOW IN FULLSCREEN 
+
+    # ---------DETECT AN F11 TO PUT WINDOW IN FULLSCREEN---------
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_F11:
-          screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+          modes = pygame.display.list_modes()
+          if not modes:
+            print ('16-bit not supported')
+          else:
+            print ('Found Resolution:', modes[0])
+          screen = pygame.display.set_mode(modes[0], pygame.FULLSCREEN)
+          xScreen, yScreen = modes[0]
         
         if event.key == pygame.K_ESCAPE:
           screen = pygame.display.set_mode((500, 550), pygame.RESIZABLE)
+          xScreen = 500
+          yScreen = 550
+    # -----------------------------------------------------------
     
   # Calling Front-End function (MAIN TITLE)
-  style.drawMainTitle(xScreen)  
+  style.drawMainTitle(xScreen)
 
   if not(makingAnimation):
     if loginIsOk:
@@ -353,8 +361,12 @@ while playing:
   # ----------------------------------------
 
   if makingAnimation:
+    if loginIsOk:
+      xCycleAdding = xLoginWindow + widthLoginWindow / 2
+      xCycleRemoval = xLoginWindow + widthLoginWindow / 2
     loginIsOk = False
-    makingAnimation, xCycleAdding, xCycleRemoval, xLoginWindow, alpha = style.loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha)
+
+    makingAnimation, xCycleAdding, xCycleRemoval, xLoginWindow, alpha = style.loginLoading(xCycleAdding, xCycleRemoval, xLoginWindow, alpha, xScreen, yScreen, yLoginWindow)
     if not(makingAnimation):
       loginIsOk = True
 
