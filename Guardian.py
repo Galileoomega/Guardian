@@ -6,19 +6,18 @@
 #####################################################################################
 
 # Catch error if the installation is not good
-#try:
-import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
-from cryptography.fernet import Fernet
+try:
+  import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
+  from cryptography.fernet import Fernet
+  from multiprocessing import Process
+  from module import engine, backModule, idVector
 
-# Module 
-from module import engine, backModule, idVector
-
-playing = True
-#except ModuleNotFoundError:
-#  for u in range(0, 5):
-#    print("!! FATAL ERROR: You have to follow the installation instruction (README.md) !!")
-#  playing = False
-#  input()
+  playing = True
+except ModuleNotFoundError:
+  for u in range(0, 5):
+    print("!! FATAL ERROR: You have to follow the installation instruction (README.md) !!")
+  playing = False
+  input()
 pygame.init()
 
 # GET current path
@@ -238,7 +237,7 @@ while playing:
         mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
 
       # BOX
-      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton = style.drawUiBox(listOfColor, xScreen)
+      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton = style.drawUiBox(listOfColor, xScreen, yScreen)
       # LABEL
       style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList)
       # IMAGES

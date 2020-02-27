@@ -278,9 +278,9 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
   return iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked
 
 # Draw all UI container
-def drawUiBox(listOfColor, xScreen):
+def drawUiBox(listOfColor, xScreen, yScreen):
   # --------Update Var Location--------
-  xFileBar = (xScreen / 2) - (widthBar / 2)
+  xFileBar = 90
   xPathList = (xScreen / 2) - (widthListBar / 2)
   xEncryptButton = ((xScreen / 2) - (widthEncryptButton / 2)) - 100
   xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
@@ -289,10 +289,8 @@ def drawUiBox(listOfColor, xScreen):
 
   # File Bar Input
   AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
-  # Path list background
-  pygame.draw.rect(screen, listOfColor[1], (xPathList, yPathList, widthListBar, lengthListPath))
-  # Legend of Path List
-  pygame.draw.rect(screen, listOfColor[2], (xPathList, yPathList, widthListBar, lengthListPath - 80))
+  # Vertical Separator
+  pygame.draw.aaline(screen, grey, (xFileBar + 400, 30), (xFileBar + 400, yScreen - 30), 2)
   # Encrypt Button
   AAfilledRoundedRect(screen, (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton), listOfColor[3], 0.2)
   # Decrypt Button
@@ -368,8 +366,8 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList):
   screen.blit(lblFile, (xFilelbl - 40, yFilelbl))
   screen.blit(lblDecryptButton, (xDecryptButton + 16, yDecryptButton + 11))
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
-  screen.blit(lblAwaiting, (xPathList + 5, yFileBar + 60))
-  screen.blit(lblStatus, (xPathList + 300, yFileBar + 60))
+  screen.blit(lblAwaiting, (xFileBar + 5, yFileBar + 60))
+  screen.blit(lblStatus, (xFileBar + 300, yFileBar + 60))
 
 # SHOW AN ERROR MESSAGE WHEN CREDENTIALS ARE WRONG
 def showErrorMessage(myText, xScreen):
