@@ -57,10 +57,10 @@ imageFile = pygame.image.load(imageFilePath)
 # ----------------------------------------------
 
 # Get all the files in the directory (myPath) similar to a ls 
-def listingFiles(myPath, xCell, yCell, xScreen):
+def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker):
   listDir = os.listdir(myPath)
   for element in listDir:
-    yCell = listDir.index(element) * 40 + 100
+    yCell = listDir.index(element) * 40 + 100 - scrollMarker
     if yCell >= 1000:
       yCell = 300
 
@@ -99,12 +99,17 @@ def renderFile(nameOfFile, xCell, yCell, xScreen):
 def popPathElement(myPath):
   word = ''
 
+  myPath = myPath.capitalize()
+
   for u in myPath[::-1]:
     word += u
     if u == "\\":
       word = word[::-1]
-      myPath = myPath.replace(word, "")
+      for u in range(0, len(word)):
+        myPath = myPath[:-1]
       word = ''
       break
+    if myPath == "C:":
+      myPath = "C:/"
 
   return myPath

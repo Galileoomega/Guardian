@@ -155,9 +155,11 @@ xCycleRemoval = xLoginWindow + widthLoginWindow / 2
 alpha = 0
 separator = 10
 myPath = THIS_FOLDER
+myPath = myPath.capitalize()
 xCell = 550
 yCell = 100
 listDir = []
+scrollMarker = 0
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -217,10 +219,6 @@ while playing:
   if not(makingAnimation):
     if loginIsOk:
       
-      # ----------LISTING ALL FILES----------
-      listDir, xCell, yCell = fileDir.listingFiles(myPath, xCell, yCell, xScreen)
-      # -------------------------------------
-
       # Detect click on ENCRYPT BUTTON
       iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
       # Detect click on DECRYPT BUTTON
@@ -229,20 +227,34 @@ while playing:
       iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
       # Detect Click on blue circle (Browser Dialog)
       iPressedMyCircleButton, tempCloseCircle = mouseChanger.clickButtonDetect(xMouse, yMouse, xCloseCircle, xCloseCircle + 20, yCloseCircle, yCloseCircle + 20, tempCloseCircle)
-      
       # FILE BROWSER: Arrows
       leftArrow = xFileBar + 405
       rightArrow = xFileBar + 435
-
       # Detect arrow press (LEFT)
       iPressedMyLeftArrow, tempCloseLeftArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, leftArrow, leftArrow + 20, 45, 65, tempCloseLeftArrow)
       # Detect arrow press (RIGHT)
       iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 10, 45, 65, tempCloseRightArrow)
       
+      # ----------LISTING ALL FILES----------
+      listDir, xCell, yCell = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker)
+      # -------------------------------------
+      
+      # ----------DETECT SCROLL MOUSE----------
+      for event in events:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+          #print(scrollMarker)
+          if event.button == 4:
+            scrollMarker -= 10
+          elif event.button == 5:
+            scrollMarker += 10
+        if scrollMarker < 0:
+          scrollMarker = 0
+      # ---------------------------------------
+
+      # --------- CHANGING DIRECTORY ---------
       if iPressedMyLeftArrow:
-        print("BEFORE : ", myPath)
         myPath = fileDir.popPathElement(myPath)
-        print("AFTER : ", myPath)
+      # --------------------------------------
 
       # ------------Change Button Color While pressed------------
       # Decrypt Button
@@ -259,7 +271,7 @@ while playing:
       # LABEL
       style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       # IMAGES
-      xHouseIcon = style.drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar)
+      xHouseIcon = style.drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar, xScreen)
       # PATHS
       style.drawPath(myPath, xHouseIcon)
 

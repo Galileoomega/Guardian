@@ -349,7 +349,10 @@ def showErrorMessage(myText, xScreen):
   lblError = fontError.render(str(myText), True, red)
   screen.blit(lblError, (xScreen, 400))
 
-def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar):
+def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar, xScreen):
+
+  # Draw a rectangle for scrolling files
+  pygame.draw.rect(screen, black, (xFileBar + 410, 0, xScreen, 80))
 
   # FILE BROWSER: Arrows
   leftArrow = xFileBar + 405
@@ -360,7 +363,6 @@ def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xH
   screen.blit(imageUnlock, (xDecryptButton + 25, yDecryptButton + 45))
 
   # ARROWS for path navigation
-  print(leftArrow)
   screen.blit(imageLeftArrow, (leftArrow, 45))
   screen.blit(imageRightArrow, (rightArrow, 45))
 
