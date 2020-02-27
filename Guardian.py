@@ -2,7 +2,7 @@
 
 #####################################################################################
 ########                      Guardian Main                                  ########
-########                          v1.0                                       ########
+########                          v1.2                                       ########
 #####################################################################################
 
 # Catch error if the installation is not good
@@ -207,7 +207,7 @@ while playing:
     # -----------------------------------------------------------
     
   # DRAW MAIN TITLE
-  style.drawMainTitle(xScreen)
+  xMainTitle = style.drawMainTitle(xScreen, loginIsOk, xMainTitle)
 
   if not(makingAnimation):
     if loginIsOk:
@@ -237,11 +237,13 @@ while playing:
         mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
 
       # BOX
-      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton = style.drawUiBox(listOfColor, xScreen, yScreen)
+      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton = style.drawUiBox(listOfColor, xScreen, yScreen)
       # LABEL
-      style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList)
+      style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       # IMAGES
-      style.drawImages(xEncryptButton, xDecryptButton)
+      style.drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton)
+      # PATHS
+      style.drawPath(myPath)
 
       if not(showBrowser):
         # -----------FILE BAR-----------

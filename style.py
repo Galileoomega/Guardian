@@ -108,6 +108,7 @@ imageFolderPath = os.path.join(THIS_FOLDER, 'Resources\\folder-invoices.png')
 imageFilePath = os.path.join(THIS_FOLDER, 'Resources\\file-image.png')
 imageRightArrowPath = os.path.join(THIS_FOLDER, 'Resources\\right-arrow.png')
 imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
+imageHousePATH = os.path.join(THIS_FOLDER, 'Resources\\house.png')
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
@@ -137,6 +138,7 @@ imageFolder = pygame.image.load(imageFolderPath)
 imageFile = pygame.image.load(imageFilePath)
 imageRightArrow = pygame.image.load(imageRightArrowPath)
 imageLeftArrow = pygame.image.load(imageLeftArrowPath)
+imageHouse = pygame.image.load(imageHousePATH)
 
 # OTHER
 separator = 10
@@ -282,8 +284,13 @@ def drawUiBox(listOfColor, xScreen, yScreen):
   # --------Update Var Location--------
   xFileBar = 90
   xPathList = (xScreen / 2) - (widthListBar / 2)
-  xEncryptButton = ((xScreen / 2) - (widthEncryptButton / 2)) - 100
-  xDecryptButton = ((xScreen / 2) - (widthDecryptButton / 2)) + 100
+
+  xEncryptButton = 70
+  yEncrypButton = yScreen - lengthEncryptButton - 80
+
+  xDecryptButton = 40 + widthEncryptButton + 190
+  yDecryptButton = yScreen - lengthDecryptButton - 80
+
   xAddButton = xFileBar + widthBar + 35
   # -----------------------------------
 
@@ -301,7 +308,7 @@ def drawUiBox(listOfColor, xScreen, yScreen):
   pygame.draw.rect(screen, listOfColor[9], (xFileBar + widthBar + 37, yFileBar + 12, 21, 2))
   pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
 
-  return xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton
+  return xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton
   
 # FILE BROWSER: FILE OPENNING (BACKGROUND)
 def browserDialog(xDialogBrowser, yDialogBrowser):
@@ -350,15 +357,19 @@ def browserDialogContent(element, separator, xDialogBrowser, yDialogBrowser):
   return separator
 
 # Draw main Title
-def drawMainTitle(xScreen):
+def drawMainTitle(xScreen, loginIsOk, xMainTitle):
   # Main LABEL
-  xMainTitle = (xScreen / 2) - 90
   yMainTitle = 20
+  if loginIsOk:
+    xMainTitle = xScreen - 300
+  else:
+    xMainTitle = (xScreen / 2) - 90
 
   screen.blit(lblMainTitle, (xMainTitle, yMainTitle))
+  return xMainTitle
 
 # Draw all Label
-def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList):
+def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton):
   # --------Update Var Location--------
   # -----------------------------------
 
@@ -366,15 +377,25 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList):
   screen.blit(lblFile, (xFilelbl - 40, yFilelbl))
   screen.blit(lblDecryptButton, (xDecryptButton + 16, yDecryptButton + 11))
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
-  screen.blit(lblAwaiting, (xFileBar + 5, yFileBar + 60))
-  screen.blit(lblStatus, (xFileBar + 300, yFileBar + 60))
+  screen.blit(lblAwaiting, (xFileBar - 50, yFileBar + 80))
+  screen.blit(lblStatus, (xFileBar + 250, yFileBar + 80))
+
+# Draw the TOP PATH
+def drawPath(myPath):
+  
+  # THE HOUSE ICON
+  screen.blit(imageHouse, (xFileBar + 390, 45))
+  
+  # THE PATH
+  lblMyPath = fontError.render(str(myPath), True, halfWhite)
+  screen.blit(lblMyPath, (xFileBar + 420, 46))
 
 # SHOW AN ERROR MESSAGE WHEN CREDENTIALS ARE WRONG
 def showErrorMessage(myText, xScreen):
   lblError = fontError.render(str(myText), True, red)
   screen.blit(lblError, (xScreen, 400))
 
-def drawImages(xEncryptButton, xDecryptButton):
+def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton):
   # USER ICON
   #screen.blit(imageUser, (10, 10))
   screen.blit(imageLock, (xEncryptButton + 25, yEncrypButton + 45))
