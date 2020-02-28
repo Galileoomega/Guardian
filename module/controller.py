@@ -15,6 +15,11 @@ tempFileButton7 = False
 tempFileButton8 = False
 tempFileButton9 = False
 tempFileButton10 = False
+tempFileButton11 = False
+tempFileButton12 = False
+tempFileButton13 = False
+tempFileButton14 = False
+tempFileButton15 = False
 
 def filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):
 	try:
@@ -39,6 +44,11 @@ def filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):
 		tempFileButton8 = data['tempFileButton8']
 		tempFileButton9 = data['tempFileButton9']
 		tempFileButton10 = data['tempFileButton10']
+		tempFileButton11 = data['tempFileButton11']
+		tempFileButton12 = data['tempFileButton12']
+		tempFileButton13 = data['tempFileButton13']
+		tempFileButton14 = data['tempFileButton14']
+		tempFileButton15 = data['tempFileButton15']
 	else:
 		tempFileButton0 = False
 		tempFileButton1 = False
@@ -51,6 +61,11 @@ def filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):
 		tempFileButton8 = False
 		tempFileButton9 = False
 		tempFileButton10 = False
+		tempFileButton11 = False
+		tempFileButton12 = False
+		tempFileButton13 = False
+		tempFileButton14 = False
+		tempFileButton15 = False
 	iPressedMyFile0, tempFileButton0 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[0], yCellList[0] + 25, tempFileButton0)
 	iPressedMyFile1, tempFileButton1 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[1], yCellList[1] + 25, tempFileButton1)
 	iPressedMyFile2, tempFileButton2 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[2], yCellList[2] + 25, tempFileButton2)
@@ -62,8 +77,11 @@ def filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):
 	iPressedMyFile8, tempFileButton8 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[8], yCellList[8] + 25, tempFileButton8)
 	iPressedMyFile9, tempFileButton9 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[9], yCellList[9] + 25, tempFileButton9)
 	iPressedMyFile10, tempFileButton10 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[10], yCellList[10] + 25, tempFileButton10)
-	if tempFileButton0:
-		print(tempFileButton0, '10')
+	iPressedMyFile11, tempFileButton11 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[11], yCellList[11] + 25, tempFileButton11)
+	iPressedMyFile12, tempFileButton12 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[12], yCellList[12] + 25, tempFileButton12)
+	iPressedMyFile13, tempFileButton13 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[13], yCellList[13] + 25, tempFileButton13)
+	iPressedMyFile14, tempFileButton14 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[14], yCellList[14] + 25, tempFileButton14)
+	iPressedMyFile15, tempFileButton15 = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList[15], yCellList[15] + 25, tempFileButton15)
 
 	f = open(buttonStatePath, 'w')
 
@@ -78,7 +96,12 @@ def filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):
 		'tempFileButton7': str(tempFileButton7),
 		'tempFileButton8': str(tempFileButton8),
 		'tempFileButton9': str(tempFileButton9),
-		'tempFileButton10': str(tempFileButton10)
+		'tempFileButton10': str(tempFileButton10),
+		'tempFileButton11': str(tempFileButton11),
+		'tempFileButton12': str(tempFileButton12),
+		'tempFileButton13': str(tempFileButton13),
+		'tempFileButton14': str(tempFileButton14),
+		'tempFileButton15': str(tempFileButton15)
 	}
 
 	f.write(json.dumps(x))

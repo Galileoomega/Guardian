@@ -1,5 +1,5 @@
 # Listing and Place All files
-import os, pygame, style, re, mouseChanger
+import os, pygame, style, re, mouseChanger, json
 from multiprocessing import Process
 pygame.init()
 
@@ -135,7 +135,6 @@ def buildController(yCellList):
   f.close()
   # ----------------------------------------------------
 
-
 # Get all the files in the directory (myPath) similar to a ls 
 def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList):
   listDir = os.listdir(myPath)
@@ -179,8 +178,17 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse):
     screen.blit(imageFile, ((xCell - 30), (yCell)))
   #---------------------------  
 
-  # Separator beetween files
-  style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), whiteGrey, 0.4)
+  # Separator beetween files ( BACKGROUND )
+  buttonStatePath = os.path.join(THIS_FOLDER, 'module\\buttonState.json')
+
+  with open(buttonStatePath) as f:
+    data = json.load(f)
+
+  ########################################################################### NEED TO CHANGE THE COMPARAISON (NameOfFile) #########################
+  if data[str(nameOfFile)] == True:
+    style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.4)
+  else:
+    style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.4)
 
   # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, halfWhite)
