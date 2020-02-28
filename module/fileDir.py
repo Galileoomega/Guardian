@@ -1,5 +1,6 @@
 # Listing and Place All files
-import os, pygame, style, re
+import os, pygame, style, re, mouseChanger
+from multiprocessing import Process
 pygame.init()
 
 # GET current path
@@ -29,6 +30,7 @@ screen = pygame.display.set_mode((xScreen, yScreen))
 
 xCell = 550
 yCell = 100
+yCellList = []
 
 # Color
 black = (40, 40, 43)
@@ -45,6 +47,7 @@ listOfColor = [grey, grey, whiteGrey, grey, grey, darkBlack, grey, grey, grey, b
 robotoLightTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Light.ttf')
 imageFolderPath = os.path.join(THIS_FOLDER, 'Resources\\folder.png')
 imageFilePath = os.path.join(THIS_FOLDER, 'Resources\\file-image.png')
+controllerPath = os.path.join(THIS_FOLDER, 'module\\controller.py')
 # ----------------------
 
 fontText = pygame.font.Font(robotoLightTTF, 13)
@@ -54,10 +57,77 @@ imageFolder = pygame.image.load(imageFolderPath)
 imageFile = pygame.image.load(imageFilePath)
 # -----------------------
 
+iPressedMyFiles = False
+tempFileButtons = False
+
 # ----------------------------------------------
 
+def buildController(yCellList):
+
+  # ----------------- CONTROLLER BUILD -----------------
+  f = open(controllerPath, "w")
+  
+  f.write(
+    "import mouseChanger, os, json" + "\n" + 
+    "THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))\n" + 
+    "buttonStatePath = os.path.join(THIS_FOLDER, 'buttonState.json')\n\n" + 
+    "xCell = 550" + "\n\n"
+  )
+
+  for u in range(0, len(yCellList)):
+    f.write("tempFileButton" + str(u) + " = False\n")
+
+  f.write(
+    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, tempFileButtons):\n" + 
+    "\ttry:"
+    "\n\t\twith open(buttonStatePath) as f:\n" + 
+    "\t\t\tdata = json.load(f)\n" + 
+    "\t\t\tiHaveMyData = True\n" + 
+    "\texcept json.decoder.JSONDecodeError:\n" + 
+    "\t\tiHaveMyData = False\n\n"
+    "\tif iHaveMyData:\n"
+  )
+
+  for u in range(0, len(yCellList)):
+    f.write("\t\ttempFileButton" + str(u) + " = data['tempFileButton" + str(u) + "']\n")
+  
+  f.write("\telse:\n")
+
+  for u in range(0, len(yCellList)):
+    f.write("\t\ttempFileButton" + str(u) + " = False\n")
+
+  for u in range(0, len(yCellList)):
+    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickButtonDetect(xMouse, yMouse, xCell, xCell + 50, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 50, tempFileButton" + str(u) + ")" + "\n")
+  
+  for u in range(0, len(yCellList)):
+    f.write(
+      "\tif iPressedMyFile" + str(u) + ":\n"
+      "\t\tprint(iPressedMyFile"+ str(u) +")" + "\n"
+    )
+
+  f.write(
+    "\n\tf = open(buttonStatePath, 'w')\n\n" + 
+    "\tx = { \n"
+  )
+
+  for u in range(0, len(yCellList)):
+    if not(u == len(yCellList) - 1):
+      f.write("\t\t'tempFileButton" + str(u) + "': str(tempFileButton" + str(u) + "),\n")
+    else:
+      f.write("\t\t'tempFileButton" + str(u) + "': str(tempFileButton" + str(u) + ")\n")
+
+  f.write(
+    "\t}\n\n" + 
+    "\tf.write(json.dumps(x))\n" + 
+    "\tf.close()\n"
+  )
+  
+  f.close()
+  # ----------------------------------------------------
+
+
 # Get all the files in the directory (myPath) similar to a ls 
-def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker):
+def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList):
   listDir = os.listdir(myPath)
   listDir.sort()
 
@@ -66,18 +136,23 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker):
     # Delete useless file to show
     if re.search('NTUSER.DAT.*', element):
       break
-      
+
+    # Change the coordinates (Y)
     yCell = listDir.index(element) * 40 + 100 - scrollMarker
 
-    #if yCell >= 1000:
-      #yCell = 300
+    # ------- Add Each coordinates into a list -------
+    if len(yCellList) < len(listDir):
+      if not(len(yCellList) > len(listDir)):
+        yCellList.append(yCell)
+    # ------------------------------------------------
 
-    xCell, yCell = renderFile(element, xCell, yCell, xScreen)
+    # Call the function which will draw the UI element for this file
+    xCell, yCell = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse)
 
-  return listDir, xCell, yCell
+  return listDir, xCell, yCell, yCellList
 
 # FOR....
-def renderFile(nameOfFile, xCell, yCell, xScreen):
+def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse):
 
   # Size of boxes management
   lenOfBoxes = int(xScreen - xCell - 10)
@@ -97,7 +172,7 @@ def renderFile(nameOfFile, xCell, yCell, xScreen):
   # Separator beetween files
   style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxes, 30), whiteGrey, 0.4)
 
-  # Files Names
+  # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, halfWhite)
   screen.blit(lblNameOfFile, (xCell, yCell))
 

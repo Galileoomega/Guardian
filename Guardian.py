@@ -10,12 +10,13 @@ try:
   import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
   from cryptography.fernet import Fernet
   from multiprocessing import Process
-  from module import engine, backModule, idVector, fileDir
+  from module import engine, backModule, idVector, fileDir, controller
+  from importlib import reload
 
   playing = True
 except ModuleNotFoundError:
   for u in range(0, 5):
-    print("!! FATAL ERROR: You have to follow the installation instruction (README.md) !!")
+    print("ERROR: Missing module...")
   playing = False
   input()
 pygame.init()
@@ -141,6 +142,10 @@ makingAnimation = False
 iPressedMyLeftArrow = tempCloseLeftArrow = False
 tempCloseRightArrow = iPressedMyRightArrow = False
 fullscreen = False
+tempFileButtons = False
+iPressedMyFiles = False
+tempFileButtons0 = False
+tempFileButtons1 = False
 
 # OTHER
 userPassword = ""
@@ -160,6 +165,7 @@ xCell = 550
 yCell = 100
 listDir = []
 scrollMarker = 0
+yCellList = []
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -196,7 +202,7 @@ while playing:
         screen = pygame.display.set_mode(scrsize,pygame.RESIZABLE)
         changed = True
 
-    # ---------DETECT AN F11 TO PUT WINDOW IN FULLSCREEN---------
+    # ---------DETECT AN F11/ESCAPE TO PUT WINDOW IN FULLSCREEN---------
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_F11:
           modes = pygame.display.list_modes()
@@ -236,17 +242,23 @@ while playing:
       iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 10, 45, 65, tempCloseRightArrow)
       
       # ----------LISTING ALL FILES----------
-      listDir, xCell, yCell = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker)
+      listDir, xCell, yCell, yCellList = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList)
       # -------------------------------------
+
+      # --------Build the file wich contain all click controller--------
+      fileDir.buildController(yCellList)
+      # ------------------------------------------------------------
+
+      # ------------ Detect all click on the file ------------
+      controller = reload(controller)
+      iPressedMyFiles = controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, tempFileButtons)
+
+      #print(iPressedMyFile0)
+      # ------------------------------------------------------
       
       # ----------DETECT SCROLL MOUSE----------
       for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
-
-          #if not(iHaveMyMarker):
-          #  myMarker = yCell
-          #  iHaveMyMarker = True
-          #if myMarker > yCell:
           # SCROLL UP
           if event.button == 5:
             scrollMarker += 15
@@ -260,6 +272,7 @@ while playing:
 
       # --------- CHANGING DIRECTORY ---------
       if iPressedMyLeftArrow:
+        yCellList = []
         myPath = fileDir.popPathElement(myPath)
       # --------------------------------------
 
