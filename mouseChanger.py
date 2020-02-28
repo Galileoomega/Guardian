@@ -45,12 +45,14 @@ def flyDetector(xMouse, yMouse, xLeft, xRight, yTop, yBottom):
   
   return mouseSkinChanged
 
+
 # Can Change the color of a button (similar to flyDetector())
 def flyDetectorButtons(permissionToChange, listOfColor, index, baseColor):
   if permissionToChange:
     listOfColor[index] = lavanda
   else:
     listOfColor[index] = baseColor
+
 
 # Detect when the mouse click on an BUTTON
 def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
@@ -81,6 +83,42 @@ def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked
     iPressedMyButton = True
     
   return iPressedMyButton, tempIClicked
+
+
+# Detect when the mouse click on an FILE FIELD
+def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
+  iClicked = False
+  if xMouse < xRight + 20:
+    if xMouse > xLeft - 5:
+      if yMouse < yBottom:
+        if yMouse > yTop - 5:
+          if tempIClicked:
+            if pygame.mouse.get_pressed() == (0,0,0):
+              iClicked = True 
+              #tempIClicked = False
+
+          if pygame.mouse.get_pressed() == (1,0,0):
+            tempIClicked = True
+        else:
+          if pygame.mouse.get_pressed() == (1,0,0):
+            tempIClicked = False
+      else:
+        if pygame.mouse.get_pressed() == (1,0,0):
+          tempIClicked = False
+    else:
+      if pygame.mouse.get_pressed() == (1,0,0):
+        tempIClicked = False
+  else:
+    if pygame.mouse.get_pressed() == (1,0,0):
+      tempIClicked = False
+
+  if not(iClicked):
+    iPressedMyButton = False
+  else:
+    iPressedMyButton = True
+    
+  return iPressedMyButton, tempIClicked
+
 
 # Detect when the mouse click on an INPUT BAR
 def clickBarDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):

@@ -78,7 +78,7 @@ def buildController(yCellList):
     f.write("tempFileButton" + str(u) + " = False\n")
 
   f.write(
-    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse):\n" + 
+    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):\n" + 
     "\ttry:"
     "\n\t\twith open(buttonStatePath) as f:\n" + 
     "\t\t\tdata = json.load(f)\n" + 
@@ -100,13 +100,20 @@ def buildController(yCellList):
     f.write("\t\ttempFileButton" + str(u) + " = False\n")
 
   for u in range(0, len(yCellList)):
-    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickButtonDetect(xMouse, yMouse, xCell, xCell + 50, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 50, tempFileButton" + str(u) + ")" + "\n")
+    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ")" + "\n")
   
-  for u in range(0, len(yCellList)):
-    f.write(
-      "\tif tempFileButton" + str(u) + ":\n"
-      "\t\tprint(tempFileButton"+ str(u) +", '" + str(u) + "')" + "\n"
-    )
+  # ------DEBUG------
+  #for u in range(0, len(yCellList)):
+  #f.write(
+  #  "\tif tempFileButton" + str(0) + ":\n"
+  #  "\t\tprint(tempFileButton"+ str(0) +", '" + str(u) + "')" + "\n"
+  #)
+  #for u in range(0, len(yCellList)):
+  #  f.write(
+  #    "\tif iPressedMyFile" + str(u) + ":\n" + 
+  #    "\t\tprint('OverFly " + str(u) + "')\n" 
+  #  )
+  # -----------------
 
   f.write(
     "\n\tf = open(buttonStatePath, 'w')\n\n" + 
@@ -150,19 +157,19 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     # ------------------------------------------------
 
     # Call the function which will draw the UI element for this file
-    xCell, yCell = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse)
+    xCell, yCell, lenOfBoxesOfFiles = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse)
 
-  return listDir, xCell, yCell, yCellList
+  return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles
 
 # FOR....
 def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse):
 
   # Size of boxes management
-  lenOfBoxes = int(xScreen - xCell - 10)
-  if lenOfBoxes < 30:
-    lenOfBoxes = 30
-  if lenOfBoxes > 200:
-    lenOfBoxes = 200
+  lenOfBoxesOfFiles = int(xScreen - xCell - 10)
+  if lenOfBoxesOfFiles < 30:
+    lenOfBoxesOfFiles = 30
+  if lenOfBoxesOfFiles > 200:
+    lenOfBoxesOfFiles = 200
 
   # ---SEE If Its A Folder Or File---
   x = re.search("\.", nameOfFile)
@@ -173,13 +180,13 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse):
   #---------------------------  
 
   # Separator beetween files
-  style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxes, 30), whiteGrey, 0.4)
+  style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), whiteGrey, 0.4)
 
   # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, halfWhite)
   screen.blit(lblNameOfFile, (xCell, yCell))
 
-  return xCell, yCell
+  return xCell, yCell, lenOfBoxesOfFiles
 
 # Remove one element from the path 
 def popPathElement(myPath):

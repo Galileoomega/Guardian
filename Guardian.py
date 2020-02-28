@@ -166,6 +166,7 @@ yCell = 100
 listDir = []
 scrollMarker = 0
 yCellList = []
+lenOfBoxesOfFiles = 200
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -242,7 +243,7 @@ while playing:
       iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 10, 45, 65, tempCloseRightArrow)
       
       # ----------LISTING ALL FILES----------
-      listDir, xCell, yCell, yCellList = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList)
+      listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList)
       # -------------------------------------
 
       # --------Build the file wich contain all click controller--------
@@ -251,7 +252,7 @@ while playing:
 
       # ------------ Detect all click on the file ------------
       controller = reload(controller)
-      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse)
+      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles)
       # ------------------------------------------------------
       
       # ----------DETECT SCROLL MOUSE----------
