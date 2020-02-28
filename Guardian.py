@@ -242,11 +242,18 @@ while playing:
       # ----------DETECT SCROLL MOUSE----------
       for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
-          #print(scrollMarker)
+
+          #if not(iHaveMyMarker):
+          #  myMarker = yCell
+          #  iHaveMyMarker = True
+          #if myMarker > yCell:
+          # SCROLL UP
+          if event.button == 5:
+            scrollMarker += 15
+          # SCROLL DOWN
           if event.button == 4:
-            scrollMarker -= 10
-          elif event.button == 5:
-            scrollMarker += 10
+            scrollMarker -= 15
+          
         if scrollMarker < 0:
           scrollMarker = 0
       # ---------------------------------------

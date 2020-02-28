@@ -59,10 +59,18 @@ imageFile = pygame.image.load(imageFilePath)
 # Get all the files in the directory (myPath) similar to a ls 
 def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker):
   listDir = os.listdir(myPath)
+  listDir.sort()
+
   for element in listDir:
+
+    # Delete useless file to show
+    if re.search('NTUSER.DAT.*', element):
+      break
+      
     yCell = listDir.index(element) * 40 + 100 - scrollMarker
-    if yCell >= 1000:
-      yCell = 300
+
+    #if yCell >= 1000:
+      #yCell = 300
 
     xCell, yCell = renderFile(element, xCell, yCell, xScreen)
 
