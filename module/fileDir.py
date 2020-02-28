@@ -78,11 +78,14 @@ def buildController(yCellList):
     f.write("tempFileButton" + str(u) + " = False\n")
 
   f.write(
-    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, tempFileButtons):\n" + 
+    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse):\n" + 
     "\ttry:"
     "\n\t\twith open(buttonStatePath) as f:\n" + 
     "\t\t\tdata = json.load(f)\n" + 
-    "\t\t\tiHaveMyData = True\n" + 
+    "\t\t\tif len(data) == len(yCellList):\n" + 
+    "\t\t\t\tiHaveMyData = True\n" + 
+    "\t\t\telse:\n"
+    "\t\t\t\tiHaveMyData = False\n" + 
     "\texcept json.decoder.JSONDecodeError:\n" + 
     "\t\tiHaveMyData = False\n\n"
     "\tif iHaveMyData:\n"
@@ -101,8 +104,8 @@ def buildController(yCellList):
   
   for u in range(0, len(yCellList)):
     f.write(
-      "\tif iPressedMyFile" + str(u) + ":\n"
-      "\t\tprint(iPressedMyFile"+ str(u) +")" + "\n"
+      "\tif tempFileButton" + str(u) + ":\n"
+      "\t\tprint(tempFileButton"+ str(u) +", '" + str(u) + "')" + "\n"
     )
 
   f.write(

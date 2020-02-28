@@ -251,9 +251,7 @@ while playing:
 
       # ------------ Detect all click on the file ------------
       controller = reload(controller)
-      iPressedMyFiles = controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, tempFileButtons)
-
-      #print(iPressedMyFile0)
+      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse)
       # ------------------------------------------------------
       
       # ----------DETECT SCROLL MOUSE----------
