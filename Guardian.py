@@ -12,6 +12,7 @@ try:
   from multiprocessing import Process
   from module import engine, backModule, idVector, fileDir, controller
   from importlib import reload
+  from pygame.locals import *
 
   playing = True
 except ModuleNotFoundError:
@@ -41,7 +42,10 @@ clock = pygame.time.Clock()
 xScreen = 750
 yScreen = 550
 
-screen = pygame.display.set_mode((xScreen, yScreen), pygame.RESIZABLE)
+flags = RESIZABLE | DOUBLEBUF | HWSURFACE
+flags2 = FULLSCREEN | DOUBLEBUF | HWSURFACE
+
+screen = pygame.display.set_mode((xScreen, yScreen), flags)
 
 # File Input Bar
 lengthBar = 25
@@ -190,6 +194,7 @@ while playing:
 
   # EVENTS
   events = pygame.event.get()
+  pygame.event.set_allowed([QUIT, KEYDOWN, VIDEORESIZE, MOUSEBUTTONDOWN])
   for event in events:
     if event.type == pygame.KEYDOWN:
         keyPress = True
@@ -200,7 +205,7 @@ while playing:
     # UPDATE The Size Of The Screen
     if event.type == pygame.VIDEORESIZE:
         scrsize = event.size  # or event.w, event.h
-        screen = pygame.display.set_mode(scrsize,pygame.RESIZABLE)
+        screen = pygame.display.set_mode(scrsize,flags)
         changed = True
 
     # ---------DETECT AN F11/ESCAPE TO PUT WINDOW IN FULLSCREEN---------
@@ -211,11 +216,11 @@ while playing:
             print ('16-bit not supported')
           else:
             print ('Found Resolution:', modes[0])
-          screen = pygame.display.set_mode(modes[0], pygame.FULLSCREEN)
+          screen = pygame.display.set_mode(modes[0], flags2)
           xScreen, yScreen = modes[0]
         
         if event.key == pygame.K_ESCAPE:
-          screen = pygame.display.set_mode((xScreen, yScreen), pygame.RESIZABLE)
+          screen = pygame.display.set_mode((xScreen, yScreen), flags)
           xScreen = 750
           yScreen = 550
     # -----------------------------------------------------------
