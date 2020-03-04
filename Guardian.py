@@ -22,6 +22,8 @@ except ModuleNotFoundError:
   input()
 pygame.init()
 
+pygame.event.set_blocked(pygame.MOUSEMOTION)
+
 # GET current path
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 robotoRegularTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Regular.ttf')
@@ -42,10 +44,13 @@ clock = pygame.time.Clock()
 xScreen = 750
 yScreen = 550
 
+
 flags = RESIZABLE | DOUBLEBUF | HWSURFACE
 flags2 = FULLSCREEN | DOUBLEBUF | HWSURFACE
 
 screen = pygame.display.set_mode((xScreen, yScreen), flags)
+
+screen.set_alpha(None)
 
 # File Input Bar
 lengthBar = 25
@@ -171,6 +176,7 @@ listDir = []
 scrollMarker = 0
 yCellList = []
 lenOfBoxesOfFiles = 200
+activeFile = ''
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -194,7 +200,7 @@ while playing:
 
   # EVENTS
   events = pygame.event.get()
-  pygame.event.set_allowed([QUIT, KEYDOWN, VIDEORESIZE, MOUSEBUTTONDOWN])
+  
   for event in events:
     if event.type == pygame.KEYDOWN:
         keyPress = True
@@ -228,6 +234,7 @@ while playing:
   # DRAW MAIN TITLE
   xMainTitle = style.drawMainTitle(xScreen, loginIsOk, xMainTitle)
 
+  # --------------------------HOME SCREEN--------------------------
   if not(makingAnimation):
     if loginIsOk:
       
@@ -247,8 +254,23 @@ while playing:
       # Detect arrow press (RIGHT)
       iPressedMyRightArrow, tempCloseRightArrow = mouseChanger.clickButtonDetect(xMouse, yMouse, rightArrow, rightArrow + 10, 45, 65, tempCloseRightArrow)
       
+      # ------------Change Button Color While pressed------------
+      # Decrypt Button
+      mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
+      # Encrypt Button
+      mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
+      # Add Button
+      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
+      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
+      # ---------------------------------------------------------
+
+      # BOX
+      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton = style.drawUiBox(listOfColor, xScreen, yScreen)
+      # LABEL
+      style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
+      
       # ----------LISTING ALL FILES----------
-      listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList)
+      listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList)
       # -------------------------------------
 
       # --------Build the file wich contain all click controller--------
@@ -280,24 +302,11 @@ while playing:
         myPath = fileDir.popPathElement(myPath)
       # --------------------------------------
 
-      # ------------Change Button Color While pressed------------
-      # Decrypt Button
-      mouseChanger.flyDetectorButtons(tempDecryptButton, listOfColor, 4, grey)
-      # Encrypt Button
-      mouseChanger.flyDetectorButtons(tempEncryptButton, listOfColor, 3, grey)
-      # Add Button
-      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 9, black)
-      mouseChanger.flyDetectorButtons(tempIClickedAddButton, listOfColor, 10, black)
-      # ---------------------------------------------------------
-
-      # BOX
-      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton = style.drawUiBox(listOfColor, xScreen, yScreen)
-      # LABEL
-      style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       # IMAGES
       xHouseIcon = style.drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar, xScreen)
+
       # PATHS
-      style.drawPath(myPath, xHouseIcon)
+      style.drawPath(myPath, xHouseIcon, xScreen)
 
       # -----------FILE BAR-----------
       # Detect click On FILE BAR
@@ -339,8 +348,10 @@ while playing:
         u = littleFont.render(listOfPath[u], True, white)
         screen.blit(u, (xElement, yElement))
       # -------------------------------------
+  # ---------------------------------------------------------------
 
-  # ------------------WINDOW LOGIN------------------
+
+  # -------------------------WINDOW LOGIN--------------------------
   if not(loginIsOk):
 
     # Background Of Window Login
@@ -392,7 +403,7 @@ while playing:
     # Blit the text on the screen
     textinputPassword = font.render(hideUserPassword, True, white)
     screen.blit(textinputPassword, (xLoginWindow + 25, yPasswordBar + 3))
-  # ------------------------------------------------
+  # ---------------------------------------------------------------
 
   if makingAnimation:
     if loginIsOk:

@@ -32,6 +32,12 @@ xCell = 550
 yCell = 100
 yCellList = []
 
+# File Input Bar
+lengthBar = 25
+widthBar = 270
+xFileBar = (xScreen / 2) - (widthBar / 2)
+yFileBar = 100
+
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
@@ -59,6 +65,8 @@ imageFile = pygame.image.load(imageFilePath)
 
 iPressedMyFiles = False
 tempFileButtons = False
+
+activeFile = ""
 
 # ----------------------------------------------
 
@@ -140,6 +148,7 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
   listDir = os.listdir(myPath)
   listDir.sort()
   indexOfElement = 0
+  activeFiles = ""
 
   for element in listDir:
 
@@ -157,19 +166,23 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     # ------------------------------------------------
 
     # Call the function which will draw the UI element for this file
-    xCell, yCell, lenOfBoxesOfFiles = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement)
+    xCell, yCell, lenOfBoxesOfFiles, activeFile = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement)
 
     # Get the index of the nameOfFile
     indexOfElement += 1
 
-  return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles
+    if activeFile != "":
+
+      takingFileName(element, myPath)
+      activeFiles = activeFile
+
+  return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles
 
 # FOR....
 def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement):
 
   # Concatenate the nameOfFile
   myFile = "tempFileButton" + str(indexOfElement)
-
 
   # Size of boxes management
   lenOfBoxesOfFiles = int(xScreen - xCell - 10)
@@ -207,16 +220,17 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
     if corelation:
       style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
       colorFiles = white
+      activeFile = myFile
     else:
       style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
+      activeFile = ""
       colorFiles = halfWhite
-
 
   # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, colorFiles)
   screen.blit(lblNameOfFile, (xCell, yCell))
 
-  return xCell, yCell, lenOfBoxesOfFiles
+  return xCell, yCell, lenOfBoxesOfFiles, activeFile
 
 # Remove one element from the path 
 def popPathElement(myPath):
@@ -236,3 +250,22 @@ def popPathElement(myPath):
       myPath = "C:/"
 
   return myPath
+
+def takingFileName(element, myPath):
+  myNewPath = ""
+  count = 0
+  for u in myPath:
+    if u == '\\':
+      count += 1
+    if count >= 2:
+      break
+
+    myNewPath += u 
+  
+  myNewPath += "\\...\\"
+  lblPath = fontText.render(str(myNewPath + element), True, halfWhite)
+
+  # NEED TO RESIZE PATH
+
+  screen.blit(lblPath, (xFileBar - 18, yFileBar + 4))
+
