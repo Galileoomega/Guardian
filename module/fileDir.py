@@ -139,6 +139,7 @@ def buildController(yCellList):
 def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList):
   listDir = os.listdir(myPath)
   listDir.sort()
+  indexOfElement = 0
 
   for element in listDir:
 
@@ -156,19 +157,26 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     # ------------------------------------------------
 
     # Call the function which will draw the UI element for this file
-    xCell, yCell, lenOfBoxesOfFiles = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse)
+    xCell, yCell, lenOfBoxesOfFiles = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement)
+
+    # Get the index of the nameOfFile
+    indexOfElement += 1
 
   return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles
 
 # FOR....
-def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse):
+def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement):
+
+  # Concatenate the nameOfFile
+  myFile = "tempFileButton" + str(indexOfElement)
+
 
   # Size of boxes management
   lenOfBoxesOfFiles = int(xScreen - xCell - 10)
-  if lenOfBoxesOfFiles < 30:
-    lenOfBoxesOfFiles = 30
-  if lenOfBoxesOfFiles > 200:
-    lenOfBoxesOfFiles = 200
+  if lenOfBoxesOfFiles < 100:
+    lenOfBoxesOfFiles = 100
+  if lenOfBoxesOfFiles > 300:
+    lenOfBoxesOfFiles = 300
 
   # ---SEE If Its A Folder Or File---
   x = re.search("\.", nameOfFile)
@@ -176,22 +184,36 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse):
     screen.blit(imageFolder, ((xCell - 32), (yCell - 2)))
   else:
     screen.blit(imageFile, ((xCell - 30), (yCell)))
-  #---------------------------  
+  # ---------------------------------
 
   # Separator beetween files ( BACKGROUND )
   buttonStatePath = os.path.join(THIS_FOLDER, 'module\\buttonState.json')
 
+  # Open the buttonState.json to see wich button is active
   with open(buttonStatePath) as f:
     data = json.load(f)
 
-  ########################################################################### NEED TO CHANGE THE COMPARAISON (NameOfFile) #########################
-  if data[str(nameOfFile)] == True:
-    style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.4)
-  else:
-    style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.4)
+    # ------Translate str() to bool()------
+    try:
+      corelation1 = data[myFile]
+    except KeyError:
+      corelation1 = data["tempFileButton0"]
+    if corelation1 == 'False':
+      corelation = False
+    else:
+      corelation = True
+    # -------------------------------------
+
+    if corelation:
+      style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
+      colorFiles = white
+    else:
+      style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
+      colorFiles = halfWhite
+
 
   # BLIT Files Names
-  lblNameOfFile = fontText.render(str(nameOfFile), True, halfWhite)
+  lblNameOfFile = fontText.render(str(nameOfFile), True, colorFiles)
   screen.blit(lblNameOfFile, (xCell, yCell))
 
   return xCell, yCell, lenOfBoxesOfFiles
