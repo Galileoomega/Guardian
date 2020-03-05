@@ -1,6 +1,5 @@
 # Listing and Place All files
-import os, pygame, style, re, mouseChanger, json
-from multiprocessing import Process
+import os, pygame, style, re, mouseChanger, json, module.timeVar
 pygame.init()
 
 # GET current path
@@ -174,9 +173,13 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     if activeFile != "":
       if activeFile != tempActiveFile:
         oneTap = True
+        module.timeVar.fileChanged = True
+      else:
+        module.timeVar.fileChanged = False
       if oneTap:
         tempActiveFile = activeFile
         print(activeFile)
+        module.timeVar.fileName = element
         oneTap = False
       takingFileName(element, myPath)
       activeFiles = activeFile
@@ -251,11 +254,12 @@ def popPathElement(myPath):
         myPath = myPath[:-1]
       word = ''
       break
-    if myPath == "C:":
-      myPath = "C:/"
+  if myPath == "C:":
+    myPath = "C:\\"
 
   return myPath
 
+# Refrom myPath for input path
 def takingFileName(element, myPath):
   myNewPath = ""
   count = 0

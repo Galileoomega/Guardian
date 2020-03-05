@@ -100,8 +100,22 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
 
           if pygame.mouse.get_pressed() == (1,0,0):
             tempIClicked = True
+
+            #if (timeVar.time - timeVar.oldTime) <= 500:
+            #  print("time : ", time, "oldTime : ", timeVar.oldTime)
+            # print(timeVar.time - timeVar.oldTime)
+            #else:
+           #   timeVar.oldTime = pygame.time.get_ticks()
+
+            now = timeVar.time
+            
+            if now - timeVar.oldTime <= timeVar.double_click_duration:
+              timeVar.clickState = "double"
+            else:
+              timeVar.clickState = "single"
             timeVar.oldTime = pygame.time.get_ticks()
-            #print("iClicked at : ", pygame.time.get_ticks())
+            pygame.time.delay(50)
+
         else:
           if pygame.mouse.get_pressed() == (1,0,0):
             tempIClicked = False

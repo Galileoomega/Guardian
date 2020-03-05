@@ -284,10 +284,20 @@ while playing:
 
       # ------------ Detect all click on the file ------------
       controller = reload(controller)
+      timeVar.time = pygame.time.get_ticks()
+      timeVar.myPath = myPath
       controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time)
+
+      if timeVar.clickState == "double":
+        if myPath == "C:\\":
+          myPath = myPath[:-1]
+
+        myPath += "\\" + timeVar.fileName
+        timeVar.clickState = ""
+        pygame.time.delay(50)
       # ------------------------------------------------------
 
-      print(timeVar.oldTime)
+      #print(timeVar.oldTime)
       # ----------DETECT SCROLL MOUSE----------
       for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
