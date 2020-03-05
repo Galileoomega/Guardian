@@ -292,11 +292,13 @@ while playing:
       timeVar.myPath = myPath
       controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time)
       # ------------------------------------------------------
-
+      print(timeVar.clickState)
       # -----------GO INTO A FOLDER WHEN DOUBLE CLICK-----------
       x = fileDir.folderType(myPath + "\\" + timeVar.fileName)
       if not(x):
         if timeVar.clickState == "double":
+            timeVar.fileName = listDir[int(activeFiles[-1])]
+
             if myPath == "C:\\":
               myPath = myPath[:-1]
 

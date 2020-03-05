@@ -97,6 +97,7 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
             if pygame.mouse.get_pressed() == (0,0,0):
               iClicked = True 
               #tempIClicked = False
+              timeVar.clickState = ""
 
           if pygame.mouse.get_pressed() == (1,0,0):
             tempIClicked = True
