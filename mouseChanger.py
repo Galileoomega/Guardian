@@ -86,7 +86,7 @@ def clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked
 
 
 # Detect when the mouse click on an FILE FIELD
-def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked):
+def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, time, oldTime):
   iClicked = False
   if xMouse < xRight + 20:
     if xMouse > xLeft - 5:

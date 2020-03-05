@@ -177,6 +177,9 @@ scrollMarker = 0
 yCellList = []
 lenOfBoxesOfFiles = 200
 activeFile = ''
+oldTime = 0
+oneTap = False
+tempActiveFile = ""
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -197,6 +200,8 @@ while playing:
   screen.fill(black)
   # Get Mouse Position
   xMouse, yMouse = pygame.mouse.get_pos()
+  # Get Time Value
+  time = pygame.time.get_ticks()
 
   # EVENTS
   events = pygame.event.get()
@@ -270,7 +275,7 @@ while playing:
       style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       
       # ----------LISTING ALL FILES----------
-      listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList)
+      listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
       # -------------------------------------
 
       # --------Build the file wich contain all click controller--------
@@ -279,7 +284,7 @@ while playing:
 
       # ------------ Detect all click on the file ------------
       controller = reload(controller)
-      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles)
+      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time, oldTime)
       # ------------------------------------------------------
       
       # ----------DETECT SCROLL MOUSE----------
