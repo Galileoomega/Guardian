@@ -86,7 +86,7 @@ def buildController(yCellList):
     f.write("tempFileButton" + str(u) + " = False\n")
 
   f.write(
-    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles):\n" + 
+    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time, oldTime):\n" + 
     "\ttry:"
     "\n\t\twith open(buttonStatePath) as f:\n" + 
     "\t\t\tdata = json.load(f)\n" + 
@@ -108,7 +108,7 @@ def buildController(yCellList):
     f.write("\t\ttempFileButton" + str(u) + " = False\n")
 
   for u in range(0, len(yCellList)):
-    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ")" + "\n")
+    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ", time, oldTime)" + "\n")
   
   # ------DEBUG------
   #for u in range(0, len(yCellList)):
@@ -144,11 +144,12 @@ def buildController(yCellList):
   # ----------------------------------------------------
 
 # Get all the files in the directory (myPath) similar to a ls 
-def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList):
+def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile):
   listDir = os.listdir(myPath)
   listDir.sort()
   indexOfElement = 0
   activeFiles = ""
+  yCellList = []
 
   for element in listDir:
 
@@ -160,9 +161,7 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     yCell = listDir.index(element) * 40 + 100 - scrollMarker
 
     # ------- Add Each coordinates into a list -------
-    if len(yCellList) < len(listDir):
-      if not(len(yCellList) > len(listDir)):
-        yCellList.append(yCell)
+    yCellList.append(yCell)
     # ------------------------------------------------
 
     # Call the function which will draw the UI element for this file
@@ -172,11 +171,16 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     indexOfElement += 1
 
     if activeFile != "":
-
+      if activeFile != tempActiveFile:
+        oneTap = True
+      if oneTap:
+        tempActiveFile = activeFile
+        print(activeFile)
+        oneTap = False
       takingFileName(element, myPath)
       activeFiles = activeFile
 
-  return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles
+  return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile
 
 # FOR....
 def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement):
