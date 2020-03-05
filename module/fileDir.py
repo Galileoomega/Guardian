@@ -155,7 +155,12 @@ def buildController(yCellList):
 
 # Get all the files in the directory (myPath) similar to a ls 
 def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile):
-  listDir = os.listdir(myPath)
+  try:
+    listDir = os.listdir(myPath)
+  except NotADirectoryError:
+    myPath = popPathElement(myPath)
+    listDir = os.listdir(myPath)
+
   listDir.sort()
   indexOfElement = 0
   activeFiles = ""
