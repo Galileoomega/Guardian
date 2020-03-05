@@ -69,6 +69,16 @@ activeFile = ""
 
 # ----------------------------------------------
 
+def folderType(myPath):
+  # If x = True: ITS A FILE
+  # If x = False: ITS A FOLDER
+  x = os.path.isfile(myPath)
+
+  module.timeVar.fileType = x
+  
+  return x
+
+
 def buildController(yCellList):
 
   # ----------------- CONTROLLER BUILD -----------------
@@ -200,7 +210,8 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
     lenOfBoxesOfFiles = 300
 
   # ---SEE If Its A Folder Or File---
-  x = re.search("\.", nameOfFile)
+  x = folderType(module.timeVar.myPath + "\\" + nameOfFile)
+  
   if not(x):
     screen.blit(imageFolder, ((xCell - 32), (yCell - 2)))
   else:
@@ -256,6 +267,8 @@ def popPathElement(myPath):
       break
   if myPath == "C:":
     myPath = "C:\\"
+
+  module.timeVar.myPath = myPath
 
   return myPath
 

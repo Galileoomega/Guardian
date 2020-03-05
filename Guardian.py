@@ -275,7 +275,11 @@ while playing:
       style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       
       # ----------LISTING ALL FILES----------
-      listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
+      try:
+        listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
+      except FileNotFoundError:
+        myPath = fileDir.popPathElement(myPath)
+        listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
       # -------------------------------------
 
       # --------Build the file wich contain all click controller--------
@@ -287,17 +291,21 @@ while playing:
       timeVar.time = pygame.time.get_ticks()
       timeVar.myPath = myPath
       controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time)
-
-      if timeVar.clickState == "double":
-        if myPath == "C:\\":
-          myPath = myPath[:-1]
-
-        myPath += "\\" + timeVar.fileName
-        timeVar.clickState = ""
-        pygame.time.delay(50)
       # ------------------------------------------------------
 
-      #print(timeVar.oldTime)
+      # -----------GO INTO A FOLDER WHEN DOUBLE CLICK-----------
+      x = fileDir.folderType(myPath + "\\" + timeVar.fileName)
+      if not(x):
+        if timeVar.clickState == "double":
+            if myPath == "C:\\":
+              myPath = myPath[:-1]
+
+            myPath += "\\" + timeVar.fileName
+            timeVar.clickState = ""
+            pygame.time.delay(70)
+      # --------------------------------------------------------
+
+
       # ----------DETECT SCROLL MOUSE----------
       for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:

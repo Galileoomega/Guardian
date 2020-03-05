@@ -5,5 +5,5 @@ time = 0
 clickState = ""
 fileName = ""
 double_click_duration = 500
-
+fileType = False
 myPath = ""
