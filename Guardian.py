@@ -298,7 +298,11 @@ while playing:
       if not(x):
         if timeVar.clickState == "double":
             # Update the name of the file wich has been clicked
-            timeVar.fileName = listDir[int(activeFiles[-1])]
+            try:
+              timeVar.fileName = listDir[int(activeFiles[-1])]
+            except IndexError:
+              print(listDir)
+              exit()
 
             if myPath == "C:\\":
               myPath = myPath[:-1]
