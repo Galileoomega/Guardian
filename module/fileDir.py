@@ -27,7 +27,7 @@ xScreen = 500
 yScreen = 550
 screen = pygame.display.set_mode((xScreen, yScreen))
 
-xCell = 550
+xCell = 0
 yCell = 100
 yCellList = []
 
@@ -214,16 +214,7 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
   if lenOfBoxesOfFiles > 300:
     lenOfBoxesOfFiles = 300
 
-  # ---SEE If Its A Folder Or File---
-  x = folderType(module.timeVar.myPath + "\\" + nameOfFile)
-  
-  if not(x):
-    screen.blit(imageFolder, ((xCell - 32), (yCell - 2)))
-  else:
-    screen.blit(imageFile, ((xCell - 30), (yCell)))
-  # ---------------------------------
 
-  # Separator beetween files ( BACKGROUND )
   buttonStatePath = os.path.join(THIS_FOLDER, 'module\\buttonState.json')
 
   # Open the buttonState.json to see wich button is active
@@ -242,6 +233,7 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
     # -------------------------------------
 
     if corelation:
+      #style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
       style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
       colorFiles = white
       activeFile = myFile
@@ -249,6 +241,18 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
       style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
       activeFile = ""
       colorFiles = halfWhite
+
+
+  # Separator beetween files ( BACKGROUND )
+  # ---SEE If Its A Folder Or File---
+  x = folderType(module.timeVar.myPath + "\\" + nameOfFile)
+  
+  if not(x):
+    screen.blit(imageFolder, ((xCell - 32), (yCell - 2)))
+  else:
+    screen.blit(imageFile, ((xCell - 30), (yCell)))
+  # ---------------------------------
+
 
   # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, colorFiles)

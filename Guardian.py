@@ -170,7 +170,7 @@ alpha = 0
 separator = 10
 myPath = THIS_FOLDER
 myPath = myPath.capitalize()
-xCell = 550
+xCell = 520
 yCell = 100
 listDir = []
 scrollMarker = 0
@@ -235,13 +235,13 @@ while playing:
           xScreen = 750
           yScreen = 550
     # -----------------------------------------------------------
-    
-  # DRAW MAIN TITLE
-  xMainTitle = style.drawMainTitle(xScreen, loginIsOk, xMainTitle)
 
   # --------------------------HOME SCREEN--------------------------
   if not(makingAnimation):
     if loginIsOk:
+
+      # DRAW MAIN TITLE
+      xMainTitle = style.drawMainTitle(xScreen, loginIsOk, xMainTitle, 20)
       
       # Detect click on ENCRYPT BUTTON
       iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
@@ -301,7 +301,7 @@ while playing:
             try:
               timeVar.fileName = listDir[int(activeFiles[-1])]
             except IndexError:
-              print(listDir)
+              print("ERROR CATCHED : listDir() : ", listDir, "index : ", activeFiles[-1])
               exit()
 
             if myPath == "C:\\":
@@ -387,6 +387,9 @@ while playing:
 
   # -------------------------WINDOW LOGIN--------------------------
   if not(loginIsOk):
+    
+    # DRAW MAIN TITLE
+    xMainTitle = style.drawMainTitle(xScreen, loginIsOk, xMainTitle, yLoginWindow - 60)
 
     yUsernameBar = yLoginWindow + 70
     yPasswordBar = yLoginWindow + 140

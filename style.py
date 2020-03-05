@@ -327,9 +327,8 @@ def drawUiBox(listOfColor, xScreen, yScreen):
   return xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton
   
 # Draw main Title
-def drawMainTitle(xScreen, loginIsOk, xMainTitle):
+def drawMainTitle(xScreen, loginIsOk, xMainTitle, yMainTitle):
   # Main LABEL
-  yMainTitle = 20
   if loginIsOk:
     xMainTitle = 150
   else:
