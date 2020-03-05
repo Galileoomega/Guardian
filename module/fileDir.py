@@ -77,6 +77,7 @@ def buildController(yCellList):
   
   f.write(
     "import mouseChanger, os, json" + "\n" + 
+    "oldTime = 0\n" + 
     "THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))\n" + 
     "buttonStatePath = os.path.join(THIS_FOLDER, 'buttonState.json')\n\n" + 
     "xCell = 550" + "\n\n"
@@ -86,7 +87,7 @@ def buildController(yCellList):
     f.write("tempFileButton" + str(u) + " = False\n")
 
   f.write(
-    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time, oldTime):\n" + 
+    "\ndef filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time):\n" + 
     "\ttry:"
     "\n\t\twith open(buttonStatePath) as f:\n" + 
     "\t\t\tdata = json.load(f)\n" + 
@@ -108,7 +109,7 @@ def buildController(yCellList):
     f.write("\t\ttempFileButton" + str(u) + " = False\n")
 
   for u in range(0, len(yCellList)):
-    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ", time, oldTime)" + "\n")
+    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ", time)" + "\n")
   
   # ------DEBUG------
   #for u in range(0, len(yCellList)):

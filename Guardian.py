@@ -10,7 +10,7 @@ try:
   import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
   from cryptography.fernet import Fernet
   from multiprocessing import Process
-  from module import engine, backModule, idVector, fileDir, controller
+  from module import engine, backModule, idVector, fileDir, controller, timeVar
   from importlib import reload
   from pygame.locals import *
 
@@ -284,9 +284,10 @@ while playing:
 
       # ------------ Detect all click on the file ------------
       controller = reload(controller)
-      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time, oldTime)
+      controller.filesClickDetector(xCell, yCellList, xMouse, yMouse, lenOfBoxesOfFiles, time)
       # ------------------------------------------------------
-      
+
+      print(timeVar.oldTime)
       # ----------DETECT SCROLL MOUSE----------
       for event in events:
         if event.type == pygame.MOUSEBUTTONDOWN:
