@@ -301,9 +301,9 @@ while playing:
             try:
               timeVar.fileName = listDir[int(activeFiles[-1])]
             except IndexError:
-              print("ERROR CATCHED : listDir() : ", listDir, "index : ", activeFiles[-1])
-              exit()
-
+              print("ERROR CATCHED : listDir() : ", listDir, "with index : ", activeFiles, "[-1]")
+              pass
+            
             if myPath == "C:\\":
               myPath = myPath[:-1]
 

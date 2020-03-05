@@ -234,11 +234,11 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
 
     if corelation:
       #style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
-      style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
+      style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
       colorFiles = white
       activeFile = myFile
     else:
-      style.AAfilledRoundedRect(screen, (xCell - 4, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
+      style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
       activeFile = ""
       colorFiles = halfWhite
 
