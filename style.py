@@ -1,7 +1,6 @@
 # FRONT END but call some BACK-END function
 from pygame import *
 import os, mouseChanger, pygame, re
-from module import gradient
 pygame.init()
 
 # GET current path
