@@ -307,9 +307,12 @@ while playing:
             if myPath == "C:\\":
               myPath = myPath[:-1]
 
+            timeVar.text = myPath
+
             myPath += "\\" + timeVar.fileName
             timeVar.clickState = ""
             pygame.time.delay(70)
+        timeVar.text = myPath
       # --------------------------------------------------------
 
 
@@ -385,8 +388,16 @@ while playing:
   # -------------------------WINDOW LOGIN--------------------------
   if not(loginIsOk):
 
+    yUsernameBar = yLoginWindow + 70
+    yPasswordBar = yLoginWindow + 140
+
+    yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
+    xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
+
+
     # Background Of Window Login
     xLoginWindow = (xScreen / 2) - (widthLoginWindow / 2)
+    yLoginWindow = (yScreen / 2) - (lengthLoginWindow / 2) - 30
     iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked = style.loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow)
 
     for event in events:
@@ -417,7 +428,7 @@ while playing:
 
     # Show An Error If the password is not correct
     if wrongPass:
-      style.showErrorMessage("Invalid credentials...", xScreen / 2 - 55)
+      style.showErrorMessage("Invalid credentials...", xScreen / 2 - 55, yLoginWindow + 10)
 
     # TEXT INPUT USERNAME
     if focusOnUsernameBar:

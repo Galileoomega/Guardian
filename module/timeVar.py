@@ -7,3 +7,4 @@ fileName = ""
 double_click_duration = 500
 fileType = False
 myPath = ""
+text = ""

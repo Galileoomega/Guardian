@@ -277,7 +277,7 @@ def popPathElement(myPath):
 
   return myPath
 
-# Refrom myPath for input path
+# Refrom myPath for input path and show it
 def takingFileName(element, myPath):
   myNewPath = ""
   count = 0
@@ -294,5 +294,5 @@ def takingFileName(element, myPath):
 
   # NEED TO RESIZE PATH
 
-  screen.blit(lblPath, (xFileBar - 18, yFileBar + 4))
+  screen.blit(lblPath, (xFileBar - 45, yFileBar + 4))
 

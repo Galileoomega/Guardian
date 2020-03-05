@@ -1,4 +1,5 @@
 import pygame, os, style
+from module import timeVar
 pygame.init()
 pygame.scrap.init()
 
@@ -70,6 +71,7 @@ def textInput(event, text, maxLimit):
           pass
   else: 
     text = text
+  
   try:
     return text
   except UnboundLocalError:

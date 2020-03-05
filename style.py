@@ -1,6 +1,7 @@
 # FRONT END but call some BACK-END function
 from pygame import *
 import os, mouseChanger, pygame, re
+from module import timeVar
 pygame.init()
 
 # GET current path
@@ -228,6 +229,13 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
   focusOnPasswordBar = False
   focusOnUsernameBar = False
 
+  yUsernameBar = yLoginWindow + 70
+  yPasswordBar = yLoginWindow + 140
+
+  yButtonLogin = (yLoginWindow + lengthLoginWindow) - 50
+  xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
+
+
   # BACKGROUND BLIT
   AAfilledRoundedRect(screen, (xLoginWindow, yLoginWindow, widthLoginWindow, lengthLoginWindow), listOfColor[5], 0.1)
 
@@ -249,8 +257,11 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
     focusOnUsernameBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25, tempIClicked)
   # CHANGE COLOR IF FOCUSED
   if focusOnUsernameBar:
-    pygame.draw.rect(screen, lavanda, (xLoginWindow + 19, yUsernameBar - 1, 252, 27))
-    pygame.draw.rect(screen, grey, (xLoginWindow + 20, yUsernameBar, 250, 25))
+    #pygame.draw.rect(screen, lavanda, (xLoginWindow + 19, yUsernameBar - 1, 252, 27))
+    AAfilledRoundedRect(screen, (xLoginWindow + 19, yUsernameBar - 1, 252, 27), lavanda, 0.3)
+
+    #pygame.draw.rect(screen, grey, (xLoginWindow + 20, yUsernameBar, 250, 25))
+    AAfilledRoundedRect(screen, (xLoginWindow + 20, yUsernameBar, 250, 25), grey, 0.3)
   
   mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
   # ------------------------------------
@@ -262,8 +273,9 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
       focusOnPasswordBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
   # CHANGE COLOR IF FOCUSED
   if focusOnPasswordBar:
-    pygame.draw.rect(screen, lavanda, (xLoginWindow + 19, yPasswordBar - 1, 252, 27))
-    pygame.draw.rect(screen, grey, (xLoginWindow + 20, yPasswordBar, 250, 25))
+    AAfilledRoundedRect(screen, (xLoginWindow + 19, yPasswordBar - 1, 252, 27), lavanda, 0.3)
+    AAfilledRoundedRect(screen, (xLoginWindow + 20, yPasswordBar, 250, 25), grey, 0.3)
+
     mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
     #mouseSkinChanged = False
   # ------------------------------------
@@ -286,13 +298,13 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
 # Draw all UI container
 def drawUiBox(listOfColor, xScreen, yScreen):
   # --------Update Var Location--------
-  xFileBar = 90
+  xFileBar = 60
   xPathList = (xScreen / 2) - (widthListBar / 2)
 
-  xEncryptButton = 70
+  xEncryptButton = 50
   yEncrypButton = yScreen - lengthEncryptButton - 80
 
-  xDecryptButton = 40 + widthEncryptButton + 190
+  xDecryptButton = 20 + widthEncryptButton + 190
   yDecryptButton = yScreen - lengthDecryptButton - 80
 
   xAddButton = xFileBar + widthBar + 35
@@ -301,7 +313,7 @@ def drawUiBox(listOfColor, xScreen, yScreen):
   # File Bar Input
   AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
   # Vertical Separator
-  pygame.draw.aaline(screen, grey, (xFileBar + 380, 30), (xFileBar + 380, yScreen - 30), 2)
+  pygame.draw.aaline(screen, grey, (xFileBar + 390, 30), (xFileBar + 390, yScreen - 30), 2)
   # Encrypt Button
   AAfilledRoundedRect(screen, (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton), listOfColor[3], 0.2)
   # Decrypt Button
@@ -332,7 +344,8 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yE
   # -----------------------------------
 
   # FILE label
-  screen.blit(lblFile, (xFilelbl - 40, yFilelbl))
+  if timeVar.text == "":
+    screen.blit(lblFile, (xFilelbl + 10, yFilelbl))
   screen.blit(lblDecryptButton, (xDecryptButton + 16, yDecryptButton + 11))
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
   screen.blit(lblAwaiting, (xFileBar - 50, yFileBar + 80))
@@ -346,9 +359,9 @@ def drawPath(myPath, xHouseIcon, xScreen):
   screen.blit(lblMyPath, (xHouseIcon + 30, 46))
 
 # SHOW AN ERROR MESSAGE WHEN CREDENTIALS ARE WRONG
-def showErrorMessage(myText, xScreen):
+def showErrorMessage(myText, xScreen, yScreen):
   lblError = fontError.render(str(myText), True, red)
-  screen.blit(lblError, (xScreen, 400))
+  screen.blit(lblError, (xScreen, yScreen))
 
 def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xHouseIcon, xFileBar, xScreen):
 
