@@ -301,7 +301,7 @@ def drawUiBox(listOfColor, xScreen, yScreen):
   # File Bar Input
   AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
   # Vertical Separator
-  pygame.draw.aaline(screen, grey, (xFileBar + 400, 30), (xFileBar + 400, yScreen - 30), 2)
+  pygame.draw.aaline(screen, grey, (xFileBar + 380, 30), (xFileBar + 380, yScreen - 30), 2)
   # Encrypt Button
   AAfilledRoundedRect(screen, (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton), listOfColor[3], 0.2)
   # Decrypt Button
