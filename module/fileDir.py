@@ -118,7 +118,7 @@ def buildController(yCellList):
     f.write("\t\ttempFileButton" + str(u) + " = False\n")
 
   for u in range(0, len(yCellList)):
-    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ", time)" + "\n")
+    f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell - 40, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ", time)" + "\n")
   
   # ------DEBUG------
   #for u in range(0, len(yCellList)):
