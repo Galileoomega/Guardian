@@ -1,5 +1,5 @@
-import pygame, os, style
-from module import timeVar
+import pygame, os, style, mouseChanger
+from module import timeVar, coordinates
 pygame.init()
 pygame.scrap.init()
 
@@ -111,4 +111,13 @@ def listDirectory(separator, xDialogBrowser, yDialogBrowser, myPath):
   
   return separator
 
+# Scroll Bar Management
+def scrollGrabber(xMouse, yMouse):
+  xLeft = coordinates.xScrollGrabber - 5
+  xRight = coordinates.xScrollGrabber + 5
+  yTop = coordinates.yScrollGrabber
+  yBottom = coordinates.yScrollGrabber + 120
+  mouseChanger.clickButtonDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked)
 
+  # Scroll Grabber
+  AAfilledRoundedRect(screen, (coordinates.xScrollGrabber, coordinates.yScrollGrabber, 10, 120), grey, 0.8)

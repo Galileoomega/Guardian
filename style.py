@@ -1,7 +1,7 @@
 # FRONT END but call some BACK-END function
 from pygame import *
 import os, mouseChanger, pygame, re
-from module import timeVar
+from module import timeVar, coordinates
 pygame.init()
 
 # GET current path
@@ -312,6 +312,8 @@ def drawUiBox(listOfColor, xScreen, yScreen, xMainTitle):
 
   xSeparator = xScreen - 25
 
+  coordinates.xScrollGrabber = xFileBar + 386
+
   if xScreen < 650:
     xSeparator = 650
 
@@ -327,8 +329,6 @@ def drawUiBox(listOfColor, xScreen, yScreen, xMainTitle):
   #pygame.draw.aaline(screen, grey, (xFileBar + 390, 0), (xFileBar + 390, yScreen), 2)
   # Vertical Separator 2
   #pygame.draw.aaline(screen, grey, (xSeparator, 30), (xSeparator, yScreen - 30), 3)
-  # Scroll Grabber
-  AAfilledRoundedRect(screen, (xFileBar + 386, 100, 10, 120), grey, 0.8)
   # Encrypt Button
   AAfilledRoundedRect(screen, (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton), listOfColor[3], 0.2)
   # Decrypt Button

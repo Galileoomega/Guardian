@@ -217,11 +217,10 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
 
   # Size of boxes management
   lenOfBoxesOfFiles = int(xScreen - xCell - 10)
-  if lenOfBoxesOfFiles < 100:
-    lenOfBoxesOfFiles = 100
-  if lenOfBoxesOfFiles > 300:
+  if lenOfBoxesOfFiles < 300:
     lenOfBoxesOfFiles = 300
-
+  if lenOfBoxesOfFiles > 500:
+    lenOfBoxesOfFiles = 500
 
   buttonStatePath = os.path.join(THIS_FOLDER, 'module\\buttonState.json')
 
@@ -240,6 +239,7 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
       corelation = True
     # -------------------------------------
 
+    # BLIT BACKGROUND OF FILES
     if corelation:
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), lavanda, 0.3)
       style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
@@ -262,6 +262,15 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
     screen.blit(imageFile, ((xCell - 30), (yCell)))
   # ---------------------------------
 
+  # get the Length of the path (x) to limit the number of char
+  text_width, text_height = fontText.size(str(nameOfFile))
+
+  
+  # ------------RESIZE NAME OF FILE IF HE'S TOO BIG------------
+  if text_width > 40:
+    nameOfFile = nameOfFile[0:40] + "..."
+  # -----------------------------------------------------------
+
 
   # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, colorFiles)
@@ -270,7 +279,7 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
   # BLIT Size Of Files
   if x:
     lblSizeOfFile = fontText.render(str(sizeOfFile) + " KB", True, colorFiles)
-    screen.blit(lblSizeOfFile, (xCell + 300, yCell))
+    screen.blit(lblSizeOfFile, (lenOfBoxesOfFiles + 440, yCell))
 
   return xCell, yCell, lenOfBoxesOfFiles, activeFile
 
