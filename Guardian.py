@@ -312,6 +312,10 @@ while playing:
             myPath += "\\" + timeVar.fileName
             timeVar.clickState = ""
             pygame.time.delay(70)
+
+        if fileDir.folderType(myPath):
+          myPath = fileDir.popPathElement(myPath)
+          print("DELETED")
         timeVar.text = myPath
       # --------------------------------------------------------
 

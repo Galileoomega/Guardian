@@ -199,7 +199,11 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
       takingFileName(element, myPath)
       activeFiles = activeFile
 
-  return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile
+  try:
+    return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile
+  except UnboundLocalError:
+    lenOfBoxesOfFiles = 10
+    return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile
 
 # FOR....
 def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement):
