@@ -261,14 +261,10 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
   else:
     screen.blit(imageFile, ((xCell - 30), (yCell)))
   # ---------------------------------
-
-  # get the Length of the path (x) to limit the number of char
-  text_width, text_height = fontText.size(str(nameOfFile))
-
   
   # ------------RESIZE NAME OF FILE IF HE'S TOO BIG------------
-  if text_width > 40:
-    nameOfFile = nameOfFile[0:40] + "..."
+  if len(nameOfFile) >= 60:
+    nameOfFile = nameOfFile[0:20] + "..." + str(nameOfFile[len(nameOfFile) - 10:len(nameOfFile)])
   # -----------------------------------------------------------
 
 
