@@ -353,9 +353,15 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yE
 # Draw the TOP PATH
 def drawPath(myPath, xHouseIcon, xScreen):  
 
-  # THE PATH
+  # get the Length of the path (x) to allow the background to follow him
+  text_width, text_height = fontError.size(str(myPath))
+
+  # Background of the path label
+  AAfilledRoundedRect(screen, (xHouseIcon + 30, 42, text_width + 10, 28), grey, 0.5)
+  
+  # THE PATH LABEL
   lblMyPath = fontError.render(str(myPath), True, halfWhite)
-  screen.blit(lblMyPath, (xHouseIcon + 30, 46))
+  screen.blit(lblMyPath, (xHouseIcon + 35, 46))
 
 # SHOW AN ERROR MESSAGE WHEN CREDENTIALS ARE WRONG
 def showErrorMessage(myText, xScreen, yScreen):
