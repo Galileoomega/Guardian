@@ -191,6 +191,8 @@ errorPathList = littleFont.render("Maximum File", True, lavanda)
 
 while playing:
 
+  print(scrollMarker)
+
   # GET THE NEW WIDTH OF THE SCREEN
   xScreen, yScreen = pygame.display.get_surface().get_size()
 
@@ -239,9 +241,6 @@ while playing:
   # --------------------------HOME SCREEN--------------------------
   if not(makingAnimation):
     if loginIsOk:
-
-      # DRAW MAIN TITLE
-      xMainTitle = style.drawMainTitle(xScreen, loginIsOk, xMainTitle, 20)
       
       # Detect click on ENCRYPT BUTTON
       iPressedMyEncryptButton, tempEncryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xEncryptButton, xEncryptButton + 73, yEncrypButton, yEncrypButton + 40, tempEncryptButton)
@@ -270,7 +269,7 @@ while playing:
       # ---------------------------------------------------------
 
       # BOX
-      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton = style.drawUiBox(listOfColor, xScreen, yScreen)
+      xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton = style.drawUiBox(listOfColor, xScreen, yScreen, xMainTitle)
       # LABEL
       style.drawUiLabel(xScreen, xFileBar, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton)
       

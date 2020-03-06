@@ -84,6 +84,7 @@ xHouseIcon = xFileBar + 400
 
 # Color
 black = (40, 40, 43)
+newBlack = (45, 45, 48)
 darkBlack = (20, 20, 23)
 white = (255,255,255)
 halfWhite = (200,200,200)
@@ -296,7 +297,7 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
   return iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked
 
 # Draw all UI container
-def drawUiBox(listOfColor, xScreen, yScreen):
+def drawUiBox(listOfColor, xScreen, yScreen, xMainTitle):
   # --------Update Var Location--------
   xFileBar = 60
   xPathList = (xScreen / 2) - (widthListBar / 2)
@@ -308,12 +309,26 @@ def drawUiBox(listOfColor, xScreen, yScreen):
   yDecryptButton = yScreen - lengthDecryptButton - 80
 
   xAddButton = xFileBar + widthBar + 35
+
+  xSeparator = xScreen - 25
+
+  if xScreen < 650:
+    xSeparator = 650
+
   # -----------------------------------
 
+  # New Left Background
+  pygame.draw.rect(screen, newBlack, (0, 0, xFileBar + 390, yScreen))
+  # DRAW MAIN TITLE
+  xMainTitle = drawMainTitle(xScreen, True, xMainTitle, 20)
   # File Bar Input
   AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
   # Vertical Separator
   pygame.draw.aaline(screen, grey, (xFileBar + 390, 30), (xFileBar + 390, yScreen - 30), 2)
+  # Vertical Separator 2
+  #pygame.draw.aaline(screen, grey, (xSeparator, 30), (xSeparator, yScreen - 30), 3)
+  # Scroll Grabber
+  AAfilledRoundedRect(screen, (xFileBar + 386, 100, 10, 120), grey, 0.8)
   # Encrypt Button
   AAfilledRoundedRect(screen, (xEncryptButton, yEncrypButton, widthEncryptButton, lengthEncryptButton), listOfColor[3], 0.2)
   # Decrypt Button
@@ -333,7 +348,7 @@ def drawMainTitle(xScreen, loginIsOk, xMainTitle, yMainTitle):
     xMainTitle = 150
   else:
     xMainTitle = (xScreen / 2) - 90
-
+   
   screen.blit(lblMainTitle, (xMainTitle, yMainTitle))
   return xMainTitle
 
