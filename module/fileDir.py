@@ -179,8 +179,12 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     yCellList.append(yCell)
     # ------------------------------------------------
 
+    # Get the size of the actual file
+    # And convert It to KB
+    size = int(os.path.getsize(myPath + "\\" + element) / 1000)
+
     # Call the function which will draw the UI element for this file
-    xCell, yCell, lenOfBoxesOfFiles, activeFile = renderFile(element, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement)
+    xCell, yCell, lenOfBoxesOfFiles, activeFile = renderFile(element, size, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement)
 
     # Get the index of the nameOfFile
     indexOfElement += 1
@@ -206,7 +210,7 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     return listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile
 
 # FOR....
-def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement):
+def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement):
 
   # Concatenate the nameOfFile
   myFile = "tempFileButton" + str(indexOfElement)
@@ -262,6 +266,11 @@ def renderFile(nameOfFile, xCell, yCell, xScreen, xMouse, yMouse, indexOfElement
   # BLIT Files Names
   lblNameOfFile = fontText.render(str(nameOfFile), True, colorFiles)
   screen.blit(lblNameOfFile, (xCell, yCell))
+
+  # BLIT Size Of Files
+  if x:
+    lblSizeOfFile = fontText.render(str(sizeOfFile) + " KB", True, colorFiles)
+    screen.blit(lblSizeOfFile, (xCell + 300, yCell))
 
   return xCell, yCell, lenOfBoxesOfFiles, activeFile
 

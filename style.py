@@ -324,7 +324,7 @@ def drawUiBox(listOfColor, xScreen, yScreen, xMainTitle):
   # File Bar Input
   AAfilledRoundedRect(screen, (xFileBar, yFileBar, widthBar, lengthBar), listOfColor[0], 0.4)
   # Vertical Separator
-  pygame.draw.aaline(screen, grey, (xFileBar + 390, 30), (xFileBar + 390, yScreen - 30), 2)
+  #pygame.draw.aaline(screen, grey, (xFileBar + 390, 0), (xFileBar + 390, yScreen), 2)
   # Vertical Separator 2
   #pygame.draw.aaline(screen, grey, (xSeparator, 30), (xSeparator, yScreen - 30), 3)
   # Scroll Grabber
@@ -368,11 +368,16 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yE
 # Draw the TOP PATH
 def drawPath(myPath, xHouseIcon, xScreen):  
 
+  xFilePath = xScreen - xHouseIcon - 100
+
   # get the Length of the path (x) to allow the background to follow him
   text_width, text_height = fontError.size(str(myPath))
 
+  if xScreen < text_width + xHouseIcon + 110:
+    xFilePath = text_width + 20
+
   # Background of the path label
-  AAfilledRoundedRect(screen, (xHouseIcon + 30, 42, text_width + 10, 28), grey, 0.5)
+  AAfilledRoundedRect(screen, (xHouseIcon + 30, 42, xFilePath, 28), grey, 0.5)
   
   # THE PATH LABEL
   lblMyPath = fontError.render(str(myPath), True, halfWhite)
