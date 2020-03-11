@@ -358,35 +358,9 @@ while playing:
       # PATHS
       style.drawPath(myPath, xHouseIcon, xScreen)
 
-      # -----------FILE BAR-----------
-      # Detect click On FILE BAR
-      focusOnFileBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25, tempIClicked)
-
-      # CHANGE COLOR IF FOCUSED
-      if focusOnFileBar:
-        style.AAfilledRoundedRect(screen, (xFileBar - 1, yFileBar - 1, widthBar + 2, lengthBar + 2), lavanda, 0.1)
-        pygame.draw.rect(screen, grey, (xFileBar, yFileBar, widthBar, lengthBar))
-      # Detect overfly on FILE BAR
-      mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xFileBar, xFileBar + 250, yFileBar, yFileBar + 25)
-        
-      # TEXT INPUT FILE BAR
-      if focusOnFileBar:
-        for event in events:
-          userFile = backModule.textInput(event, userFile, lengthBar)
-
-      # Show the text input on the screen
-      textinputFile = font.render(userFile, True, white)
-      screen.blit(textinputFile, (xFileBar + 5, yFileBar + 3))
-      # ------------------------------
-
       # ADDING PATH TO WAIT LIST
       if iPressedMyAddButton:
         print("LALAAAAAA")
-        #iPressedMyAddButton = False
-        #myPath = THIS_FOLDER
-        #showBrowser = True
-        # Initialize the File Browser
-        #xCloseCircle, yCloseCircle, leftArrow, rightArrow = style.browserDialog(xDialogBrowser, yDialogBrowser)
 
       # -----------LIST OF PATH--------------
       # 6 is equal of the number of file simultaneously
