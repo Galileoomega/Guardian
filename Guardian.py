@@ -283,7 +283,6 @@ while playing:
       # -------------------------------------
 
       # --------Build the file wich contain all click controller--------
-      # !!!!!!! BAD OPTIMISATION !!!!!!!
       if needToBuildMyFile:
         if yCellList == []:
           yCellList = [10]
@@ -329,7 +328,6 @@ while playing:
           print("DELETED")
         timeVar.text = myPath
       # --------------------------------------------------------
-
 
       # ----------DETECT SCROLL MOUSE----------
       for event in events:

@@ -81,6 +81,8 @@ def folderType(myPath):
 
 def buildController(yCellList):
 
+  print("CALL : buildController()")
+
   # ----------------- CONTROLLER BUILD -----------------
   f = open(controllerPath, "w")
   
@@ -119,19 +121,6 @@ def buildController(yCellList):
 
   for u in range(0, len(yCellList)):
     f.write("\tiPressedMyFile" + str(u) + ", tempFileButton" + str(u) + " = mouseChanger.clickFileDetect(xMouse, yMouse, xCell - 40, xCell + lenOfBoxesOfFiles, yCellList["+ str(u) +"], yCellList["+ str(u) +"] + 25, tempFileButton" + str(u) + ", time)" + "\n")
-  
-  # ------DEBUG------
-  #for u in range(0, len(yCellList)):
-  #f.write(
-  #  "\tif tempFileButton" + str(0) + ":\n"
-  #  "\t\tprint(tempFileButton"+ str(0) +", '" + str(u) + "')" + "\n"
-  #)
-  #for u in range(0, len(yCellList)):
-  #  f.write(
-  #    "\tif iPressedMyFile" + str(u) + ":\n" + 
-  #    "\t\tprint('OverFly " + str(u) + "')\n" 
-  #  )
-  # -----------------
 
   f.write(
     "\n\tf = open(buttonStatePath, 'w')\n\n" + 
@@ -197,7 +186,6 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
         module.timeVar.fileChanged = False
       if oneTap:
         tempActiveFile = activeFile
-        print(activeFile)
         module.timeVar.fileName = element
         oneTap = False
       takingFileName(element, myPath)
@@ -242,12 +230,12 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
     # BLIT BACKGROUND OF FILES
     if corelation:
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), lavanda, 0.3)
-      style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
+      #style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
       colorFiles = white
       activeFile = myFile
     else:
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), grey, 0.3)
-      style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
+      #style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
       activeFile = ""
       colorFiles = halfWhite
 
@@ -274,8 +262,16 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
 
   # BLIT Size Of Files
   if x:
-    lblSizeOfFile = fontText.render(str(sizeOfFile) + " KB", True, colorFiles)
-    screen.blit(lblSizeOfFile, (lenOfBoxesOfFiles + 440, yCell))
+    # Check if it need to be converted in Mo
+    if sizeOfFile > 1000:
+      sizeOfFile = sizeOfFile / 1000
+      lblSizeOfFile = fontText.render(str(sizeOfFile) + " MB", True, colorFiles)
+    else:
+      lblSizeOfFile = fontText.render(str(sizeOfFile) + " KB", True, colorFiles)
+    
+    # Blit it to the screen
+    lenOfFile, width = fontText.size(str(sizeOfFile))
+    screen.blit(lblSizeOfFile, (lenOfBoxesOfFiles + 440 - lenOfFile, yCell))
 
   return xCell, yCell, lenOfBoxesOfFiles, activeFile
 
