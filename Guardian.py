@@ -155,6 +155,7 @@ tempFileButtons = False
 iPressedMyFiles = False
 tempFileButtons0 = False
 tempFileButtons1 = False
+needToBuildMyFile = True
 
 # OTHER
 userPassword = ""
@@ -191,7 +192,7 @@ errorPathList = littleFont.render("Maximum File", True, lavanda)
 
 while playing:
 
-  print(scrollMarker)
+  #print(scrollMarker)
 
   # GET THE NEW WIDTH OF THE SCREEN
   xScreen, yScreen = pygame.display.get_surface().get_size()
@@ -207,7 +208,7 @@ while playing:
 
   # EVENTS
   events = pygame.event.get()
-  
+
   for event in events:
     if event.type == pygame.KEYDOWN:
         keyPress = True
@@ -282,7 +283,12 @@ while playing:
       # -------------------------------------
 
       # --------Build the file wich contain all click controller--------
-      fileDir.buildController(yCellList)
+      # !!!!!!! BAD OPTIMISATION !!!!!!!
+      if needToBuildMyFile:
+        if yCellList == []:
+          yCellList = [10]
+        fileDir.buildController(yCellList)
+        needToBuildMyFile = False
       # ------------------------------------------------------------
 
       # ------------ Detect all click on the file ------------
@@ -296,6 +302,12 @@ while playing:
       x = fileDir.folderType(myPath + "\\" + timeVar.fileName)
       if not(x):
         if timeVar.clickState == "double":
+            # Will allow to update the content of the new folder
+            needToBuildMyFile = True
+            
+            # Reset the scroll orientation 
+            scrollMarker = 0
+            
             # Update the name of the file wich has been clicked
             try:
               timeVar.fileName = listDir[int(activeFiles[-1])]
@@ -335,6 +347,9 @@ while playing:
 
       # --------- CHANGING DIRECTORY ---------
       if iPressedMyLeftArrow:
+        # Will allow to update the content of the new folder
+        needToBuildMyFile = True
+        
         yCellList = []
         myPath = fileDir.popPathElement(myPath)
       # --------------------------------------
