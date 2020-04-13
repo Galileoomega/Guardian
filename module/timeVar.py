@@ -3,10 +3,14 @@ fileChanged = False
 firstTime = True
 time = 0
 clickState = ""
+
+# Return the name of the file who has been clicked
 fileName = ""
-double_click_duration = 700
+
+double_click_duration = 70
 fileType = False
 myPath = ""
+fileOnFocusPath = ""
 text = ""
 myPathLook = ""
 added = False

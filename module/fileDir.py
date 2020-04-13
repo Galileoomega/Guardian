@@ -69,6 +69,7 @@ activeFile = ""
 
 # ----------------------------------------------
 
+# Check if its a folder or a file and return a True/False
 def folderType(myPath):
   # If x = True: ITS A FILE
   # If x = False: ITS A FOLDER
@@ -296,10 +297,15 @@ def popPathElement(myPath):
 
   return myPath
 
-# Refrom myPath for input path and show it
+# File Path area SHOW
 def takingFileName(element, myPath):
+
+  # ACTUAL FILE PATH for programm only
+  module.timeVar.fileOnFocusPath = myPath + "\\" + element
+
   myNewPath = ""
   count = 0
+
   for u in myPath:
     if u == '\\':
       count += 1
@@ -307,11 +313,30 @@ def takingFileName(element, myPath):
       break
 
     myNewPath += u 
+
+  # Will check if the name of the file is too big. (GRAPHIC ONLY)
+  if len(element) >= 20:
+    
+    element = element[0:20] + "..." + str(element[len(element) - 10:len(element)])
   
+  
+
   myNewPath += "\\...\\"
   lblPath = fontText.render(str(myNewPath + element), True, halfWhite)
 
   # NEED TO RESIZE PATH
 
   screen.blit(lblPath, (xFileBar - 45, yFileBar + 4))
+
+# List all the pending files for being encrypted
+def listPendingFiles(myPath):
+
+  yFile = 200
+
+  for pathFile in myPath:
+
+    yFile += 20
+    # BLIT Files Names
+    lblPendingFile = fontText.render(str(pathFile), True, white)
+    screen.blit(lblPendingFile, (20, yFile))
 

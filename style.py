@@ -356,7 +356,6 @@ def drawMainTitle(xScreen, loginIsOk, xMainTitle, yMainTitle):
 def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yEncrypButton, yDecryptButton):
   # --------Update Var Location--------
   # -----------------------------------
-
   # FILE label
   if timeVar.text == "":
     screen.blit(lblFile, (xFilelbl + 10, yFilelbl))

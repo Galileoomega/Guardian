@@ -181,6 +181,7 @@ activeFile = ''
 oldTime = 0
 oneTap = False
 tempActiveFile = ""
+listOfPendingFiles = []
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -278,9 +279,14 @@ while playing:
       try:
         listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
       except FileNotFoundError:
+        print("ERROR CATCHED: FileNotFoundError at line 280")
         myPath = fileDir.popPathElement(myPath)
         listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
       # -------------------------------------
+
+      # ----------LISTING ALL PENDING FILES----------
+      fileDir.listPendingFiles(listOfPendingFiles)
+      # ---------------------------------------------
 
       # --------Build the file wich contain all click controller--------
       if needToBuildMyFile:
@@ -360,7 +366,9 @@ while playing:
 
       # ADDING PATH TO WAIT LIST
       if iPressedMyAddButton:
-        print("LALAAAAAA")
+        if timeVar.fileOnFocusPath != "":
+          listOfPendingFiles.append(timeVar.fileOnFocusPath)
+        timeVar.fileOnFocusPath = ""
 
       # -----------LIST OF PATH--------------
       # 6 is equal of the number of file simultaneously
