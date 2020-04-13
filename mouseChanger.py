@@ -1,6 +1,6 @@
 # BACK-END : Will detect if the mouse is hovering Input bar or buttons and will change his skin
 import pygame, os
-from module import timeVar
+from module import timeVar, fileDir
 pygame.init()
 
 tempIClicked = False
@@ -99,6 +99,7 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
               #tempIClicked = False
               timeVar.clickState = ""
 
+          x = fileDir.folderType(timeVar.myPath + "\\" + timeVar.fileName)
           if pygame.mouse.get_pressed() == (1,0,0):
             tempIClicked = True
 
@@ -106,15 +107,19 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
             #  print("time : ", time, "oldTime : ", timeVar.oldTime)
             # print(timeVar.time - timeVar.oldTime)
             #else:
-           #   timeVar.oldTime = pygame.time.get_ticks()
+            # timeVar.oldTime = pygame.time.get_ticks()
 
-            now = timeVar.time
-            
-            if now - timeVar.oldTime <= timeVar.double_click_duration:
-              timeVar.clickState = "double"
+            if not(x):
+              now = timeVar.time
+              if now - timeVar.oldTime <= timeVar.double_click_duration:
+                timeVar.clickState = "double"
+              else:
+                timeVar.clickState = "single"
             else:
               timeVar.clickState = "single"
-            timeVar.oldTime = pygame.time.get_ticks()
+
+            if not(x):
+              timeVar.oldTime = pygame.time.get_ticks()
             pygame.time.delay(50)
           
         else:
