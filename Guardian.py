@@ -432,7 +432,7 @@ while playing:
       style.showErrorMessage("Invalid credentials...", xScreen / 2 - 55, yLoginWindow + 10)
 
     # TEXT INPUT USERNAME
-    if focusOnUsernameBar:
+    if timeVar.focusOnUsernameBar:
       for event in events:
         userUsername = backModule.textInput(event, userUsername, 100)
     # Blit the text on the screen
@@ -440,7 +440,7 @@ while playing:
     screen.blit(textinputUsername, (xLoginWindow + 25, yUsernameBar + 3))
 
     # TEXT INPUT PASSWORD
-    if focusOnPasswordBar:
+    if timeVar.focusOnPasswordBar:
       for event in events:
         userPassword, hideUserPassword = backModule.secretTextInput(event, userPassword, hideUserPassword)
     # Blit the text on the screen

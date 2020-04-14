@@ -254,31 +254,35 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
   # ------------Username Bar------------
   # Change the mouse appearance and call the click detector
   mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
-  if mouseSkinChanged:
-    focusOnUsernameBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25, tempIClicked)
+  
+  # Detect the click
+  if pygame.mouse.get_pressed() == (1,0,0):
+    timeVar.focusOnUsernameBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25, tempIClicked)
+  
   # CHANGE COLOR IF FOCUSED
-  if focusOnUsernameBar:
-    #pygame.draw.rect(screen, lavanda, (xLoginWindow + 19, yUsernameBar - 1, 252, 27))
+  if timeVar.focusOnUsernameBar:
     AAfilledRoundedRect(screen, (xLoginWindow + 19, yUsernameBar - 1, 252, 27), lavanda, 0.3)
-
-    #pygame.draw.rect(screen, grey, (xLoginWindow + 20, yUsernameBar, 250, 25))
     AAfilledRoundedRect(screen, (xLoginWindow + 20, yUsernameBar, 250, 25), grey, 0.3)
   
   mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
   # ------------------------------------
 
   # ------------Password bar------------
+  # Change the mouse appearance and call the click detector
   if not(mouseSkinChanged):
-    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
-    if mouseSkinChanged:
-      focusOnPasswordBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
+    mouseSkinChanged2 = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
+  
+  # Detect the click
+  if pygame.mouse.get_pressed() == (1,0,0):
+    timeVar.focusOnPasswordBar, tempIClicked = mouseChanger.clickBarDetect(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25, tempIClicked)
+  
   # CHANGE COLOR IF FOCUSED
-  if focusOnPasswordBar:
+  if timeVar.focusOnPasswordBar:
     AAfilledRoundedRect(screen, (xLoginWindow + 19, yPasswordBar - 1, 252, 27), lavanda, 0.3)
     AAfilledRoundedRect(screen, (xLoginWindow + 20, yPasswordBar, 250, 25), grey, 0.3)
-
-    mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
-    #mouseSkinChanged = False
+  
+  if not(mouseSkinChanged):
+    mouseSkinChanged2 = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
   # ------------------------------------
   
   # ---------------LOGIN Button---------------
