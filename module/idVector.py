@@ -2,6 +2,7 @@ import base64, os, json, style, secrets, re
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from module import cryptography
 
 # GET current path
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -71,3 +72,4 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
 
         return loginIsOk, wrongPass
     
+def encryptFiles(listOfPaths):
