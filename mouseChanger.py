@@ -102,6 +102,7 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
               iClicked = True 
               #tempIClicked = False
               timeVar.clickState = ""
+              #print("clickState RESET")
 
           x = fileDir.folderType(timeVar.myPath + "\\" + timeVar.fileName)
           if pygame.mouse.get_pressed() == (1,0,0):
@@ -117,10 +118,13 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
               now = timeVar.time
               if now - timeVar.oldTime <= timeVar.double_click_duration:
                 timeVar.clickState = "double"
+                print("clickState DOUBLE")
               else:
                 timeVar.clickState = "single"
+                print("clickState SINGLE")
             else:
               timeVar.clickState = "single"
+              print("clickState SINGLE")
 
             if not(x):
               timeVar.oldTime = pygame.time.get_ticks()

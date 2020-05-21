@@ -253,7 +253,7 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
 
   # ------------Username Bar------------
   # Change the mouse appearance and call the click detector
-  mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
+  #mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
   
   # Detect the click
   if pygame.mouse.get_pressed() == (1,0,0):
@@ -264,13 +264,13 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
     AAfilledRoundedRect(screen, (xLoginWindow + 19, yUsernameBar - 1, 252, 27), lavanda, 0.3)
     AAfilledRoundedRect(screen, (xLoginWindow + 20, yUsernameBar, 250, 25), grey, 0.3)
   
-  mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
+  #mouseSkinChanged = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yUsernameBar, yUsernameBar + 25)
   # ------------------------------------
 
   # ------------Password bar------------
   # Change the mouse appearance and call the click detector
-  if not(mouseSkinChanged):
-    mouseSkinChanged2 = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
+  #if not(mouseSkinChanged):
+  #  mouseSkinChanged2 = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
   
   # Detect the click
   if pygame.mouse.get_pressed() == (1,0,0):
@@ -281,21 +281,21 @@ def loginWindow(xMouse, yMouse, tempIClicked, xLoginWindow, yLoginWindow):
     AAfilledRoundedRect(screen, (xLoginWindow + 19, yPasswordBar - 1, 252, 27), lavanda, 0.3)
     AAfilledRoundedRect(screen, (xLoginWindow + 20, yPasswordBar, 250, 25), grey, 0.3)
   
-  if not(mouseSkinChanged):
-    mouseSkinChanged2 = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
+  #if not(mouseSkinChanged):
+  #  mouseSkinChanged2 = mouseChanger.flyDetector(xMouse, yMouse, xLoginWindow + 20, xLoginWindow + 250, yPasswordBar, yPasswordBar + 25)
   # ------------------------------------
   
   # ---------------LOGIN Button---------------
   xButtonLogin = xLoginWindow + (widthLoginWindow / 2) - 35
   AAfilledRoundedRect(screen, (xButtonLogin, yButtonLogin, 70, 30), listOfColor[8], 0.2)
   screen.blit(lblButtonLogin, (xButtonLogin + 16, yButtonLogin + 5))
-  if not(mouseSkinChanged):
-    # Detect click button
-    iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 55, yButtonLogin, yButtonLogin + 30, tempIClicked)
-    # Change button color
-    mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8, grey)
-  else:
-    iPressedMyLoginButton = False
+  #if not(mouseSkinChanged):
+  # Detect click button
+  iPressedMyLoginButton, tempIClicked = mouseChanger.clickButtonDetect(xMouse, yMouse, xButtonLogin, xButtonLogin + 55, yButtonLogin, yButtonLogin + 30, tempIClicked)
+  # Change button color
+  #mouseChanger.flyDetectorButtons(tempIClicked, listOfColor, 8, grey)
+  #else:
+  #  iPressedMyLoginButton = False
   # ------------------------------------------
 
   return iPressedMyLoginButton, focusOnUsernameBar, focusOnPasswordBar, tempIClicked

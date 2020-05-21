@@ -147,7 +147,7 @@ def buildController(yCellList):
 def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile):
   try:
     listDir = os.listdir(myPath)
-  except NotADirectoryError:
+  except PermissionError:
     myPath = popPathElement(myPath)
     listDir = os.listdir(myPath)
 

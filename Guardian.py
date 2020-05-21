@@ -281,6 +281,7 @@ while playing:
       except FileNotFoundError:
         print("ERROR CATCHED: FileNotFoundError at line 280")
         myPath = fileDir.popPathElement(myPath)
+        myPath = fileDir.popPathElement(myPath)
         listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
       # -------------------------------------
 
