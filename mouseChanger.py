@@ -106,29 +106,34 @@ def clickFileDetect(xMouse, yMouse, xLeft, xRight, yTop, yBottom, tempIClicked, 
 
           x = fileDir.folderType(timeVar.myPath + "\\" + timeVar.fileName)
           if pygame.mouse.get_pressed() == (1,0,0):
-            tempIClicked = True
+            if timeVar.clickReleased:
+              tempIClicked = True
 
-            #if (timeVar.time - timeVar.oldTime) <= 500:
-            #  print("time : ", time, "oldTime : ", timeVar.oldTime)
-            # print(timeVar.time - timeVar.oldTime)
-            #else:
-            # timeVar.oldTime = pygame.time.get_ticks()
+              #if (timeVar.time - timeVar.oldTime) <= 500:
+              #  print("time : ", time, "oldTime : ", timeVar.oldTime)
+              # print(timeVar.time - timeVar.oldTime)
+              #else:
+              # timeVar.oldTime = pygame.time.get_ticks()
 
-            if not(x):
-              now = timeVar.time
-              if now - timeVar.oldTime <= timeVar.double_click_duration:
-                timeVar.clickState = "double"
-                print("clickState DOUBLE")
+              if not(x):
+                now = timeVar.time
+                if now - timeVar.oldTime <= timeVar.double_click_duration:
+                  timeVar.clickState = "double"
+                  print("clickState DOUBLE")
+                else:
+                  timeVar.clickState = "single"
+                  print("clickState SINGLE")
               else:
+                now = timeVar.time
                 timeVar.clickState = "single"
                 print("clickState SINGLE")
-            else:
-              timeVar.clickState = "single"
-              print("clickState SINGLE")
 
-            if not(x):
               timeVar.oldTime = pygame.time.get_ticks()
-            pygame.time.delay(50)
+              pygame.time.delay(50)
+              timeVar.clickReleased = False
+          if pygame.mouse.get_pressed() == (0, 0, 0):
+            now = timeVar.time
+            timeVar.clickReleased = True
           
         else:
           if pygame.mouse.get_pressed() == (1,0,0):

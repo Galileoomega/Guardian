@@ -370,6 +370,11 @@ while playing:
         if timeVar.fileOnFocusPath != "":
           listOfPendingFiles.append(timeVar.fileOnFocusPath)
         timeVar.fileOnFocusPath = ""
+      
+      # ------------------ ENCRYPT ALL PENDING FILES ------------------
+      if iPressedMyEncryptButton:
+        listOfPendingFiles = []
+      # ---------------------------------------------------------------
 
       # -----------LIST OF PATH--------------
       # 6 is equal of the number of file simultaneously
