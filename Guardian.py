@@ -5,11 +5,12 @@
 ########                          v1.2                                       ########
 #####################################################################################
 
-import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
+import os, hashlib, cryptography, json, style, mouseChanger, random
 from cryptography.fernet import Fernet
 from multiprocessing import Process
 from module import engine, backModule, idVector, fileDir, controller, timeVar
 from importlib import reload
+import pygame
 from pygame.locals import *
 
 playing = True
