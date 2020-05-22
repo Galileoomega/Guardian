@@ -1,2 +1,0 @@
-New interface of the app (Only In Fullscreen), 
-the old File Browser is now deleted from the project to give birth of a bigger one.
