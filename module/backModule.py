@@ -3,9 +3,11 @@ from module import timeVar, coordinates
 pygame.init()
 pygame.scrap.init()
 
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
 user_input_value = ""
 iUsedCtrlV = False
-font = pygame.font.Font("Resources\\Roboto\\Roboto-Black.ttf", 13)
+font = pygame.font.Font(os.path.join(THIS_FOLDER, 'Roboto\\Roboto-Black.ttf'), 13)
 black = (250, 250, 250)
 active = False
 listDir = [str]
