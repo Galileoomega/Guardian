@@ -117,7 +117,7 @@ imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
 
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
-fontText = pygame.font.Font(robotoLightTTF, 13)
+fontText = pygame.font.Font(robotoLightTTF, 14)
 fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
 fontError = pygame.font.Font(robotoRegularTTF, 13)
 

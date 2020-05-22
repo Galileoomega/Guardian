@@ -5,21 +5,14 @@
 ########                          v1.2                                       ########
 #####################################################################################
 
-# Catch error if the installation is not good
-try:
-  import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
-  from cryptography.fernet import Fernet
-  from multiprocessing import Process
-  from module import engine, backModule, idVector, fileDir, controller, timeVar
-  from importlib import reload
-  from pygame.locals import *
+import pygame, os, hashlib, cryptography, json, style, mouseChanger, random
+from cryptography.fernet import Fernet
+from multiprocessing import Process
+from module import engine, backModule, idVector, fileDir, controller, timeVar
+from importlib import reload
+from pygame.locals import *
 
-  playing = True
-except ModuleNotFoundError:
-  for u in range(0, 5):
-    print("ERROR: Missing module...")
-  playing = False
-  input()
+playing = True
 pygame.init()
 
 pygame.event.set_blocked(pygame.MOUSEMOTION)
@@ -191,6 +184,11 @@ littleFont = pygame.font.Font(robotoRegularTTF, 12)
 errorPathList = littleFont.render("Maximum File", True, lavanda)
 # ----------------------------------------------
 
+def update_fps():
+    fps = str(int(clock.get_fps()))
+    fps_text = font.render(fps, 1, pygame.Color("coral"))
+    return fps_text
+
 while playing:
 
   #print(scrollMarker)
@@ -227,10 +225,6 @@ while playing:
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_F11:
           modes = pygame.display.list_modes()
-          if not modes:
-            print ('16-bit not supported')
-          else:
-            print ('Found Resolution:', modes[0])
           screen = pygame.display.set_mode(modes[0], flags2)
           xScreen, yScreen = modes[0]
         
@@ -250,8 +244,6 @@ while playing:
       iPressedMyDecryptButton, tempDecryptButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xDecryptButton, xDecryptButton + 73, yDecryptButton, yDecryptButton + 40, tempDecryptButton)
       # Detect Click On "Add Button"
       iPressedMyAddButton, tempIClickedAddButton = mouseChanger.clickButtonDetect(xMouse, yMouse, xAddButton, xAddButton + widthAddButton, yAddButton, yAddButton + lengthAddButton, tempIClickedAddButton)
-      # Detect Click on blue circle (Browser Dialog)
-      iPressedMyCircleButton, tempCloseCircle = mouseChanger.clickButtonDetect(xMouse, yMouse, xCloseCircle, xCloseCircle + 20, yCloseCircle, yCloseCircle + 20, tempCloseCircle)
       # FILE BROWSER: Arrows
       leftArrow = xFileBar + 405
       rightArrow = xFileBar + 435
@@ -371,9 +363,16 @@ while playing:
           listOfPendingFiles.append(timeVar.fileOnFocusPath)
         timeVar.fileOnFocusPath = ""
       
-      # ------------------ ENCRYPT ALL PENDING FILES ------------------
-      if iPressedMyEncryptButton:
-        listOfPendingFiles = []
+      # ------------------ ENCRYPT/DECRYPT ALL PENDING FILES ------------------
+      if len(listOfPendingFiles) > 1:
+        if iPressedMyEncryptButton:
+          idVector.encryptFiles(listOfPendingFiles, userPassword)
+          # Purge pending files
+          listOfPendingFiles = []
+        if iPressedMyDecryptButton:
+          idVector.decryptFiles(listOfPendingFiles, userPassword)
+          # Purge pending files
+          listOfPendingFiles = []
       # ---------------------------------------------------------------
 
       # -----------LIST OF PATH--------------
@@ -464,5 +463,5 @@ while playing:
     if not(makingAnimation):
       loginIsOk = True
 
-  
+  screen.blit(update_fps(), (10,0))
   pygame.display.update()
