@@ -130,7 +130,7 @@ lblUsername = fontText.render(str("Username"), True, white)
 lblPassword = fontText.render(str("Password"), True, white)
 lblButtonLogin = fontText.render(str("Login"), True, white)
 lblAwaiting = fontText.render(str("Awaiting files"), True, halfWhite)
-lblStatus = fontText.render(str("Status"), True, halfWhite)
+lblAction = fontText.render(str("Action"), True, halfWhite)
 lblDialogBrowser = fontText.render(str("Browser..."), True, halfWhite)
 
 # IMAGE 
@@ -366,7 +366,7 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yE
   screen.blit(lblDecryptButton, (xDecryptButton + 16, yDecryptButton + 11))
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
   screen.blit(lblAwaiting, (xFileBar - 50, yFileBar + 80))
-  screen.blit(lblStatus, (xFileBar + 250, yFileBar + 80))
+  screen.blit(lblAction, (xFileBar + 250, yFileBar + 80))
 
 # Draw the TOP PATH
 def drawPath(myPath, xHouseIcon, xScreen):  

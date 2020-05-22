@@ -324,15 +324,27 @@ def takingFileName(element, myPath):
 
   screen.blit(lblPath, (xFileBar - 45, yFileBar + 4))
 
-# List all the pending files for being encrypted
+# List all the pending files for being encrypted/decrypted
 def listPendingFiles(fileNames):
 
-  yFile = 200
+  yFile = 170
+  resizedString = False
+  lenOfBoxes = 420
 
   for fileName in fileNames:
 
-    yFile += 20
+    yFile += 40
+    # BLIT BACKGROUND OF FILES
+    style.AAfilledRoundedRect(screen, (15, yFile - 6, lenOfBoxes, 32), grey, 0.3)     
+    
     # BLIT Files Names
+    while len(fileName) > 40:
+      fileName = fileName[:-1]
+      resizedString = True
+    if resizedString:
+      fileName += "..."
+
     lblPendingFile = fontText.render(str(fileName), True, white)
-    screen.blit(lblPendingFile, (20, yFile))
+
+    screen.blit(lblPendingFile, (40, yFile))
 

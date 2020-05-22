@@ -176,6 +176,7 @@ oneTap = False
 tempActiveFile = ""
 listOfPendingFiles = []
 nameOfPendingFiles = []
+actualFile = ""
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -363,17 +364,20 @@ while playing:
       # ---------------------------------------------------------
 
       # ----------LISTING ALL PENDING FILES----------
+      # Display the awaiting files on the screen
       fileDir.listPendingFiles(nameOfPendingFiles)
       # ---------------------------------------------
 
       # ADDING PATH TO WAIT LIST
-      if iPressedMyAddButton:
-        nameOfPendingFiles.append(actualFile)
-        if timeVar.fileOnFocusPath != "":
-          listOfPendingFiles.append(timeVar.fileOnFocusPath)
-        timeVar.fileOnFocusPath = ""
-      
-      print(listOfPendingFiles)
+      if actualFile != "":
+        if iPressedMyAddButton:
+          nameOfPendingFiles.append(actualFile)
+          actualFile = ""
+          if timeVar.fileOnFocusPath != "":
+            listOfPendingFiles.append(timeVar.fileOnFocusPath)
+          timeVar.fileOnFocusPath = ""
+        
+        print(listOfPendingFiles)
       
       # ------------------ ENCRYPT/DECRYPT ALL PENDING FILES ------------------
       if len(listOfPendingFiles) > 0:
