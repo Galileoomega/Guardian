@@ -82,8 +82,6 @@ def folderType(myPath):
 
 def buildController(yCellList):
 
-  print("CALL : buildController()")
-
   # ----------------- CONTROLLER BUILD -----------------
   f = open(controllerPath, "w")
   
@@ -231,12 +229,10 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
     # BLIT BACKGROUND OF FILES
     if corelation:
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), lavanda, 0.3)
-      #style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
       colorFiles = white
       activeFile = myFile
     else:
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), grey, 0.3)
-      #style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), black, 0.3)
       activeFile = ""
       colorFiles = halfWhite
 
@@ -329,14 +325,14 @@ def takingFileName(element, myPath):
   screen.blit(lblPath, (xFileBar - 45, yFileBar + 4))
 
 # List all the pending files for being encrypted
-def listPendingFiles(myPath):
+def listPendingFiles(fileNames):
 
   yFile = 200
 
-  for pathFile in myPath:
+  for fileName in fileNames:
 
     yFile += 20
     # BLIT Files Names
-    lblPendingFile = fontText.render(str(pathFile), True, white)
+    lblPendingFile = fontText.render(str(fileName), True, white)
     screen.blit(lblPendingFile, (20, yFile))
 

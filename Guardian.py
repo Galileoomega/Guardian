@@ -175,6 +175,7 @@ oldTime = 0
 oneTap = False
 tempActiveFile = ""
 listOfPendingFiles = []
+nameOfPendingFiles = []
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -277,17 +278,13 @@ while playing:
         listDir, xCell, yCell, yCellList, lenOfBoxesOfFiles, activeFiles, oneTap, tempActiveFile = fileDir.listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yCellList, oneTap, tempActiveFile)
       # -------------------------------------
 
-      # ----------LISTING ALL PENDING FILES----------
-      fileDir.listPendingFiles(listOfPendingFiles)
-      # ---------------------------------------------
-
       # --------Build the file wich contain all click controller--------
       if needToBuildMyFile:
         if yCellList == []:
           yCellList = [10]
         fileDir.buildController(yCellList)
         needToBuildMyFile = False
-      # ------------------------------------------------------------
+      # ----------------------------------------------------------------
 
       # ------------ Detect all click on the file ------------
       controller = reload(controller)
@@ -357,22 +354,39 @@ while playing:
       # PATHS
       style.drawPath(myPath, xHouseIcon, xScreen)
 
+      # ------ DECLARE A VAR WICH CONTAIN THE ACTIVE BUTTON ------
+      if activeFiles == None or activeFiles == "":
+        pass
+      else:
+        index = int(activeFiles[-1])
+        actualFile = listDir[index]
+      # ---------------------------------------------------------
+
+      # ----------LISTING ALL PENDING FILES----------
+      fileDir.listPendingFiles(nameOfPendingFiles)
+      # ---------------------------------------------
+
       # ADDING PATH TO WAIT LIST
       if iPressedMyAddButton:
+        nameOfPendingFiles.append(actualFile)
         if timeVar.fileOnFocusPath != "":
           listOfPendingFiles.append(timeVar.fileOnFocusPath)
         timeVar.fileOnFocusPath = ""
       
+      print(listOfPendingFiles)
+      
       # ------------------ ENCRYPT/DECRYPT ALL PENDING FILES ------------------
-      if len(listOfPendingFiles) > 1:
+      if len(listOfPendingFiles) > 0:
         if iPressedMyEncryptButton:
           idVector.encryptFiles(listOfPendingFiles, userPassword)
           # Purge pending files
           listOfPendingFiles = []
+          nameOfPendingFiles = []
         if iPressedMyDecryptButton:
           idVector.decryptFiles(listOfPendingFiles, userPassword)
           # Purge pending files
           listOfPendingFiles = []
+          nameOfPendingFiles = []
       # ---------------------------------------------------------------
 
       # -----------LIST OF PATH--------------
