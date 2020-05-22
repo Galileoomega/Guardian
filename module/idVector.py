@@ -97,12 +97,31 @@ def encryptFiles(listOfPaths, userPassword):
 
         outputFile = path
         outputFile += ".sha"
-
+    
         with open(path, 'rb') as f:
             data = f.read()
         
         fernet = Fernet(key)
         encrypted = fernet.encrypt(data)
+
+        with open(outputFile, 'wb') as f:
+            f.write(encrypted)
+        
+        os.remove(path)
+
+def decryptFiles(listOfPaths, userPassword):
+    key = convertPassword(userPassword)
+    
+    for path in listOfPaths:
+
+        outputFile = path
+        outputFile = outputFile[:-3]
+    
+        with open(path, 'rb') as f:
+            data = f.read()
+        
+        fernet = Fernet(key)
+        encrypted = fernet.decrypt(data)
 
         with open(outputFile, 'wb') as f:
             f.write(encrypted)
