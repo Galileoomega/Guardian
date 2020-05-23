@@ -375,13 +375,12 @@ while playing:
       # ADDING PATH TO WAIT LIST
       if actualFile != "":
         if iPressedMyAddButton:
-          nameOfPendingFiles.append(actualFile)
-          actualFile = ""
-          if timeVar.fileOnFocusPath != "":
-            listOfPendingFiles.append(timeVar.fileOnFocusPath)
-          timeVar.fileOnFocusPath = ""
-        
-        print(listOfPendingFiles)
+          if not(actualFile in nameOfPendingFiles):
+            nameOfPendingFiles.append(actualFile)
+            actualFile = ""
+            if timeVar.fileOnFocusPath != "":
+              listOfPendingFiles.append(timeVar.fileOnFocusPath)
+            timeVar.fileOnFocusPath = ""
       
       # ------------------ ENCRYPT/DECRYPT ALL PENDING FILES ------------------
       if len(listOfPendingFiles) > 0:
