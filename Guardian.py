@@ -5,7 +5,8 @@
 ########                          v1.2                                       ########
 #####################################################################################
 
-import os, hashlib, cryptography, json, style, mouseChanger, random
+import os, hashlib, json, style, mouseChanger, random
+import cryptography
 from cryptography.fernet import Fernet
 from multiprocessing import Process
 from module import engine, backModule, idVector, fileDir, controller, timeVar
@@ -178,6 +179,8 @@ tempActiveFile = ""
 listOfPendingFiles = []
 nameOfPendingFiles = []
 actualFile = ""
+needToShowSuccessMessage = False
+timeDelay = 0
 
 # FONT 
 font = pygame.font.Font(robotoRegularTTF, 15)
@@ -387,12 +390,28 @@ while playing:
           # Purge pending files
           listOfPendingFiles = []
           nameOfPendingFiles = []
+          # Show on the screen a label "SUCCESSFULL"
+          needToShowSuccessMessage = True
         if iPressedMyDecryptButton:
           idVector.decryptFiles(listOfPendingFiles, userPassword)
           # Purge pending files
           listOfPendingFiles = []
           nameOfPendingFiles = []
+          # Show on the screen a label "SUCCESSFULL"
+          needToShowSuccessMessage = True
       # ---------------------------------------------------------------
+
+      # Display the success label with a delay called "timeDelay"
+      if needToShowSuccessMessage:
+        xSuccessLabel = xEncryptButton + 140
+        ySuccessLabel = yEncrypButton + 10
+
+        if timeDelay > 100:
+          needToShowSuccessMessage = False
+          timeDelay = 0
+
+        timeDelay += 1
+        style.showSuccessfullLabel(xSuccessLabel, ySuccessLabel)
 
       # -----------LIST OF PATH--------------
       # 6 is equal of the number of file simultaneously

@@ -89,6 +89,7 @@ darkBlack = (20, 20, 23)
 white = (255,255,255)
 halfWhite = (200,200,200)
 grey = (67, 67, 70)
+green = (20,250,20)
 whiteGrey = (57, 57, 60)
 red = (189, 11, 11)
 lavanda = (0, 115, 210)
@@ -103,6 +104,7 @@ focusOnUsernameBar = False
 # PATH
 robotoRegularTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Regular.ttf')
 robotoLightTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Light.ttf')
+robotoBlackTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Black.ttf')
 imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\8-513.png')
 imageLockPath = os.path.join(THIS_FOLDER, 'Resources\\lock.png')
 imageUnlockPath = os.path.join(THIS_FOLDER, 'Resources\\unlock.png')
@@ -118,6 +120,7 @@ imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
 # DEFINE FONT
 fontTitle = pygame.font.Font(robotoRegularTTF, 16)
 fontText = pygame.font.Font(robotoLightTTF, 14)
+fontStatus = pygame.font.Font(robotoBlackTTF, 14)
 fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
 fontError = pygame.font.Font(robotoRegularTTF, 13)
 
@@ -132,6 +135,7 @@ lblButtonLogin = fontText.render(str("Login"), True, white)
 lblAwaiting = fontText.render(str("Awaiting files"), True, halfWhite)
 lblAction = fontText.render(str("Action"), True, halfWhite)
 lblDialogBrowser = fontText.render(str("Browser..."), True, halfWhite)
+lblSuccess = fontStatus.render(str("SUCCESS !"), True, green)
 
 # IMAGE 
 imageUser = pygame.image.load(imageUserPath)
@@ -344,7 +348,7 @@ def drawUiBox(listOfColor, xScreen, yScreen, xMainTitle):
   pygame.draw.rect(screen, listOfColor[10], (xFileBar + widthBar + 47, yFileBar + 2.5, 2, 21))
 
   return xFileBar, xPathList, xEncryptButton, xDecryptButton, xAddButton, yDecryptButton, yEncrypButton
-  
+
 # Draw main Title
 def drawMainTitle(xScreen, loginIsOk, xMainTitle, yMainTitle):
   # Main LABEL
@@ -413,5 +417,8 @@ def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xH
   screen.blit(imageHouse, (xHouseIcon, 45))
 
   return xHouseIcon
-  
+
+def showSuccessfullLabel(xSuccessLabel, ySuccessLabel):
+  screen.blit(lblSuccess, (xSuccessLabel, ySuccessLabel))
+
 # ------------------------------------------------------

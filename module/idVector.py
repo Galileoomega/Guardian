@@ -1,8 +1,7 @@
-import base64, os, json, style, secrets, re
+import base64, os, json, style, secrets, re, cryptography
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from module import cryptography
 from cryptography.fernet import Fernet
 
 # GET current path
@@ -121,7 +120,10 @@ def decryptFiles(listOfPaths, userPassword):
             data = f.read()
         
         fernet = Fernet(key)
-        encrypted = fernet.decrypt(data)
+        try:
+            encrypted = fernet.decrypt(data)
+        except cryptography.fernet.InvalidToken:
+            break
 
         with open(outputFile, 'wb') as f:
             f.write(encrypted)

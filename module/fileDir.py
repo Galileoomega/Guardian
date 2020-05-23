@@ -40,6 +40,7 @@ yFileBar = 100
 # Color
 black = (40, 40, 43)
 darkBlack = (20, 20, 23)
+newBlack = (45, 45, 48)
 white = (255,255,255)
 halfWhite = (200,200,200)
 grey = (67, 67, 70)
@@ -329,13 +330,14 @@ def listPendingFiles(fileNames):
 
   yFile = 170
   resizedString = False
-  lenOfBoxes = 420
+  lenOfBoxes = 415
 
   for fileName in fileNames:
 
     yFile += 40
     # BLIT BACKGROUND OF FILES
-    style.AAfilledRoundedRect(screen, (15, yFile - 6, lenOfBoxes, 32), grey, 0.3)     
+    style.AAfilledRoundedRect(screen, (15, yFile - 6, lenOfBoxes, 32), grey, 0.3)
+    style.AAfilledRoundedRect(screen, (370, yFile - 3, 35, 26), newBlack, 0.3)
     
     # BLIT Files Names
     while len(fileName) > 40:
