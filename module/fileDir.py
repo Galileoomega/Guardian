@@ -330,14 +330,16 @@ def listPendingFiles(fileNames):
 
   yFile = 170
   resizedString = False
-  lenOfBoxes = 415
+  lenOfBoxes = 360
+  startPosition = 55
+  startPositionCancelButton = 370
 
   for fileName in fileNames:
 
     yFile += 40
     # BLIT BACKGROUND OF FILES
-    style.AAfilledRoundedRect(screen, (15, yFile - 6, lenOfBoxes, 32), grey, 0.3)
-    style.AAfilledRoundedRect(screen, (370, yFile - 3, 35, 26), newBlack, 0.3)
+    style.AAfilledRoundedRect(screen, (startPosition, yFile - 6, lenOfBoxes, 32), grey, 0.3)
+    style.AAfilledRoundedRect(screen, (startPositionCancelButton, yFile - 3, 35, 26), newBlack, 0.3)
     
     # BLIT Files Names
     while len(fileName) > 40:
@@ -345,8 +347,9 @@ def listPendingFiles(fileNames):
       resizedString = True
     if resizedString:
       fileName += "..."
+      resizedString = False
 
     lblPendingFile = fontText.render(str(fileName), True, white)
 
-    screen.blit(lblPendingFile, (40, yFile))
+    screen.blit(lblPendingFile, (65, yFile))
 
