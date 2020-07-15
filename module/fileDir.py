@@ -294,7 +294,7 @@ def popPathElement(myPath):
 
   return myPath
 
-# File Path area SHOW
+# File Path area SHOW (called in the same file in listingFiles())
 def takingFileName(element, myPath):
 
   # ACTUAL FILE PATH for programm only
@@ -319,6 +319,7 @@ def takingFileName(element, myPath):
   
 
   myNewPath += "\\...\\"
+  print("ELEMENT = " + element)
   lblPath = fontText.render(str(myNewPath + element), True, halfWhite)
 
   # NEED TO RESIZE PATH
