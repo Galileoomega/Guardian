@@ -150,10 +150,24 @@ def listingFiles(myPath, xCell, yCell, xScreen, scrollMarker, xMouse, yMouse, yC
     myPath = popPathElement(myPath)
     listDir = os.listdir(myPath)
 
-  listDir.sort()
+  # Sort the list of files alphabetically
+  listDir = sorted(sorted(listDir, reverse=True), key=str.lower)
   indexOfElement = 0
   activeFiles = ""
   yCellList = []
+  listA = []
+  listB = []
+
+  # ----- Wipe the main list of files to make one of folder and files -----
+  for element in listDir:
+    x = folderType(module.timeVar.myPath + "\\" + element)
+    if x:
+      listA.append(element)
+    else:
+      listB.append(element)
+  listDir = []
+  listDir = listB + listA
+  # -----------------------------------------------------------------------
 
   for element in listDir:
 
