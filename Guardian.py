@@ -376,7 +376,7 @@ while playing:
       if actualFile != "":
         if iPressedMyAddButton:
           if not(actualFile in nameOfPendingFiles):
-            nameOfPendingFiles.append(actualFile)
+            nameOfPendingFiles.append(timeVar.activeFile)
             actualFile = ""
             if timeVar.fileOnFocusPath != "":
               listOfPendingFiles.append(timeVar.fileOnFocusPath)
