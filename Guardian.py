@@ -386,14 +386,14 @@ while playing:
       if len(listOfPendingFiles) > 0:
         if iPressedMyEncryptButton:
           idVector.encryptFiles(listOfPendingFiles, userPassword)
-          # Purge pending files
+          # Reset pending files
           listOfPendingFiles = []
           nameOfPendingFiles = []
           # Show on the screen a label "SUCCESSFULL"
           needToShowSuccessMessage = True
         if iPressedMyDecryptButton:
           idVector.decryptFiles(listOfPendingFiles, userPassword)
-          # Purge pending files
+          # Reset pending files
           listOfPendingFiles = []
           nameOfPendingFiles = []
           # Show on the screen a label "SUCCESSFULL"
