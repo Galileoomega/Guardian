@@ -250,7 +250,21 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), grey, 0.3)
       activeFile = ""
       colorFiles = halfWhite
+  
+  # ----------- Check if the file has been ENCRYPTED -----------
+  if nameOfFile[-3:len(nameOfFile)] == "sha":
+    thisFileIsEncrypted = True
+  else:
+    thisFileIsEncrypted = False
 
+  if thisFileIsEncrypted:
+    if activeFile == "":
+      style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), lavanda, 0.3)
+      style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
+    else:
+      style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), white, 0.3)
+      style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
+  # ------------------------------------------------------------
 
   # Separator beetween files ( BACKGROUND )
   # ---SEE If Its A Folder Or File---
