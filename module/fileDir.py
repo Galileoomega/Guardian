@@ -299,6 +299,7 @@ def takingFileName(element, myPath):
 
   # ACTUAL FILE PATH for programm only
   module.timeVar.fileOnFocusPath = myPath + "\\" + element
+  module.timeVar.activeFile = element
 
   myNewPath = ""
   count = 0
@@ -319,7 +320,6 @@ def takingFileName(element, myPath):
   
 
   myNewPath += "\\...\\"
-  print("ELEMENT = " + element)
   lblPath = fontText.render(str(myNewPath + element), True, halfWhite)
 
   # NEED TO RESIZE PATH
@@ -328,7 +328,6 @@ def takingFileName(element, myPath):
 
 # List all the pending files for being encrypted/decrypted
 def listPendingFiles(fileNames):
-
   yFile = 170
   resizedString = False
   lenOfBoxes = 360

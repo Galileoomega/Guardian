@@ -16,3 +16,4 @@ text = ""
 myPathLook = ""
 added = False
 clickRelease = True
+activeFile = ""
