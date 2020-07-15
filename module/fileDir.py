@@ -259,7 +259,7 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
   if not(x):
     screen.blit(imageFolder, ((xCell - 32), (yCell - 2)))
   else:
-    screen.blit(imageFile, ((xCell - 30), (yCell)))
+    screen.blit(imageFile, ((xCell - 31), (yCell - 1)))
   # ---------------------------------
   
   # ------------RESIZE NAME OF FILE IF HE'S TOO BIG------------
