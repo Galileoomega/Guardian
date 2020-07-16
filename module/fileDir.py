@@ -262,7 +262,7 @@ def renderFile(nameOfFile, sizeOfFile, xCell, yCell, xScreen, xMouse, yMouse, in
       style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), lavanda, 0.3)
       style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), grey, 0.3)
     else:
-      style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), white, 0.3)
+      style.AAfilledRoundedRect(screen, (xCell - 41, yCell - 6, lenOfBoxesOfFiles + 2, 32), halfWhite, 0.3)
       style.AAfilledRoundedRect(screen, (xCell - 40, yCell - 5, lenOfBoxesOfFiles, 30), lavanda, 0.3)
   # ------------------------------------------------------------
 
@@ -363,14 +363,20 @@ def listPendingFiles(fileNames):
   startPositionCancelButton = 370
 
   for fileName in fileNames:
-
     yFile += 40
+
     # BLIT BACKGROUND OF FILES
     style.AAfilledRoundedRect(screen, (startPosition, yFile - 6, lenOfBoxes, 32), grey, 0.3)
     style.AAfilledRoundedRect(screen, (startPositionCancelButton, yFile - 3, 35, 26), newBlack, 0.3)
     
+    # BLIT IMAGES AND CHECK IF ITS A FOLDER OR NOT
+    if folderType(module.timeVar.myPath + "\\" + fileName):
+      screen.blit(imageFile, (60, yFile - 1))
+    else:
+      screen.blit(imageFolder, (60, yFile - 1))
+
     # BLIT Files Names
-    while len(fileName) > 40:
+    while len(fileName) > 35:
       fileName = fileName[:-1]
       resizedString = True
     if resizedString:
@@ -378,6 +384,5 @@ def listPendingFiles(fileNames):
       resizedString = False
 
     lblPendingFile = fontText.render(str(fileName), True, white)
-
-    screen.blit(lblPendingFile, (65, yFile))
+    screen.blit(lblPendingFile, (90, yFile))
 
