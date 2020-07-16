@@ -371,6 +371,8 @@ def drawUiLabel(xScreen, xFilelbl, xDecryptButton, xEncryptButton, xPathList, yE
   screen.blit(lblCryptButton, (xEncryptButton + 16, yEncrypButton + 11))
   screen.blit(lblAwaiting, (xFileBar - 50, yFileBar + 80))
   screen.blit(lblAction, (xFileBar + 250, yFileBar + 80))
+  lblPath = fontText.render(timeVar.shortPathWithActiveFile, True, halfWhite)
+  screen.blit(lblPath, (xFileBar - 45, yFileBar + 4))
 
 # Draw the TOP PATH
 def drawPath(myPath, xHouseIcon, xScreen):  
