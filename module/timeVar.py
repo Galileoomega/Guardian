@@ -17,3 +17,4 @@ myPathLook = ""
 added = False
 clickRelease = True
 activeFile = ""
+shortPathWithActiveFile = ""
