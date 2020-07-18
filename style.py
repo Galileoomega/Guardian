@@ -121,6 +121,7 @@ fontText = pygame.font.Font(robotoLightTTF, 14)
 fontStatus = pygame.font.Font(robotoBlackTTF, 14)
 fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
 fontError = pygame.font.Font(robotoRegularTTF, 13)
+fontSubtitle = pygame.font.Font(robotoRegularTTF, 16)
 
 # DEFINE TEXT
 lblMainTitle = fontTitle.render(str("GUARDIAN ENCRYPTION"), True, white)
@@ -423,9 +424,15 @@ def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xH
 def showSuccessfullLabel(xSuccessLabel, ySuccessLabel):
   screen.blit(lblSuccess, (xSuccessLabel, ySuccessLabel))
 
-def showSettingsMenu(xScreen):
+def showSettingsMenu(xScreen, userUsername):
   sizeOfField = 300
-  lblUser = fontText.render("Hi, ", True, white)
-  screen.blit(lblUser, (20, 20))
-  AAfilledRoundedRect(screen, (xScreen / 2 - (sizeOfField / 2), 100, sizeOfField, 25), grey, 0.3)
+  xFieldOne = xScreen / 2 - (sizeOfField / 2)
+  yFieldOne = 250
+  
+  xNickname = xScreen / 2 - (len(userUsername) * 2)
+  
+  lblUser = fontSubtitle.render("hi, " + userUsername, True, white)
+
+  screen.blit(lblUser, (xNickname, 100))
+  AAfilledRoundedRect(screen, (xFieldOne, yFieldOne, sizeOfField, 25), grey, 0.3)
 # ------------------------------------------------------

@@ -18,15 +18,13 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
             data1 = json.load(f)
         
         extractedUsername = data1["user"]
-        r = re.compile(userUsername)
-        newlist = list(filter(r.search, extractedUsername)) # Read Note
+        newList = extractedUsername.count(userUsername)
         
-        if len(newlist) == 1:
+        if newList == 1:
             # If the user exist: Extract the ID (index)
             userExist = True
-            masterIndex = extractedUsername.index(newlist[0])
+            masterIndex = extractedUsername.index(userUsername)
         else:
-            newlist = []
             userExist = False
             print("User don't exist")
         # ----------------------------------------------------

@@ -493,8 +493,7 @@ while playing:
 
   # ------------------------MENU SETTINGS--------------------------
   if showSettingsMenu:
-    style.showSettingsMenu(xScreen)
-    print(userUsername)
+    style.showSettingsMenu(xScreen, userUsername)
   # ---------------------------------------------------------------
 
   if makingAnimation:
