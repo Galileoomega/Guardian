@@ -105,16 +105,14 @@ focusOnUsernameBar = False
 robotoRegularTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Regular.ttf')
 robotoLightTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Light.ttf')
 robotoBlackTTF = os.path.join(THIS_FOLDER, 'Resources\\Roboto\\Roboto-Black.ttf')
-imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\8-513.png')
 imageLockPath = os.path.join(THIS_FOLDER, 'Resources\\lock.png')
 imageUnlockPath = os.path.join(THIS_FOLDER, 'Resources\\unlock.png')
-imageEyePath = os.path.join(THIS_FOLDER, 'Resources\\eyeBall.png')
-imageCirclePath = os.path.join(THIS_FOLDER, 'Resources\\circle.png')
 imageFolderPath = os.path.join(THIS_FOLDER, 'Resources\\folder-invoices.png')
 imageFilePath = os.path.join(THIS_FOLDER, 'Resources\\file-image.png')
 imageHousePATH = os.path.join(THIS_FOLDER, 'Resources\\house.png')
 imageRightArrowPath = os.path.join(THIS_FOLDER, 'Resources\\right-arrow.png')
 imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
+imageLogOutPath = os.path.join(THIS_FOLDER, 'Resources\\logout.png')
 
 
 # DEFINE FONT
@@ -137,17 +135,15 @@ lblAction = fontText.render(str("Action"), True, halfWhite)
 lblDialogBrowser = fontText.render(str("Browser..."), True, halfWhite)
 lblSuccess = fontStatus.render(str("SUCCESS !"), True, green)
 
-# IMAGE 
-imageUser = pygame.image.load(imageUserPath)
+# IMAGE
 imageLock = pygame.image.load(imageLockPath)
 imageUnlock = pygame.image.load(imageUnlockPath)
-imageEye = pygame.image.load(imageEyePath)
-imageCircle = pygame.image.load(imageCirclePath)
 imageFolder = pygame.image.load(imageFolderPath)
 imageFile = pygame.image.load(imageFilePath)
 imageHouse = pygame.image.load(imageHousePATH)
 imageRightArrow = pygame.image.load(imageRightArrowPath)
 imageLeftArrow = pygame.image.load(imageLeftArrowPath)
+imageLogOut = pygame.image.load(imageLogOutPath)
 
 
 # OTHER
@@ -354,6 +350,7 @@ def drawMainTitle(xScreen, loginIsOk, xMainTitle, yMainTitle):
   # Main LABEL
   if loginIsOk:
     xMainTitle = 150
+    yMainTitle = yMainTitle + 7
   else:
     xMainTitle = (xScreen / 2) - 90
    
@@ -418,9 +415,17 @@ def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xH
   xHouseIcon = xFileBar + 470
   screen.blit(imageHouse, (xHouseIcon, 45))
 
+  # LOG OUT ICON
+  screen.blit(imageLogOut, (20, 19))
+
   return xHouseIcon
 
 def showSuccessfullLabel(xSuccessLabel, ySuccessLabel):
   screen.blit(lblSuccess, (xSuccessLabel, ySuccessLabel))
 
+def showSettingsMenu(xScreen):
+  sizeOfField = 300
+  lblUser = fontText.render("Hi, ", True, white)
+  screen.blit(lblUser, (20, 20))
+  AAfilledRoundedRect(screen, (xScreen / 2 - (sizeOfField / 2), 100, sizeOfField, 25), grey, 0.3)
 # ------------------------------------------------------

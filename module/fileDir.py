@@ -342,17 +342,10 @@ def takingFileName(element, myPath):
 
   # Will check if the name of the file is too big. (GRAPHIC ONLY)
   if len(element) >= 20:
-    
     element = element[0:20] + "..." + str(element[len(element) - 10:len(element)])
   
-  
-
   myNewPath += "\\...\\"
-  lblPath = fontText.render(str(myNewPath + element), True, halfWhite)
-
-  # NEED TO RESIZE PATH
-
-  screen.blit(lblPath, (xFileBar - 45, yFileBar + 4))
+  module.timeVar.shortPathWithActiveFile = myNewPath + element
 
 # List all the pending files for being encrypted/decrypted
 def listPendingFiles(fileNames):

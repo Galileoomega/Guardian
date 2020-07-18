@@ -28,6 +28,7 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
         else:
             newlist = []
             userExist = False
+            print("User don't exist")
         # ----------------------------------------------------
 
         if userExist:
@@ -44,7 +45,7 @@ def confirmationLogin(userPassword, iPressedMyLoginButton, userUsername):
             key = base64.urlsafe_b64encode(kdf.derive(password)) # Can only use kdf once
             key = key.decode()
 
-            print(key)
+            print("KEYYY: " + key)
 
             with open(passwordPath) as f:
                 data2 = json.load(f)
