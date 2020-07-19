@@ -113,6 +113,9 @@ imageHousePATH = os.path.join(THIS_FOLDER, 'Resources\\house.png')
 imageRightArrowPath = os.path.join(THIS_FOLDER, 'Resources\\right-arrow.png')
 imageLeftArrowPath = os.path.join(THIS_FOLDER, 'Resources\\left-arrow.png')
 imageLogOutPath = os.path.join(THIS_FOLDER, 'Resources\\logout.png')
+imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\user.png')
+imageCloseCrossPath = os.path.join(THIS_FOLDER, 'Resources\\cross.png')
+imageMenuLogoutPath = os.path.join(THIS_FOLDER, 'Resources\\menu-logout.png')
 
 
 # DEFINE FONT
@@ -121,6 +124,7 @@ fontText = pygame.font.Font(robotoLightTTF, 14)
 fontStatus = pygame.font.Font(robotoBlackTTF, 14)
 fontWelcome = pygame.font.Font(robotoRegularTTF, 13)
 fontError = pygame.font.Font(robotoRegularTTF, 13)
+fontField = pygame.font.Font(robotoRegularTTF, 14)
 fontSubtitle = pygame.font.Font(robotoRegularTTF, 16)
 
 # DEFINE TEXT
@@ -145,6 +149,9 @@ imageHouse = pygame.image.load(imageHousePATH)
 imageRightArrow = pygame.image.load(imageRightArrowPath)
 imageLeftArrow = pygame.image.load(imageLeftArrowPath)
 imageLogOut = pygame.image.load(imageLogOutPath)
+imageUser = pygame.image.load(imageUserPath)
+imageCloseCross = pygame.image.load(imageCloseCrossPath)
+imageMenuLogout = pygame.image.load(imageMenuLogoutPath)
 
 
 # OTHER
@@ -416,7 +423,7 @@ def drawImages(xEncryptButton, xDecryptButton, yEncrypButton, yDecryptButton, xH
   xHouseIcon = xFileBar + 470
   screen.blit(imageHouse, (xHouseIcon, 45))
 
-  # LOG OUT ICON
+  # USER ICON (TO OPEN THE SETTINGS)
   screen.blit(imageLogOut, (20, 19))
 
   return xHouseIcon
@@ -427,12 +434,36 @@ def showSuccessfullLabel(xSuccessLabel, ySuccessLabel):
 def showSettingsMenu(xScreen, userUsername):
   sizeOfField = 300
   xFieldOne = xScreen / 2 - (sizeOfField / 2)
-  yFieldOne = 250
-  
-  xNickname = xScreen / 2 - (len(userUsername) * 2)
-  
-  lblUser = fontSubtitle.render("hi, " + userUsername, True, white)
+  yFieldOne = 250  
 
-  screen.blit(lblUser, (xNickname, 100))
+  text_width, text_height = fontSubtitle.size("hi, " + userUsername)
+
+  xNickname = xScreen / 2 - text_width / 2
+  
+  xUserIcon = xNickname + text_width / 2 - 13
+
+  xLogout = xFieldOne
+  xChangePassword = xFieldOne
+  xEncryptedFiles = xFieldOne
+
+  lblUser = fontSubtitle.render("hi, " + userUsername, True, white)
+  lblLogOut = fontField.render("Logout", True, halfWhite)
+  lblMyEncryptedFiles = fontField.render("My encrypted files", True, halfWhite)
+  lblChangePassword = fontField.render("Change password", True, halfWhite)
+  
+  # SEPARATOR
   AAfilledRoundedRect(screen, (xFieldOne, yFieldOne, sizeOfField, 25), grey, 0.3)
+  AAfilledRoundedRect(screen, (xFieldOne, 300, sizeOfField, 25), grey, 0.3)
+  AAfilledRoundedRect(screen, (xFieldOne, 350, sizeOfField, 25), grey, 0.3)
+
+  # ICONS
+  screen.blit(imageUser, (xUserIcon, 55))
+  screen.blit(imageCloseCross, (15, 15))
+  screen.blit(imageMenuLogout, (xLogout, 350))
+
+  # LABELS
+  screen.blit(lblUser, (xNickname, 100))
+  screen.blit(lblChangePassword, (xChangePassword + 40, yFieldOne + 2))
+  screen.blit(lblMyEncryptedFiles, (xEncryptedFiles + 40, 302))
+  screen.blit(lblLogOut, (xLogout + 40, 352))
 # ------------------------------------------------------
