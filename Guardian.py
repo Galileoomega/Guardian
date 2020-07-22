@@ -154,6 +154,12 @@ needToBuildMyFile = True
 iPressedMyLogOutButton = False
 tempLogOutButton = False
 showSettingsMenu = False
+iPressedMenuOption1 = False
+iPressedMenuOption2 = False
+iPressedMenuOption3 = False
+tempMenuOption1 = False
+tempMenuOption2 = False
+tempMenuOption3 = False
 
 # OTHER
 userPassword = ""
@@ -493,7 +499,26 @@ while playing:
 
   # ------------------------MENU SETTINGS--------------------------
   if showSettingsMenu:
-    style.showSettingsMenu(xScreen, userUsername)
+
+
+    xField = style.showSettingsMenu(xScreen, userUsername)
+    # ARROW BUTTON (to close settings menu)
+    iPressedMyLogOutButton, tempLogOutButton = mouseChanger.clickButtonDetect(xMouse, yMouse, 20, 50, 20, 50, tempLogOutButton)
+    # MENU OPTION 1
+    iPressedMenuOption1, tempMenuOption1 = mouseChanger.clickButtonDetect(xMouse, yMouse, xField, xField + 300, 250, 275, tempMenuOption1)
+    # MENU OPTION 2
+    iPressedMenuOption2, tempMenuOption2 = mouseChanger.clickButtonDetect(xMouse, yMouse, xField, xField + 300, 300, 325, tempMenuOption2)
+    # MENU OPTION 3
+    iPressedMenuOption3, tempMenuOption3 = mouseChanger.clickButtonDetect(xMouse, yMouse, xField, xField + 300, 350, 375, tempMenuOption3)
+
+    if iPressedMyLogOutButton:
+      showSettingsMenu = False
+    if iPressedMenuOption1:
+      print("Change Password click")
+    if iPressedMenuOption2:
+      print("See folder")
+    if iPressedMenuOption3:
+      print("Logout")
   # ---------------------------------------------------------------
 
   if makingAnimation:

@@ -116,6 +116,8 @@ imageLogOutPath = os.path.join(THIS_FOLDER, 'Resources\\logout.png')
 imageUserPath = os.path.join(THIS_FOLDER, 'Resources\\user.png')
 imageCloseCrossPath = os.path.join(THIS_FOLDER, 'Resources\\cross.png')
 imageMenuLogoutPath = os.path.join(THIS_FOLDER, 'Resources\\menu-logout.png')
+imageMenuEncryptedFilePath = os.path.join(THIS_FOLDER, 'Resources\\encrypted.png')
+imageMenuKeyPath = os.path.join(THIS_FOLDER, 'Resources\\key.png')
 
 
 # DEFINE FONT
@@ -152,6 +154,8 @@ imageLogOut = pygame.image.load(imageLogOutPath)
 imageUser = pygame.image.load(imageUserPath)
 imageCloseCross = pygame.image.load(imageCloseCrossPath)
 imageMenuLogout = pygame.image.load(imageMenuLogoutPath)
+imageMenuEncryptedFile = pygame.image.load(imageMenuEncryptedFilePath)
+imageMenuKey = pygame.image.load(imageMenuKeyPath)
 
 
 # OTHER
@@ -442,9 +446,9 @@ def showSettingsMenu(xScreen, userUsername):
   
   xUserIcon = xNickname + text_width / 2 - 13
 
-  xLogout = xFieldOne
-  xChangePassword = xFieldOne
-  xEncryptedFiles = xFieldOne
+  xLogout = xFieldOne + 90
+  xChangePassword = xFieldOne + 90
+  xEncryptedFiles = xFieldOne + 90
 
   lblUser = fontSubtitle.render("hi, " + userUsername, True, white)
   lblLogOut = fontField.render("Logout", True, halfWhite)
@@ -458,12 +462,16 @@ def showSettingsMenu(xScreen, userUsername):
 
   # ICONS
   screen.blit(imageUser, (xUserIcon, 55))
-  screen.blit(imageCloseCross, (15, 15))
-  screen.blit(imageMenuLogout, (xLogout, 350))
+  screen.blit(imageCloseCross, (19, 15))
+  screen.blit(imageMenuLogout, (xLogout - 35, 350))
+  screen.blit(imageMenuEncryptedFile, (xEncryptedFiles - 35, 300))
+  screen.blit(imageMenuKey, (xChangePassword - 35, 250))
 
   # LABELS
   screen.blit(lblUser, (xNickname, 100))
-  screen.blit(lblChangePassword, (xChangePassword + 40, yFieldOne + 2))
-  screen.blit(lblMyEncryptedFiles, (xEncryptedFiles + 40, 302))
-  screen.blit(lblLogOut, (xLogout + 40, 352))
+  screen.blit(lblChangePassword, (xChangePassword, yFieldOne + 2))
+  screen.blit(lblMyEncryptedFiles, (xEncryptedFiles, 302))
+  screen.blit(lblLogOut, (xLogout, 352))
+
+  return xFieldOne
 # ------------------------------------------------------
