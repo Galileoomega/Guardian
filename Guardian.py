@@ -204,6 +204,11 @@ def update_fps():
     fps_text = font.render(fps, 1, pygame.Color("coral"))
     return fps_text
 
+def logout():
+  loginIsOk = False
+  showSettingsMenu = False
+
+
 while playing:
 
   # GET THE NEW WIDTH OF THE SCREEN
@@ -518,7 +523,11 @@ while playing:
     if iPressedMenuOption2:
       print("See folder")
     if iPressedMenuOption3:
-      print("Logout")
+      loginIsOk = False
+      showSettingsMenu = False
+      userUsername = ""
+      userPassword = ""
+      hideUserPassword = ""
   # ---------------------------------------------------------------
 
   if makingAnimation:
